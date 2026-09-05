@@ -1,0 +1,47 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  npm registry search + registry.npmjs.org, pypi.org/pypi/<name>/json, rubygems.org, crates.io,
+  api.github.com/orgs/30mhz/repos, https://support.30mhz.com/api-endpoints-documentation-new
+package_count: 0
+official_sdk_count: 0
+note: >-
+  30MHz publishes no client library to any public package registry. Searched 2026-09-05: npm registry
+  search returns 0 results for both "30mhz" and "zensie", and registry.npmjs.org 404s for 30mhz,
+  zensie, @30mhz/sdk, 30mhz-api and zensie-api; PyPI 404s for 30mhz, zensie, thirtymhz, py30mhz,
+  30mhz-api and zensie-api; RubyGems 404s for 30mhz. The github.com/30mhz organization exists and
+  holds 14 public repositories, but none is an API client — they are infrastructure forks
+  (EXTERNAL-pre-commit-hooks, EXTERNAL-terraform-aws-eks-blueprints, EXTERNAL-aws-mfa) and pre-2022
+  hardware/tooling projects (pinecone-datalogger, hilink, resin-utils, balena-reboot-app). No SDKs
+  pointer is emitted.
+packages: []
+unreleased:
+- language: python
+  name: 30MHz Python API client
+  registry: null
+  url: null
+  version: null
+  published: null
+  official: true
+  public: false
+  install: null
+  note: >-
+    A first-party Python API client exists but is NOT publicly distributed. Both the API-endpoints
+    article and the query-data article say a caller may use "our python api client" and footnote it
+    identically: "to use our python api client request access via support" / "Access to our Python API
+    client can be requested via support." There is no registry entry and no repository, so there is no
+    version or publish date to record — the client is gated behind a support request, which is why
+    version and published are null rather than absent.
+  evidence:
+  - url: https://support.30mhz.com/api-endpoints-documentation-new
+    status: 200
+  - url: https://support.30mhz.com/query-data-from-the-30mhz-platform
+    status: 200
+third_party:
+- name: pump-30mhz-to-lightelligence
+  url: https://github.com/vaclavautengruber/pump-30mhz-to-lightelligence
+  official: false
+  note: Third-party bridge pushing 30MHz data into Lightelligence. Not a 30MHz product.
+alternatives_documented:
+- curl
+- Postman

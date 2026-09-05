@@ -1,0 +1,70 @@
+generated: '2026-09-05'
+method: searched
+source: https://www.30mhz.com/pricing/
+currency: EUR
+billing_period: monthly
+plan_count: 3
+note: >-
+  30MHz sells a modular subscription: a per-location service licence plus hardware. Prices are
+  published on the pricing page in euros per month and are quoted at two commitment lengths — a
+  1-year term and a 3-year term (the 3-year term is the cheaper of the two, and the page defaults to
+  it). A service licence applies to ONE location; additional locations get a 10% discount. Every tier
+  routes to a "Request info" form rather than a self-serve checkout, and the API is not sold or
+  metered separately — it comes with the platform. No free tier is published.
+plans:
+- name: Connect
+  price: 120
+  price_alternate: 135
+  currency: EUR
+  period: month
+  term_note: 120 EUR/month on a 3-year term, 135 EUR/month on a 1-year term
+  scope: one location
+  signup: https://www.30mhz.com/book-demo/
+  included:
+  - Connect and visualize up to 10 sensors
+  - Smart Assistant to talk to your data
+  - Alerts
+  - Historic and forecasted weather data
+  limits:
+    sensors: 10
+- name: Business
+  price: 285
+  price_alternate: 315
+  currency: EUR
+  period: month
+  term_note: 285 EUR/month on a 3-year term, 315 EUR/month on a 1-year term
+  scope: one location
+  signup: https://www.30mhz.com/book-demo/
+  included:
+  - Everything in Connect
+  - Unlimited sensors
+  - Climate computer integration
+  - Personalized cultivations and strategy settings
+  - Greenhouse maps
+  limits:
+    sensors: unlimited
+- name: Custom
+  price: null
+  currency: EUR
+  period: month
+  scope: negotiated
+  signup: https://www.30mhz.com/book-demo/
+  included:
+  - Everything in Business
+  - Full service
+  - Customizable to your needs
+  - Whitelabel option
+  limits: {}
+add_ons:
+- name: Extra sensors
+  price: 60
+  currency: EUR
+  period: month
+  description: +10 sensors without upgrading the service licence
+- name: Additional locations
+  price: null
+  currency: EUR
+  description: 10% discount on the service licence for each additional location
+hardware:
+  catalogue: https://www.30mhz.com/wireless-sensor-catalog/
+  note: Sensor specifications and pricing are published in a downloadable catalogue, not on the web page.

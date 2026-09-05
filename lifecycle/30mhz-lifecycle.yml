@@ -1,0 +1,65 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/30mhz-zensie-openapi.json
+versioning:
+  scheme: none
+  current: '2.0'
+  in_path: false
+  docs: null
+  note: >-
+    info.version reads "2.0" and the base path is a bare /api with no version segment. There is no
+    published versioning policy, no version header, and no dated release train. A breaking change
+    would land on the same URLs that clients call today.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset or Deprecation header support, and no advance-notice
+    commitment is published anywhere on 30mhz.com or support.30mhz.com. The contract DOES mark 19
+    operations deprecated: true, which is a real and useful signal, but nothing tells a caller when
+    those operations will be removed.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  note: >-
+    Probed 2026-09-05: status.30mhz.com does not resolve, 30mhz.status.io does not resolve, and no
+    status/uptime link appears in the site footer, the support centre or the developer docs. The
+    contract exposes an operational readiness endpoint (GET /status/ingest, HTTP 503 "One or more
+    backing services are unavailable; the instance is not ready to serve traffic") and a per-customer
+    network overview (getNetworkStatusOverview), but neither is a public status page. No StatusPage
+    pointer is emitted.
+support:
+  docs: https://support.30mhz.com/get-help
+  email: support@30mhz.com
+deprecated_operations:
+- openapi/30mhz-zensie-openapi.json#getCommentsFeedForGroup
+- openapi/30mhz-zensie-openapi.json#getCommentsFeedForOrganization
+- openapi/30mhz-zensie-openapi.json#getLocation
+- openapi/30mhz-zensie-openapi.json#deleteLocation
+- openapi/30mhz-zensie-openapi.json#createLocation
+- openapi/30mhz-zensie-openapi.json#getAllPrivateLocations
+- openapi/30mhz-zensie-openapi.json#getPrivateLocationsForOrganization
+- openapi/30mhz-zensie-openapi.json#getPublicLocations
+- openapi/30mhz-zensie-openapi.json#updateSite
+- openapi/30mhz-zensie-openapi.json#updateLocation
+- openapi/30mhz-zensie-openapi.json#createNotificationInOrganization
+- openapi/30mhz-zensie-openapi.json#updateNotification
+- openapi/30mhz-zensie-openapi.json#activateLocation
+- openapi/30mhz-zensie-openapi.json#deactivateLocation
+- openapi/30mhz-zensie-openapi.json#getOrganizationForCurrentUserLegacy
+- openapi/30mhz-zensie-openapi.json#requestLocation
+- openapi/30mhz-zensie-openapi.json#updateOrganizationMembership
+- openapi/30mhz-zensie-openapi.json#createSensorForOrganization
+- openapi/30mhz-zensie-openapi.json#activateUser
+deprecation_pattern:
+  observed: >-
+    The deprecated set is one coherent migration — the "location" vocabulary is being replaced by
+    "site". getLocation/createLocation/deleteLocation/activateLocation/deactivateLocation/updateLocation
+    are all deprecated and each has a live /site sibling (getSite, requestSite, activateSite,
+    deactivateSite, updateSite_1). The contract shows the migration; nothing announces its deadline.

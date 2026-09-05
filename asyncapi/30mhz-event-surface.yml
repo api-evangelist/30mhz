@@ -1,0 +1,42 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/30mhz-zensie-openapi.json
+spec_type: none
+asyncapi_published: false
+webhooks_published: false
+note: >-
+  30MHz publishes no AsyncAPI document and does not advertise webhooks. /asyncapi.yaml, /asyncapi.json
+  and the docs were checked; the developer documentation (support.30mhz.com/developer-docs) covers only
+  the REST API and a pull/push data-integration pattern. No AsyncAPI or Webhooks pointer is emitted.
+  Two adjacent surfaces exist in the contract and are recorded here because an integrator looking for
+  "how do I get data OUT of 30MHz without polling" will land on them — neither is an event-driven
+  webhook and neither should be scored as one.
+adjacent_surfaces:
+- name: Export partner jobs
+  kind: scheduled-outbound-push
+  event_driven: false
+  description: >-
+    An organization can register an export partner with a target exportPartnerURL and then create
+    export partner jobs that carry a frequency, a payload, an active flag and an exportPartnerAccess
+    token (token/tokenType/expiresAt). The platform pushes to the partner URL on that frequency. This
+    is a scheduled export, not an event subscription — there is no event type, no delivery record, no
+    retry semantics and no signature scheme documented anywhere in the contract or the docs.
+  operations: [createExportPartner, updateExportPartner, getExportPartners, createExportPartnerJob, getExportPartnerJobsForOrganization, removeExportPartnerJob]
+  schemas: [ExportPartner, NewExportPartner, ExportPartnerJob, NewExportPartnerJob, ExportPartnerAccess, ExportPartnerJobMap]
+- name: Agent message stream
+  kind: request-response-stream
+  event_driven: false
+  description: >-
+    POST /agent/message-stream sends a message to a conversation and starts a run, backing the
+    "Smart Assistant to talk to your data" feature. It is a streamed response to a caller-initiated
+    request, not a subscribable channel; the contract declares no media type for the stream.
+  operations: [sendMessageStream, getConversationMessages]
+- name: Ingest
+  kind: inbound-push
+  event_driven: false
+  description: >-
+    POST /ingest/organization/{organizationId} accepts batches of ImportCheckEvent objects (capped at
+    100 per call, HTTP 413 beyond that) and returns ImportCheckEventsResponse with per-event failures.
+    This is the documented "push data to the 30MHz platform" direction.
+  operations: [ingestImportChecks, getIngestImportCheckTemplate, updateManualImportChecks, deleteDataManualImportChecks]
+  docs: https://support.30mhz.com/push-data-to-the-30mhz-platform

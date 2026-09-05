@@ -1,0 +1,22 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.30mhz.com/developer-docs
+limit_count: 0
+note: >-
+  30MHz publishes no API rate limits. All four developer-docs articles (create-an-api-key,
+  api-endpoints-documentation-new, push-data-to-the-30mhz-platform, query-data-from-the-30mhz-platform)
+  were read on 2026-09-05 and none mentions quotas, throttling, per-key limits or a 429. The
+  558-operation Swagger contract declares no 429 response on any operation and no X-RateLimit-* or
+  RateLimit-* response header. A consumer cannot tell how hard they may call this API, and an agent
+  gets no runtime backoff signal.
+rate_limits: []
+response_headers: []
+exhaustion_status: null
+payload_limits:
+- surface: ingest
+  operation: ingestImportChecks
+  limit: 100 events per call
+  status_on_exceed: 413
+  evidence: >-
+    HTTP 413 response declared in the contract with the description "Too many events sent. A maximum
+    of 100 events are allowed per call". This is a payload-size cap, not a request-rate limit.

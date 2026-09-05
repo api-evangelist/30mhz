@@ -1,23 +1,151 @@
 aid: 30mhz
 name: 30MHz
-description: '30MHz is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  30MHz is a Rotterdam-based horticulture technology company that builds a wireless sensor network and
+  the ZENSIE data platform for greenhouse and controlled-environment growers. Battery-powered sensors
+  capture temperature, humidity, PAR/light, CO2, substrate moisture and EC in the crop, stream it to
+  ZENSIE over LoRa gateways, and surface it as dashboards, maps, alerts, cultivation strategies and
+  AI-generated growing advice. The platform integrates with climate computers (Priva, Hoogendoorn,
+  Ridder) and third-party data services such as Meteomatics weather, and exposes a public REST API —
+  the ZENSIE API at api.30mhz.com — covering sensors, checks (data sources), data query and ingest,
+  dashboards, widgets, organizations, notifications, locations, zones, cultivations, licensing and
+  billing, so growers, advisors and technology partners can push data into the platform and pull it
+  back out into their own systems.
+image: https://www.30mhz.com/wp-content/uploads/2026/04/Infographic-for-greenbg-1536x571.png
 url: https://raw.githubusercontent.com/api-evangelist/30mhz/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-05'
 modified: '2026-09-05'
 tags:
-- Company
-apis: []
+- Horticulture
+- Agriculture
+- AgTech
+- Sensors
+- Internet of Things
+- Greenhouse
+- Climate Monitoring
+- Time Series Data
+- Data Platform
+- Netherlands
+tags_raw:
+- horticulture
+- agriculture
+- agtech
+- sensors
+- internet-of-things
+- greenhouse
+- climate-monitoring
+- time-series-data
+- data-platform
+- netherlands
+apis:
+- name: ZENSIE API
+  description: >-
+    The ZENSIE REST API is 30MHz's public platform API, documented in Swagger at
+    https://api.30mhz.com/api/swagger and served from https://api.30mhz.com/api. It carries 558
+    operations across 425 paths covering sensors and sensor types, gateways and gateway clusters,
+    checks (data sources), data query and data-upload/ingest, dashboards, widgets and charts, maps
+    and zones, organizations, users, groups and notifications, cultivations and cultivation targets,
+    apps (irrigation, GDD, RTR, CultiWatch), export partners, and the commercial surface (licenses,
+    subscriptions, quotes, orders, invoices, pricing). Authentication is a bearer JWT API key issued
+    from the ZENSIE Account Settings > Developer page and sent in the Authorization header.
+  image: https://www.30mhz.com/wp-content/uploads/2026/04/Infographic-for-greenbg-1536x571.png
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - Horticulture
+  - Sensors
+  - Internet of Things
+  - Greenhouse
+  - Climate Monitoring
+  - Time Series Data
+  tags_raw:
+  - horticulture
+  - sensors
+  - internet-of-things
+  - greenhouse
+  - climate-monitoring
+  - time-series-data
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-zensie-openapi.json
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/30mhz-agentic-access.yml
+- type: DomainSecurity
+  url: security/30mhz-domain-security.yml
+- type: Authentication
+  url: authentication/30mhz-authentication.yml
 - type: Website
-  url: https://equityzen.com/company/30mhz
+  url: https://30mhz.com/
+- type: DeveloperPortal
+  url: https://support.30mhz.com/developer-docs
+- type: Documentation
+  url: https://support.30mhz.com/developer-docs
+- type: APIReference
+  url: https://api.30mhz.com/api/swagger
+- type: GettingStarted
+  url: https://support.30mhz.com/create-an-api-key
+- type: Support
+  url: https://support.30mhz.com/get-help
+- type: HelpCenter
+  url: https://support.30mhz.com/
+- type: Blog
+  url: https://www.30mhz.com/news
+- type: GitHubOrganization
+  url: https://github.com/30mhz
+- type: Pricing
+  url: https://www.30mhz.com/pricing/
+- type: SignUp
+  url: https://www.30mhz.com/book-demo/
+- type: Login
+  url: https://zensie.30mhz.com/
+- type: TermsOfService
+  url: https://30mhz.com/terms/
+- type: PrivacyPolicy
+  url: https://30mhz.com/privacy/
+- type: ChangeLog
+  url: https://support.30mhz.com/whats-new
+- type: ChangeLog
+  url: changelog/30mhz-changelog.yml
+- type: Conventions
+  url: conventions/30mhz-conventions.yml
+- type: ErrorCatalog
+  url: errors/30mhz-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/30mhz-lifecycle.yml
+- type: Conformance
+  url: conformance/30mhz-conformance.yml
+- type: DataModel
+  url: data-model/30mhz-data-model.yml
+- type: RateLimits
+  url: rate-limits/30mhz-rate-limits.yml
+- type: Plans
+  url: plans/30mhz-plans-pricing.yml
+- type: LLMsTxt
+  url: llms/30mhz-llms.txt
+- type: Overlay
+  url: overlays/30mhz-zensie-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: X-MCPServerCandidate
+  url: mcp/30mhz-mcp.yml
+
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v3

@@ -1,0 +1,1565 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/30mhz-zensie-openapi.json
+format: none
+note: >-
+  The ZENSIE API does not use RFC 9457 application/problem+json. Error responses are declared in
+  Swagger 2.0 with an HTTP status and a human-readable description only; 30 responses declare a
+  bare string schema and the rest declare no schema at all, so there is no machine-readable error
+  envelope, error code registry or type URI to bind to. Observed live, an unauthenticated call to
+  https://api.30mhz.com/api returns 401 with the JSON body {"message":"Could not decode JWT token"},
+  which is the closest thing to a documented envelope the surface exposes. The catalog below is
+  derived verbatim from the response descriptions in the published contract.
+envelope:
+  observed: '{"message": "<text>"}'
+  observed_source: https://api.30mhz.com/api
+  observed_status: 401
+  declared_in_spec: false
+status_classes:
+- status: 400
+  responses: 133
+  distinct_messages: 52
+- status: 401
+  responses: 62
+  distinct_messages: 10
+- status: 403
+  responses: 480
+  distinct_messages: 66
+- status: 404
+  responses: 206
+  distinct_messages: 114
+- status: 406
+  responses: 2
+  distinct_messages: 2
+- status: 409
+  responses: 20
+  distinct_messages: 17
+- status: 410
+  responses: 1
+  distinct_messages: 1
+- status: 412
+  responses: 1
+  distinct_messages: 1
+- status: 413
+  responses: 1
+  distinct_messages: 1
+- status: 422
+  responses: 3
+  distinct_messages: 2
+- status: 500
+  responses: 161
+  distinct_messages: 101
+- status: 501
+  responses: 3
+  distinct_messages: 1
+- status: 503
+  responses: 1
+  distinct_messages: 1
+- status: 510
+  responses: 10
+  distinct_messages: 7
+problems:
+- status: 400
+  title: "Invalid data in the properties to be updated"
+  occurrences: 25
+  source_operations: ["updateAssembly", "updateBillingHistoryByMother", "updateBillingHistoryDetails", "updateBillingHistory", "transferChecks"]
+- status: 400
+  title: "Invalid data in the properties to be patched."
+  occurrences: 21
+  source_operations: ["patchCrop", "patchDataSourceCoordinates", "bulkEditDataSources", "patchDevice", "putHighlight"]
+- status: 400
+  title: "Invalid data in the properties to be updated."
+  occurrences: 10
+  source_operations: ["putCrop", "putDataSourceCoordinates", "putDevice", "updateGateway", "putLicense"]
+- status: 400
+  title: "Not a valid e-mail address."
+  occurrences: 6
+  source_operations: ["getChecksSharedByUser", "getChecksSharedWithUser", "listSharedCheckDetails", "getDashboardsSharedByUser", "getDashboardsSharedWithUser"]
+- status: 400
+  title: "Configuration values must be either strings or json objects."
+  occurrences: 5
+  source_operations: ["installApp", "updateAppInstallation", "updateInstallable", "saveFactory", "updateFactoryConfiguration"]
+- status: 400
+  title: "The provided date must be a valid date: ISO 8601 date. E.g.: '2016-03-03T00:00:00Z'"
+  occurrences: 5
+  source_operations: ["getScatterplot", "getDowntimeInfoByPeriod", "getCheckEventsForTimeRange", "getCheckStatsByTimeInterval", "getChecksStatsByTimeInterval"]
+- status: 400
+  title: "Invalid properties"
+  occurrences: 4
+  source_operations: ["deleteImportCheckCollection", "getImportCheckCollectionValues", "getImportCheckDateEntryValues", "getManualInputDataForCheck"]
+- status: 400
+  title: "Organization id or email don't match, or invalid role"
+  occurrences: 4
+  source_operations: ["addMember", "modifyOrganizationMembership", "getOrganizations_1", "updateOrganizationMembership"]
+- status: 400
+  title: "Invalid data in the properties"
+  occurrences: 3
+  source_operations: ["updateCollection", "updateCollectionOrder", "updateDateEntry"]
+- status: 400
+  title: "Invalid date entry properties."
+  occurrences: 3
+  source_operations: ["getDateEntriesForImportCheck", "addImportCheckDateEntry", "addDateEntries"]
+- status: 400
+  title: "Bad request while ingesting manual data"
+  occurrences: 2
+  source_operations: ["updateManualImportChecks", "updateManualImportChecksWithId"]
+- status: 400
+  title: "Location does not belong to the organization"
+  occurrences: 2
+  source_operations: ["createSensor", "createSensorForOrganization"]
+- status: 400
+  title: "Sensor type data missing or incomplete."
+  occurrences: 2
+  source_operations: ["createSensorType", "createPrivateSensorType"]
+- status: 400
+  title: "The pricing record already exists"
+  occurrences: 2
+  source_operations: ["addDefaultPricingForCurrency", "addPricingToOrganization"]
+- status: 400
+  title: "There was a problem getting the assembly."
+  occurrences: 2
+  source_operations: ["getAssembly", "getAssemblyByXbee"]
+- status: 400
+  title: "A user with that email doesn't exist."
+  occurrences: 1
+  source_operations: ["requestChangePassword"]
+- status: 400
+  title: "Attempting to share or copy a public sensor type."
+  occurrences: 1
+  source_operations: ["copyImportCheckIntoOrganization"]
+- status: 400
+  title: "Bad request - missing details or bad syntax in details data"
+  occurrences: 1
+  source_operations: ["createCompanyDetails"]
+- status: 400
+  title: "Bad request - missing location or bad syntax in location data"
+  occurrences: 1
+  source_operations: ["createLocation"]
+- status: 400
+  title: "Bad request - missing product or bad syntax in product data"
+  occurrences: 1
+  source_operations: ["createProduct"]
+- status: 400
+  title: "Bad request while deleting manual data"
+  occurrences: 1
+  source_operations: ["deleteDataManualImportChecks"]
+- status: 400
+  title: "Bad request while deleting row"
+  occurrences: 1
+  source_operations: ["deleteManualInputRowById"]
+- status: 400
+  title: "Bad request, e.g. sensors of different types requested"
+  occurrences: 1
+  source_operations: ["aggregate"]
+- status: 400
+  title: "Bad request: the owner of the check always remains a follower"
+  occurrences: 1
+  source_operations: ["deleteNotificationSetting"]
+- status: 400
+  title: "Could not perform operation due to wrong input."
+  occurrences: 1
+  source_operations: ["deleteSubscription"]
+- status: 400
+  title: "Export partner already exists for this organization"
+  occurrences: 1
+  source_operations: ["createExportPartner"]
+- status: 400
+  title: "Invalid MAC Address"
+  occurrences: 1
+  source_operations: ["addMother"]
+- status: 400
+  title: "Invalid collection properties."
+  occurrences: 1
+  source_operations: ["addImportCheckCollections"]
+- status: 400
+  title: "Invalid data in one or more of the check properties."
+  occurrences: 1
+  source_operations: ["createSharedCheck"]
+- status: 400
+  title: "Invalid data in one or more of the dashboard properties."
+  occurrences: 1
+  source_operations: ["createSharedDashboard"]
+- status: 400
+  title: "Invalid data in the note to be created."
+  occurrences: 1
+  source_operations: ["createNote"]
+- status: 400
+  title: "Invalid data in the properties."
+  occurrences: 1
+  source_operations: ["createAssembly"]
+- status: 400
+  title: "Invalid input."
+  occurrences: 1
+  source_operations: ["updateAppProperties"]
+- status: 400
+  title: "Invalid query parameters."
+  occurrences: 1
+  source_operations: ["getAllDevices"]
+- status: 400
+  title: "Invalid role"
+  occurrences: 1
+  source_operations: ["getOrganizations"]
+- status: 400
+  title: "Language is not supported."
+  occurrences: 1
+  source_operations: ["signUp"]
+- status: 400
+  title: "Location data missing or incomplete."
+  occurrences: 1
+  source_operations: ["requestLocation"]
+- status: 400
+  title: "Malformed request or referenced organization does not exist"
+  occurrences: 1
+  source_operations: ["inviteUser"]
+- status: 400
+  title: "Metric data missing or incomplete."
+  occurrences: 1
+  source_operations: ["createMetric"]
+- status: 400
+  title: "Name, sensor type is empty or invalid data in one or more of the check properties."
+  occurrences: 1
+  source_operations: ["createImportCheck"]
+- status: 400
+  title: "Organization data missing or incomplete."
+  occurrences: 1
+  source_operations: ["createOrganization"]
+- status: 400
+  title: "Password cannot be empty"
+  occurrences: 1
+  source_operations: ["changePassword"]
+- status: 400
+  title: "Site data missing or incomplete."
+  occurrences: 1
+  source_operations: ["requestSite"]
+- status: 400
+  title: "The export partner does not exist for this organization"
+  occurrences: 1
+  source_operations: ["createExportPartnerJob"]
+- status: 400
+  title: "The metric is currently used by existing sensor types and cannot be removed."
+  occurrences: 1
+  source_operations: ["deleteMetric"]
+- status: 400
+  title: "The mother is associated to a location and cannot be removed"
+  occurrences: 1
+  source_operations: ["removeMother"]
+- status: 400
+  title: "The mother template is associated to one or multiple mothers and cannot be removed"
+  occurrences: 1
+  source_operations: ["removeMotherTemplate"]
+- status: 400
+  title: "The organization is not billable"
+  occurrences: 1
+  source_operations: ["createSqsBillingHistoryRequestForOrganization"]
+- status: 400
+  title: "The sensor type is currently used by existing checks and cannot be removed."
+  occurrences: 1
+  source_operations: ["deleteSensorType"]
+- status: 400
+  title: "URL, name or locations is empty or invalid data in one or more of the check properties."
+  occurrences: 1
+  source_operations: ["createWebcheck"]
+- status: 400
+  title: "must be one of valid allowed Intervals"
+  occurrences: 1
+  source_operations: ["getCheckCurrentDowntime"]
+- status: 400
+  title: "must be one of valid allowed Periods"
+  occurrences: 1
+  source_operations: ["getCheckCurrentDowntimeInfo"]
+- status: 401
+  title: "Unauthenticated request"
+  occurrences: 32
+  source_operations: ["getDevicePublicKey", "getAccessToken", "assignRoleOnLicense", "unassignRoleOnLicense", "assignRoleOnOrganization"]
+- status: 401
+  title: "Unauthenticated request, cannot perform operation"
+  occurrences: 18
+  source_operations: ["getImportCheck", "getMetric", "getAllMetrics", "getConversions", "addNotificationSetting"]
+- status: 401
+  title: "User is not authorized to perform this operation. She should be owner within the organization or an admin."
+  occurrences: 5
+  source_operations: ["getOrganization", "getOrganizationForCurrentUserLegacy", "getOrganizations_1", "getOrganizationMemberships", "getOrganizationUsers"]
+- status: 401
+  title: "Not authenticated or user is not admin"
+  occurrences: 1
+  source_operations: ["removeUser"]
+- status: 401
+  title: "This {authorizationCode} is not valid for this user."
+  occurrences: 1
+  source_operations: ["changePassword"]
+- status: 401
+  title: "Unauthenticated or unauthorized to perform the operation"
+  occurrences: 1
+  source_operations: ["revokeAPIKeyForUser"]
+- status: 401
+  title: "Unauthorized access to the check, only the owner (organization) can remove a notification setting"
+  occurrences: 1
+  source_operations: ["deleteNotificationSetting"]
+- status: 401
+  title: "User is not authorized to perform this operation."
+  occurrences: 1
+  source_operations: ["getOrganizations"]
+- status: 401
+  title: "User is not authorized to perform this operation. Should be admin."
+  occurrences: 1
+  source_operations: ["getAllSensorTypes"]
+- status: 401
+  title: "User not authenticated"
+  occurrences: 1
+  source_operations: ["hasAPIKey"]
+- status: 403
+  title: "Not enough permissions to perform the operation"
+  occurrences: 116
+  source_operations: ["getBillingHistoryDetailsById", "getBillingHistoryDetailsByOrganizationIdAndMonth", "getBillingHistoryDetailsChecksJson", "getBillingHistoryDetailsMothersByOrgIdAndMonth", "updateBillingHistoryByMother"]
+- status: 403
+  title: "Not enough permissions to perform the operation."
+  occurrences: 56
+  source_operations: ["getConversationMessages", "sendMessageStream", "getCultivationTargetSeriesById", "getPublicCrops", "getCropById"]
+- status: 403
+  title: "User not allowed to perform the operation"
+  occurrences: 47
+  source_operations: ["deleteAllNotificationFollowsOfUser", "deleteCompanyDetails", "createCompanyDetails", "updateCompanyDetails", "getDashboards"]
+- status: 403
+  title: "User not authorized."
+  occurrences: 43
+  source_operations: ["createCrop", "putCrop", "deleteCrop", "createDataSourceCoordinates", "putDataSourceCoordinates"]
+- status: 403
+  title: "User is not authorized to perform this operation."
+  occurrences: 33
+  source_operations: ["cloneCheck", "getOrganizationChecks", "getGatewayClusterSensors", "getGatewaySensors", "assignSensorsOfClusterToGateway"]
+- status: 403
+  title: "User must be authenticated."
+  occurrences: 25
+  source_operations: ["patchCrop", "patchDataSourceCoordinates", "bulkEditDataSources", "patchDevice", "updateGateway"]
+- status: 403
+  title: "User must be an admin."
+  occurrences: 24
+  source_operations: ["createAssembly", "getAssembly", "deleteAssembly", "getAssemblyByXbee", "getAssemblyHistory"]
+- status: 403
+  title: "Unauthorized access to the check id"
+  occurrences: 12
+  source_operations: ["removeCheck", "removeChecks", "getCheckCurrentDowntime", "getCheckCurrentDowntimeInfo", "getDowntimeInfoByPeriod"]
+- status: 403
+  title: "Not enough permissions to perform this operation"
+  occurrences: 11
+  source_operations: ["createExportPartnerJob", "getExportPartnerJob", "removeExportPartnerJob", "getExportPartnerJobsForOrganization", "getJobsForOrganizationIdExportPartnerIdFrequencyAndActive"]
+- status: 403
+  title: "Not enough permissions to perform the operation. User must be admin."
+  occurrences: 9
+  source_operations: ["createSqsBillingHistoryRequest", "uniqueMother", "motherIdsInLocationsExist", "sensorLocationHasMother", "getAllMothers"]
+- status: 403
+  title: "User must be a authenticated."
+  occurrences: 8
+  source_operations: ["assignDashboardThemeToGroup", "removeDashboardThemeFromGroup", "assignDashboardThemeToOrganization", "removeDashboardThemeFromOrganization", "createDashboardTheme"]
+- status: 403
+  title: "Not enough permissions to perform the operation. User must be editor or owner in the organization."
+  occurrences: 6
+  source_operations: ["deleteDataManualImportChecks", "getIngestImportCheckTemplate", "ingestImportChecks", "updateManualImportChecks", "updateManualImportChecksWithId"]
+- status: 403
+  title: "Unauthorized to perform the operation. User has to be admin."
+  occurrences: 6
+  source_operations: ["getApiBuildVersion", "getAuth0Health", "getDynamoDbHealth", "getSchedulerHealth", "createDiagnosticsDashboard"]
+- status: 403
+  title: "User must be an admin or an organization editor/owner."
+  occurrences: 6
+  source_operations: ["getSharedByOrganization", "shareSensorTypeWithGroup", "shareSensorTypeWithOrganization", "shareSensorTypeWithUser", "sharedSensorTypesWithOrganization"]
+- status: 403
+  title: "User is not authorized to perform this operation. She should be owner within the organization or an admin."
+  occurrences: 5
+  source_operations: ["deleteOrganization", "addMember", "modifyOrganizationMembership", "deleteOrganizationMembership", "updateOrganizationMembership"]
+- status: 403
+  title: "User is not authorized to perform this operation. Should be admin."
+  occurrences: 5
+  source_operations: ["deleteMetric", "createMetric", "createOrganization", "createSensorType", "deleteSensorType"]
+- status: 403
+  title: "User not allowed to make this call"
+  occurrences: 5
+  source_operations: ["listWidgets", "getWidget", "getCheckUptimeBetweenDates", "getCheckUptimeByInterval", "getChecksUptimeByInterval"]
+- status: 403
+  title: "User is not authorized to perform operation, must be an admin."
+  occurrences: 4
+  source_operations: ["removeGatewayCluster", "uninstallApp", "getAppInstallationsForApp", "removeFactory"]
+- status: 403
+  title: "User must be an admin or an organization or group editor/owner."
+  occurrences: 4
+  source_operations: ["createComment", "createReply", "updateComment", "commentReplyUpdate"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be group owner or an admin."
+  occurrences: 3
+  source_operations: ["addUserToGroup", "removeUserFromGroup", "deleteGroup"]
+- status: 403
+  title: "Authenticated user is not allowed to access this check"
+  occurrences: 2
+  source_operations: ["getCheck", "getCheckCondition"]
+- status: 403
+  title: "Forbidden to read role assignments on this organization"
+  occurrences: 2
+  source_operations: ["getRoleAssignmentsOfUserOnOrganization", "getRoleAssignmentsOnOrganization"]
+- status: 403
+  title: "Unauthorized to perform operation, not enough permissions."
+  occurrences: 2
+  source_operations: ["getLocation", "getSite"]
+- status: 403
+  title: "Unauthorized to perform the operation. User must have access to cultiwatch app or be an admin."
+  occurrences: 2
+  source_operations: ["getDrop", "getDropByInterval"]
+- status: 403
+  title: "User is not authorized to perform this operation"
+  occurrences: 2
+  source_operations: ["getDataSourcesBySite", "getSiteByUuid"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be an admin."
+  occurrences: 2
+  source_operations: ["deleteCurrency", "deleteCalculation"]
+- status: 403
+  title: "Caller lacks permission to invite to this organization"
+  occurrences: 1
+  source_operations: ["inviteUser"]
+- status: 403
+  title: "Error accessing the check: not enough permissions to perform operation"
+  occurrences: 1
+  source_operations: ["addNotificationSetting"]
+- status: 403
+  title: "Forbidden to read role assignments under this license"
+  occurrences: 1
+  source_operations: ["getRoleAssignmentsOfUserUnderLicense"]
+- status: 403
+  title: "Invalid or expired authorization code."
+  occurrences: 1
+  source_operations: ["signUp"]
+- status: 403
+  title: "Unauthorized"
+  occurrences: 1
+  source_operations: ["getChecksLastRecordedStatInfo"]
+- status: 403
+  title: "Unauthorized access to an admin only user operation"
+  occurrences: 1
+  source_operations: ["getUserByEmail"]
+- status: 403
+  title: "Unauthorized access to the check"
+  occurrences: 1
+  source_operations: ["getCheckLastRecordedState"]
+- status: 403
+  title: "Unauthorized access to the check id."
+  occurrences: 1
+  source_operations: ["getScatterplot"]
+- status: 403
+  title: "Unauthorized access to the data"
+  occurrences: 1
+  source_operations: ["getDataForSensors"]
+- status: 403
+  title: "Unauthorized to delete this shared check"
+  occurrences: 1
+  source_operations: ["deleteSharedCheck"]
+- status: 403
+  title: "Unauthorized to delete this shared dashboard"
+  occurrences: 1
+  source_operations: ["deleteSharedDashboard"]
+- status: 403
+  title: "Unauthorized to get this shared check"
+  occurrences: 1
+  source_operations: ["getSharedCheck"]
+- status: 403
+  title: "Unauthorized to get this shared dashboard"
+  occurrences: 1
+  source_operations: ["getSharedDashboard"]
+- status: 403
+  title: "Unauthorized to perform the operation."
+  occurrences: 1
+  source_operations: ["getElasticsearchHealth"]
+- status: 403
+  title: "Unauthorized to perform the operation. User has to be admin or needs to have the role of owner or editor within the organization."
+  occurrences: 1
+  source_operations: ["getPrivateLocationsForOrganization"]
+- status: 403
+  title: "Unauthorized to perform the operation. User must be an admin."
+  occurrences: 1
+  source_operations: ["triggerSensorAggregation"]
+- status: 403
+  title: "Unauthorized to perform this operation."
+  occurrences: 1
+  source_operations: ["deleteLocation"]
+- status: 403
+  title: "Unauthorized to turn sharing off for this check"
+  occurrences: 1
+  source_operations: ["turnSharingOff"]
+- status: 403
+  title: "Unauthorized to turn sharing off for this dashboard"
+  occurrences: 1
+  source_operations: ["turnSharingOffForDashboard"]
+- status: 403
+  title: "User has no owner rights in organization."
+  occurrences: 1
+  source_operations: ["updateLogoForExtension"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be comment owner or an admin."
+  occurrences: 1
+  source_operations: ["deleteComment"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be group member or an admin."
+  occurrences: 1
+  source_operations: ["listUsersInGroup"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be the actual user or an admin."
+  occurrences: 1
+  source_operations: ["viewUsersGroups"]
+- status: 403
+  title: "User is not authorized to perform this operation, they must be theme owner or an admin."
+  occurrences: 1
+  source_operations: ["deleteDashboardTheme"]
+- status: 403
+  title: "User is not authorized to perform this operation, user must be admin or belong to the group"
+  occurrences: 1
+  source_operations: ["viewSensors"]
+- status: 403
+  title: "User is not authorized to perform this operation. Should be admin or organization owner."
+  occurrences: 1
+  source_operations: ["deleteImportCheck"]
+- status: 403
+  title: "User is not authorized to perform this operation. Should be admin or organization owner/editor."
+  occurrences: 1
+  source_operations: ["createPrivateSensorType"]
+- status: 403
+  title: "User is not authorized to perform this operation. an admin."
+  occurrences: 1
+  source_operations: ["deleteProduct"]
+- status: 403
+  title: "User is not authorized to perform this operation.."
+  occurrences: 1
+  source_operations: ["deleteSubscriptionLocation"]
+- status: 403
+  title: "User is not authorized to update a group member, they must be group owner or an admin."
+  occurrences: 1
+  source_operations: ["updateUserInAGroup"]
+- status: 403
+  title: "User must be admin."
+  occurrences: 1
+  source_operations: ["updateAppConfiguration"]
+- status: 403
+  title: "User must be an admin or a group editor/owner."
+  occurrences: 1
+  source_operations: ["sharedSensorTypesWithGroup"]
+- status: 403
+  title: "User must be an admin or an organization owner in order to create a currency."
+  occurrences: 1
+  source_operations: ["createCurrency"]
+- status: 403
+  title: "User must be an admin or an organization owner in order to create a group."
+  occurrences: 1
+  source_operations: ["createGroup"]
+- status: 403
+  title: "User must be an admin or an organization owner in order to edit a group."
+  occurrences: 1
+  source_operations: ["updateGroup"]
+- status: 403
+  title: "User must match be admin or owner/editor of the sensor type's organization."
+  occurrences: 1
+  source_operations: ["getSharedSensorTypeSharedWith"]
+- status: 403
+  title: "User must match the email or be admin."
+  occurrences: 1
+  source_operations: ["sharedSensorTypesWithUser"]
+- status: 403
+  title: "User not allowed to perform this operation. Should be admin."
+  occurrences: 1
+  source_operations: ["deleteBillingHistoryByOrganizationAndMonth"]
+- status: 403
+  title: "User not allowed to view the calculation"
+  occurrences: 1
+  source_operations: ["getCalculation"]
+- status: 403
+  title: "User not allowed to view the group"
+  occurrences: 1
+  source_operations: ["getGroup"]
+- status: 404
+  title: "Organization does not exist"
+  occurrences: 10
+  source_operations: ["createSqsBillingHistoryRequestForOrganization", "uploadData", "uploadDataToGroup", "addPricingToOrganization", "getAllExternalSensorTypesByOrganization"]
+- status: 404
+  title: "An import check with that id doesn't exist"
+  occurrences: 7
+  source_operations: ["deleteImportCheckCollection", "getDateEntriesForImportCheck", "addImportCheckDateEntry", "getImportCheckCollectionValues", "addDateEntries"]
+- status: 404
+  title: "Check not found"
+  occurrences: 7
+  source_operations: ["aggregate", "getCheckEventsCountForTimeInterval", "getCheckEventsForTimeRange", "getCheckLastRecordedState", "getCheckStatsByInterval"]
+- status: 404
+  title: "Assembly not found."
+  occurrences: 6
+  source_operations: ["getAssembly", "deleteAssembly", "getAssemblyByXbee", "getAssemblyHistory", "getAssemblyHistoryByXbee"]
+- status: 404
+  title: "Check with given id doesn't exist"
+  occurrences: 5
+  source_operations: ["getCheck", "transferCheckOrganization", "transferCheckOwnership", "updateCheck", "getCheckCondition"]
+- status: 404
+  title: "Group not found."
+  occurrences: 5
+  source_operations: ["listUsersInGroup", "addUserToGroup", "removeUserFromGroup", "updateUserInAGroup", "deleteGroup"]
+- status: 404
+  title: "Cultivation not found."
+  occurrences: 4
+  source_operations: ["putCultivation", "deleteCultivation", "patchCultivation", "uploadCultivationFile"]
+- status: 404
+  title: "Resource not found"
+  occurrences: 4
+  source_operations: ["getCropSpaceFilteredJson", "getCropSpaceFilteredSwagger", "getRobocropsAPIDefinition", "getRobocropsAPIJson"]
+- status: 404
+  title: "Subscription not found."
+  occurrences: 4
+  source_operations: ["getSubscriptionById", "putSubscription", "deleteSubscription", "patchSubscription"]
+- status: 404
+  title: "User not found"
+  occurrences: 4
+  source_operations: ["getUser", "getUserByEmail", "removeUser", "invite"]
+- status: 404
+  title: "User or organization not found"
+  occurrences: 4
+  source_operations: ["addMember", "getOrganizationForCurrentUserLegacy", "getOrganizations", "getOrganizations_1"]
+- status: 404
+  title: "Zone not found."
+  occurrences: 4
+  source_operations: ["putZone", "deleteZone", "patchZone", "createZone"]
+- status: 404
+  title: "App installation does not exist."
+  occurrences: 3
+  source_operations: ["activateAppInstallation", "deactivateAppInstallation", "getAppInstallation"]
+- status: 404
+  title: "Application not found"
+  occurrences: 3
+  source_operations: ["deleteApp", "publishApp", "submitApp"]
+- status: 404
+  title: "Cultivation target not found."
+  occurrences: 3
+  source_operations: ["putCultivationTarget", "deleteCultivationTarget", "patchCultivationTarget"]
+- status: 404
+  title: "Data source not found."
+  occurrences: 3
+  source_operations: ["bulkEditDataSources", "putMap", "patchMap"]
+- status: 404
+  title: "Highlight not found."
+  occurrences: 3
+  source_operations: ["putHighlight", "deleteHighlight", "patchHighlight"]
+- status: 404
+  title: "Installation not found."
+  occurrences: 3
+  source_operations: ["deleteAppConfiguration", "patchDynamicConfiguration", "getAppInstallationConfiguration"]
+- status: 404
+  title: "License not found."
+  occurrences: 3
+  source_operations: ["deleteOrganizationLicense", "deleteLicense", "getSubscriptionsByLicenseId"]
+- status: 404
+  title: "No downtime statistics found for the check"
+  occurrences: 3
+  source_operations: ["getCheckCurrentDowntime", "getCheckCurrentDowntimeInfo", "getDowntimeInfoByPeriod"]
+- status: 404
+  title: "Note not found."
+  occurrences: 3
+  source_operations: ["putNote", "deleteNote", "patchNote"]
+- status: 404
+  title: "Organization membership not found."
+  occurrences: 3
+  source_operations: ["modifyOrganizationMembership", "deleteOrganizationMembership", "updateOrganizationMembership"]
+- status: 404
+  title: "Site not found"
+  occurrences: 3
+  source_operations: ["deactivateSite", "getDataSourcesBySite", "getSiteByUuid"]
+- status: 404
+  title: "A billing history details record for that id doesn't exist"
+  occurrences: 2
+  source_operations: ["updateBillingHistoryByMother", "updateBillingHistoryDetails"]
+- status: 404
+  title: "A metric with that id does not exist"
+  occurrences: 2
+  source_operations: ["getMetric", "getConversions"]
+- status: 404
+  title: "A quote with that id doesn't exist"
+  occurrences: 2
+  source_operations: ["updateCustomerRequest", "updateQuote"]
+- status: 404
+  title: "A site with that id doesn't exist"
+  occurrences: 2
+  source_operations: ["updateSite", "updateSite_1"]
+- status: 404
+  title: "An organization with that id doesn't exist"
+  occurrences: 2
+  source_operations: ["getPrivateLocationsForOrganization", "updateOrganization"]
+- status: 404
+  title: "Calculation not found."
+  occurrences: 2
+  source_operations: ["calculate", "deleteCalculation"]
+- status: 404
+  title: "Dashboard theme not found."
+  occurrences: 2
+  source_operations: ["deleteDashboardTheme", "createOrganization"]
+- status: 404
+  title: "Data export does not exist"
+  occurrences: 2
+  source_operations: ["getDataExport", "deleteDataExport"]
+- status: 404
+  title: "Device not found."
+  occurrences: 2
+  source_operations: ["getDeviceById", "deleteDevice"]
+- status: 404
+  title: "Gateway does not exist."
+  occurrences: 2
+  source_operations: ["getGatewayById", "getStatusForGateways"]
+- status: 404
+  title: "Location does not belong to the organization"
+  occurrences: 2
+  source_operations: ["createDataExport", "getDataExportRowsCount"]
+- status: 404
+  title: "Location not found."
+  occurrences: 2
+  source_operations: ["activateLocation", "deleteSubscriptionLocation"]
+- status: 404
+  title: "Organization not found"
+  occurrences: 2
+  source_operations: ["getOrganization", "getOrganizationMemberships"]
+- status: 404
+  title: "Organization not found."
+  occurrences: 2
+  source_operations: ["removeMother", "deleteOrganization"]
+- status: 404
+  title: "Organization with that id doesn't exist"
+  occurrences: 2
+  source_operations: ["createExportPartnerJob", "createExportPartner"]
+- status: 404
+  title: "Pricing does not exist for the organization"
+  occurrences: 2
+  source_operations: ["getPricingByOrganizationId", "getPricingByOrganizationIdByYearAndMonth"]
+- status: 404
+  title: "User does not exist"
+  occurrences: 2
+  source_operations: ["addCurrencyRates", "addMotherTemplate"]
+- status: 404
+  title: "XBee factory configuration does not exist."
+  occurrences: 2
+  source_operations: ["getFactory", "getFactoryHistory"]
+- status: 404
+  title: "A billing history record for that organization doesn't exist"
+  occurrences: 1
+  source_operations: ["updateBillingHistory"]
+- status: 404
+  title: "A check or gateway with given id doesn't exist"
+  occurrences: 1
+  source_operations: ["transferChecks"]
+- status: 404
+  title: "A check with that id does not exist"
+  occurrences: 1
+  source_operations: ["updateCollectionOrder"]
+- status: 404
+  title: "A check with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["getManualInputDataForCheck"]
+- status: 404
+  title: "A collection with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateCollection"]
+- status: 404
+  title: "A customer request item with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateCustomerRequestItem"]
+- status: 404
+  title: "A date entry with that id does not exist"
+  occurrences: 1
+  source_operations: ["updateDateEntry"]
+- status: 404
+  title: "A date entry with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["getImportCheckDateEntryValues"]
+- status: 404
+  title: "A invoice with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateInvoice"]
+- status: 404
+  title: "A location with that name doesn't exist"
+  occurrences: 1
+  source_operations: ["updateLocation"]
+- status: 404
+  title: "A metric with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateMetric"]
+- status: 404
+  title: "A mother template with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateMotherTemplate"]
+- status: 404
+  title: "A mother with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateMother"]
+- status: 404
+  title: "A notification setting with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateNotificationSetting"]
+- status: 404
+  title: "A order with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateOrder"]
+- status: 404
+  title: "A pricing record for that organization doesn't exist"
+  occurrences: 1
+  source_operations: ["updatePricing"]
+- status: 404
+  title: "A product with the specified id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateProduct"]
+- status: 404
+  title: "A sensor type with that id does not exist"
+  occurrences: 1
+  source_operations: ["getSensorType"]
+- status: 404
+  title: "A sensor type with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["updateSensorType"]
+- status: 404
+  title: "An import check with that id does not exist"
+  occurrences: 1
+  source_operations: ["getImportCheck"]
+- status: 404
+  title: "An user with that email doesn't exist"
+  occurrences: 1
+  source_operations: ["updateUser"]
+- status: 404
+  title: "App not found."
+  occurrences: 1
+  source_operations: ["getAppById"]
+- status: 404
+  title: "AppInstallation not found."
+  occurrences: 1
+  source_operations: ["uninstallApp"]
+- status: 404
+  title: "CheckId is not found."
+  occurrences: 1
+  source_operations: ["getScatterplot"]
+- status: 404
+  title: "Checks not found"
+  occurrences: 1
+  source_operations: ["getChecksStatsByTimeInterval"]
+- status: 404
+  title: "Comment not found."
+  occurrences: 1
+  source_operations: ["deleteComment"]
+- status: 404
+  title: "Configuration not found."
+  occurrences: 1
+  source_operations: ["putDynamicConfiguration"]
+- status: 404
+  title: "Crop not found."
+  occurrences: 1
+  source_operations: ["deleteCrop"]
+- status: 404
+  title: "Currency not found."
+  occurrences: 1
+  source_operations: ["deleteCurrency"]
+- status: 404
+  title: "Customer registration not found."
+  occurrences: 1
+  source_operations: ["removeRegistration"]
+- status: 404
+  title: "Data source coordinates not found."
+  occurrences: 1
+  source_operations: ["deleteDataSourceCoordinates"]
+- status: 404
+  title: "Data upload  does not exist"
+  occurrences: 1
+  source_operations: ["deleteData"]
+- status: 404
+  title: "Data upload does not exist"
+  occurrences: 1
+  source_operations: ["getDataUploadById"]
+- status: 404
+  title: "Date entry not found"
+  occurrences: 1
+  source_operations: ["deleteCheckDateEntry"]
+- status: 404
+  title: "Dealer not found"
+  occurrences: 1
+  source_operations: ["getDealer"]
+- status: 404
+  title: "Dealer with that email not found"
+  occurrences: 1
+  source_operations: ["deleteDealer"]
+- status: 404
+  title: "Event not found"
+  occurrences: 1
+  source_operations: ["updateManualImportChecks"]
+- status: 404
+  title: "Gateway cluster or gateway does not exist."
+  occurrences: 1
+  source_operations: ["assignSensorsOfClusterToGateway"]
+- status: 404
+  title: "Gateway not found."
+  occurrences: 1
+  source_operations: ["removeGateway"]
+- status: 404
+  title: "GatewayCluster not found."
+  occurrences: 1
+  source_operations: ["removeGatewayCluster"]
+- status: 404
+  title: "Group not found"
+  occurrences: 1
+  source_operations: ["updateGroup"]
+- status: 404
+  title: "Import check not found."
+  occurrences: 1
+  source_operations: ["deleteImportCheck"]
+- status: 404
+  title: "Location does not exist"
+  occurrences: 1
+  source_operations: ["addMother"]
+- status: 404
+  title: "Locations not found"
+  occurrences: 1
+  source_operations: ["deactivateLocation"]
+- status: 404
+  title: "Metric not found."
+  occurrences: 1
+  source_operations: ["deleteMetric"]
+- status: 404
+  title: "No billing history for the organization in that month."
+  occurrences: 1
+  source_operations: ["deleteBillingHistoryByOrganizationAndMonth"]
+- status: 404
+  title: "Offer not found."
+  occurrences: 1
+  source_operations: ["deleteOffer"]
+- status: 404
+  title: "Order does not exist"
+  occurrences: 1
+  source_operations: ["createInvoiceFromOrder"]
+- status: 404
+  title: "Organization and / or location do not exist"
+  occurrences: 1
+  source_operations: ["getAllInternalSensorTypesByOrganizationAndLocation"]
+- status: 404
+  title: "Organization with given id doesn't exist"
+  occurrences: 1
+  source_operations: ["getNetworkStatusOverview"]
+- status: 404
+  title: "Organization with that id doesn't exist or the export partner record does not exist."
+  occurrences: 1
+  source_operations: ["updateExportPartner"]
+- status: 404
+  title: "Partner not found."
+  occurrences: 1
+  source_operations: ["removePartner"]
+- status: 404
+  title: "Product not found."
+  occurrences: 1
+  source_operations: ["deleteProduct"]
+- status: 404
+  title: "Quote does not exist"
+  occurrences: 1
+  source_operations: ["createOrderFromQuote"]
+- status: 404
+  title: "Required resource not found."
+  occurrences: 1
+  source_operations: ["createSubscription"]
+- status: 404
+  title: "Sensor type not found."
+  occurrences: 1
+  source_operations: ["deleteSensorType"]
+- status: 404
+  title: "Sensor with that id doesn't exist"
+  occurrences: 1
+  source_operations: ["getVoltage"]
+- status: 404
+  title: "Sensors not found."
+  occurrences: 1
+  source_operations: ["getDataForSensors"]
+- status: 404
+  title: "Site not found."
+  occurrences: 1
+  source_operations: ["activateSite"]
+- status: 404
+  title: "Soil not found."
+  occurrences: 1
+  source_operations: ["deleteSoil"]
+- status: 404
+  title: "Some object was not found"
+  occurrences: 1
+  source_operations: ["cloneWidgetInDashboard"]
+- status: 404
+  title: "SubscriptionAssignment not found."
+  occurrences: 1
+  source_operations: ["deleteSubscriptionAssignment"]
+- status: 404
+  title: "The config key for the user is not found."
+  occurrences: 1
+  source_operations: ["getUserConfigForUser"]
+- status: 404
+  title: "The customer request item not found."
+  occurrences: 1
+  source_operations: ["removeQuote"]
+- status: 404
+  title: "The customer request was not found."
+  occurrences: 1
+  source_operations: ["removeCustomerRequest"]
+- status: 404
+  title: "The export partner job record does not exist."
+  occurrences: 1
+  source_operations: ["updateExportPartnerJob"]
+- status: 404
+  title: "The notification setting requested to be removed, was not found"
+  occurrences: 1
+  source_operations: ["deleteNotificationSetting"]
+- status: 404
+  title: "There is no location with the given name"
+  occurrences: 1
+  source_operations: ["getLocation"]
+- status: 404
+  title: "There is no site with the given id"
+  occurrences: 1
+  source_operations: ["getSite"]
+- status: 404
+  title: "User not found."
+  occurrences: 1
+  source_operations: ["signUp"]
+- status: 404
+  title: "UserConfig not found."
+  occurrences: 1
+  source_operations: ["deleteUserConfig"]
+- status: 404
+  title: "XBee factory does not exist."
+  occurrences: 1
+  source_operations: ["getTestResultHistory"]
+- status: 404
+  title: "XBee factory not found."
+  occurrences: 1
+  source_operations: ["removeFactory"]
+- status: 406
+  title: "The notification setting method cannot be empty"
+  occurrences: 1
+  source_operations: ["updateNotificationSetting"]
+- status: 406
+  title: "The user's first name and last name cannot be empty"
+  occurrences: 1
+  source_operations: ["updateUser"]
+- status: 409
+  title: "A dealer with that email already exists"
+  occurrences: 2
+  source_operations: ["addDealer", "updateDealer"]
+- status: 409
+  title: "A sensor type with the given id already exists"
+  occurrences: 2
+  source_operations: ["createSensorType", "createPrivateSensorType"]
+- status: 409
+  title: "A site with the given name already exists"
+  occurrences: 2
+  source_operations: ["requestLocation", "requestSite"]
+- status: 409
+  title: "A cultivation target with the given ID already exists"
+  occurrences: 1
+  source_operations: ["createCultivationTarget"]
+- status: 409
+  title: "A cultivation with the given ID already exists"
+  occurrences: 1
+  source_operations: ["createCultivation"]
+- status: 409
+  title: "A metric with the given id already exists"
+  occurrences: 1
+  source_operations: ["createMetric"]
+- status: 409
+  title: "A notification topic with the given id already exists"
+  occurrences: 1
+  source_operations: ["createNotificationTopic"]
+- status: 409
+  title: "An organization with the given id already exists."
+  occurrences: 1
+  source_operations: ["createOrganization"]
+- status: 409
+  title: "Email is already an active user"
+  occurrences: 1
+  source_operations: ["inviteUser"]
+- status: 409
+  title: "Group does not exist. You cannot update a user in a group that doesn't exist."
+  occurrences: 1
+  source_operations: ["updateUserInAGroup"]
+- status: 409
+  title: "Location is already active."
+  occurrences: 1
+  source_operations: ["activateLocation"]
+- status: 409
+  title: "Site is already active."
+  occurrences: 1
+  source_operations: ["activateSite"]
+- status: 409
+  title: "Soil already exists"
+  occurrences: 1
+  source_operations: ["createSoil"]
+- status: 409
+  title: "Subscription already exists."
+  occurrences: 1
+  source_operations: ["createSubscription"]
+- status: 409
+  title: "The location of the gateway does not belong to the organization"
+  occurrences: 1
+  source_operations: ["addMother"]
+- status: 409
+  title: "The user is already a member of the organization. To modify her membership, use @PUT"
+  occurrences: 1
+  source_operations: ["addMember"]
+- status: 409
+  title: "User already exists."
+  occurrences: 1
+  source_operations: ["invite"]
+- status: 410
+  title: "Config already exists."
+  occurrences: 1
+  source_operations: ["createUserConfig"]
+- status: 412
+  title: "Sensor state error: Recorded sensor information contains errors"
+  occurrences: 1
+  source_operations: ["getCheckLastRecordedState"]
+- status: 413
+  title: "Too many events sent. A maximum of 100 events are allowed per call"
+  occurrences: 1
+  source_operations: ["ingestImportChecks"]
+- status: 422
+  title: "Unprocessable request."
+  occurrences: 2
+  source_operations: ["requestLocation", "requestSite"]
+- status: 422
+  title: "Missing or incomplete organization data."
+  occurrences: 1
+  source_operations: ["createOrganization"]
+- status: 500
+  title: "Internal server error"
+  occurrences: 9
+  source_operations: ["getSite", "updateSite_1", "getAllPermittedSites", "getDataSourcesBySite", "getSiteByUuid"]
+- status: 500
+  title: "Error obtaining the sensor type persisted data"
+  occurrences: 6
+  source_operations: ["getSensorType", "getAllExternalSensorTypesByOrganization", "getAllInternalSensorTypesByOrganizationAndLocation", "getAllPrivateSensorTypes", "getAllPublicSensorTypes"]
+- status: 500
+  title: "Failed to assign the role"
+  occurrences: 5
+  source_operations: ["getAccessToken", "assignRoleOnLicense", "assignRoleOnOrganization", "assignRoleOnDevice", "assignRoleOnSite"]
+- status: 500
+  title: "Error when reading the role assignments"
+  occurrences: 4
+  source_operations: ["getRoleAssignments", "getRoleAssignmentsOfUserOnOrganization", "getRoleAssignmentsOfUserUnderLicense", "getRoleAssignmentsOnOrganization"]
+- status: 500
+  title: "Error while retrieving devices."
+  occurrences: 4
+  source_operations: ["getAllDevices", "getDevicesByOrganizationId", "getDevicesBySiteId", "getDevicesBySiteUuid"]
+- status: 500
+  title: "Error while retrieving the  cultivation targets."
+  occurrences: 4
+  source_operations: ["getCultivationTargetSeriesById", "getTargetsForCultivation", "getCultivationTargetById", "getAllCultivationTargets"]
+- status: 500
+  title: "Failed to unassign the role"
+  occurrences: 4
+  source_operations: ["unassignRoleOnLicense", "unassignRoleOnOrganization", "unassignRoleOnDevice", "unassignRoleOnSite"]
+- status: 500
+  title: "There was a problem getting the assembly."
+  occurrences: 4
+  source_operations: ["getAssembly", "getAssemblyByXbee", "getAssemblyHistory", "getAssemblyHistoryByXbee"]
+- status: 500
+  title: "Error obtaining the metric persisted data"
+  occurrences: 3
+  source_operations: ["getMetric", "getAllMetrics", "getConversions"]
+- status: 500
+  title: "Error when verifying the users permissions"
+  occurrences: 3
+  source_operations: ["checkUserAuthorizationOnDevice", "checkUserAuthorizationOnOrganization", "checkUserAuthorizationOnSite"]
+- status: 500
+  title: "Error while retrieving the cultivations."
+  occurrences: 3
+  source_operations: ["getAllCultivations", "getCultivationById", "getCultivationsByOrganization"]
+- status: 500
+  title: "Error while updating the app installation."
+  occurrences: 3
+  source_operations: ["updateAppInstallation", "updateInstallable", "updateFactoryConfiguration"]
+- status: 500
+  title: "Sorry, there was a problem retrieving the shared sensor types."
+  occurrences: 3
+  source_operations: ["sharedSensorTypesWithGroup", "sharedSensorTypesWithOrganization", "sharedSensorTypesWithUser"]
+- status: 500
+  title: "Sorry, there was a problem sharing the sensor type."
+  occurrences: 3
+  source_operations: ["shareSensorTypeWithGroup", "shareSensorTypeWithOrganization", "shareSensorTypeWithUser"]
+- status: 500
+  title: "Error DELETING the follows related to the check"
+  occurrences: 2
+  source_operations: ["removeCheck", "removeChecks"]
+- status: 500
+  title: "Error obtaining the notification settings persisted data"
+  occurrences: 2
+  source_operations: ["obtainAllNotificationSettingsForACheck", "obtainAllNotificationSettingsForOrganizationAndUser"]
+- status: 500
+  title: "Error while installing the app."
+  occurrences: 2
+  source_operations: ["installApp", "saveFactory"]
+- status: 500
+  title: "Error while patching the cultivation target."
+  occurrences: 2
+  source_operations: ["putCultivationTarget", "patchCultivationTarget"]
+- status: 500
+  title: "Error while patching the cultivation."
+  occurrences: 2
+  source_operations: ["putCultivation", "patchCultivation"]
+- status: 500
+  title: "Error while patching the highlight."
+  occurrences: 2
+  source_operations: ["putHighlight", "patchHighlight"]
+- status: 500
+  title: "Error while patching the note."
+  occurrences: 2
+  source_operations: ["putNote", "patchNote"]
+- status: 500
+  title: "Error while patching the subscription."
+  occurrences: 2
+  source_operations: ["putSubscription", "patchSubscription"]
+- status: 500
+  title: "Error while patching the zone."
+  occurrences: 2
+  source_operations: ["putZone", "patchZone"]
+- status: 500
+  title: "Error while retrieving subscriptions."
+  occurrences: 2
+  source_operations: ["getAllSubscriptions", "getSubscriptionsByLicenseId"]
+- status: 500
+  title: "Error while updating the map."
+  occurrences: 2
+  source_operations: ["putMap", "patchMap"]
+- status: 500
+  title: "Sorry, there was a problem assigning the dashboard theme."
+  occurrences: 2
+  source_operations: ["assignDashboardThemeToGroup", "assignDashboardThemeToOrganization"]
+- status: 500
+  title: "Sorry, there was a problem creating the dashboard theme."
+  occurrences: 2
+  source_operations: ["createDashboardTheme", "updateDashboardTheme"]
+- status: 500
+  title: "Sorry, there was a problem creating the group."
+  occurrences: 2
+  source_operations: ["createGroup", "updateGroup"]
+- status: 500
+  title: "Sorry, there was a problem removing the dashboard theme."
+  occurrences: 2
+  source_operations: ["removeDashboardThemeFromGroup", "removeDashboardThemeFromOrganization"]
+- status: 500
+  title: "Sorry, there was a problem updating the comment."
+  occurrences: 2
+  source_operations: ["updateComment", "commentReplyUpdate"]
+- status: 500
+  title: "Error - Gateway cluster not removed."
+  occurrences: 1
+  source_operations: ["removeGatewayCluster"]
+- status: 500
+  title: "Error DELETING the check's notification setting persisted data"
+  occurrences: 1
+  source_operations: ["deleteNotificationSetting"]
+- status: 500
+  title: "Error obtaining current user data"
+  occurrences: 1
+  source_operations: ["getUser"]
+- status: 500
+  title: "Error obtaining the account managers"
+  occurrences: 1
+  source_operations: ["getAllAccountManagers"]
+- status: 500
+  title: "Error obtaining the import check persisted data"
+  occurrences: 1
+  source_operations: ["getImportCheck"]
+- status: 500
+  title: "Error obtaining the sensor types"
+  occurrences: 1
+  source_operations: ["getAllUserHasAccessTo"]
+- status: 500
+  title: "Error obtaining the users"
+  occurrences: 1
+  source_operations: ["getAllUsers"]
+- status: 500
+  title: "Error occurred when trying to save/obtain the user in the database"
+  occurrences: 1
+  source_operations: ["changePassword"]
+- status: 500
+  title: "Error parsing the provided dates"
+  occurrences: 1
+  source_operations: ["getDowntimeInfoByPeriod"]
+- status: 500
+  title: "Error sending the password change to the email account"
+  occurrences: 1
+  source_operations: ["requestChangePassword"]
+- status: 500
+  title: "Error storing current user data and/or sending the activation email."
+  occurrences: 1
+  source_operations: ["invite"]
+- status: 500
+  title: "Error storing the new user or sending the activation email"
+  occurrences: 1
+  source_operations: ["inviteUser"]
+- status: 500
+  title: "Error when retrieving device access token"
+  occurrences: 1
+  source_operations: ["getDeviceAccessToken"]
+- status: 500
+  title: "Error when retrieving device access token public key"
+  occurrences: 1
+  source_operations: ["getDevicePublicKey"]
+- status: 500
+  title: "Error when retrieving user scopes"
+  occurrences: 1
+  source_operations: ["getScopesAndClaims"]
+- status: 500
+  title: "Error while creating the cultivation target."
+  occurrences: 1
+  source_operations: ["createCultivationTarget"]
+- status: 500
+  title: "Error while creating the cultivation."
+  occurrences: 1
+  source_operations: ["createCultivation"]
+- status: 500
+  title: "Error while creating the note."
+  occurrences: 1
+  source_operations: ["createNote"]
+- status: 500
+  title: "Error while creating the subscription."
+  occurrences: 1
+  source_operations: ["createSubscription"]
+- status: 500
+  title: "Error while deleting the cultivation target."
+  occurrences: 1
+  source_operations: ["deleteCultivationTarget"]
+- status: 500
+  title: "Error while deleting the cultivation."
+  occurrences: 1
+  source_operations: ["deleteCultivation"]
+- status: 500
+  title: "Error while deleting the note."
+  occurrences: 1
+  source_operations: ["deleteNote"]
+- status: 500
+  title: "Error while deleting the subscription."
+  occurrences: 1
+  source_operations: ["deleteSubscription"]
+- status: 500
+  title: "Error while patching the application."
+  occurrences: 1
+  source_operations: ["updateAppProperties"]
+- status: 500
+  title: "Error while patching the crop."
+  occurrences: 1
+  source_operations: ["patchCrop"]
+- status: 500
+  title: "Error while patching the data source coordinates."
+  occurrences: 1
+  source_operations: ["patchDataSourceCoordinates"]
+- status: 500
+  title: "Error while patching the device."
+  occurrences: 1
+  source_operations: ["patchDevice"]
+- status: 500
+  title: "Error while patching the license."
+  occurrences: 1
+  source_operations: ["patchLicense"]
+- status: 500
+  title: "Error while patching the notification."
+  occurrences: 1
+  source_operations: ["patchNotification"]
+- status: 500
+  title: "Error while patching the offer."
+  occurrences: 1
+  source_operations: ["patchOffer"]
+- status: 500
+  title: "Error while patching the soil."
+  occurrences: 1
+  source_operations: ["patchSoil"]
+- status: 500
+  title: "Error while patching the userconfig."
+  occurrences: 1
+  source_operations: ["patchUserConfig"]
+- status: 500
+  title: "Error while retrieving notes."
+  occurrences: 1
+  source_operations: ["getNotesByCultivationId"]
+- status: 500
+  title: "Error while retrieving the device."
+  occurrences: 1
+  source_operations: ["getDeviceById"]
+- status: 500
+  title: "Error while retrieving the note."
+  occurrences: 1
+  source_operations: ["getNoteById"]
+- status: 500
+  title: "Error while retrieving the subscription."
+  occurrences: 1
+  source_operations: ["getSubscriptionById"]
+- status: 500
+  title: "Error while updating the ${RESOURCE_NAME.toLowerCase()}."
+  occurrences: 1
+  source_operations: ["putDataSourceCoordinates"]
+- status: 500
+  title: "Error while updating the calculation."
+  occurrences: 1
+  source_operations: ["updateAppConfiguration"]
+- status: 500
+  title: "Error while updating the crop."
+  occurrences: 1
+  source_operations: ["putCrop"]
+- status: 500
+  title: "Error while updating the data sources."
+  occurrences: 1
+  source_operations: ["bulkEditDataSources"]
+- status: 500
+  title: "Error while updating the device."
+  occurrences: 1
+  source_operations: ["putDevice"]
+- status: 500
+  title: "Error while updating the gateway."
+  occurrences: 1
+  source_operations: ["updateGateway"]
+- status: 500
+  title: "Error while updating the license."
+  occurrences: 1
+  source_operations: ["putLicense"]
+- status: 500
+  title: "Error while updating the notification."
+  occurrences: 1
+  source_operations: ["putNotification"]
+- status: 500
+  title: "Error while updating the offer."
+  occurrences: 1
+  source_operations: ["putOffer"]
+- status: 500
+  title: "Error while updating the partner."
+  occurrences: 1
+  source_operations: ["updatePartner"]
+- status: 500
+  title: "Error while updating the soil."
+  occurrences: 1
+  source_operations: ["putSoil"]
+- status: 500
+  title: "Error while updating the userconfig."
+  occurrences: 1
+  source_operations: ["putUserConfig"]
+- status: 500
+  title: "Message was not sent, please try again later"
+  occurrences: 1
+  source_operations: ["sendContactMessage"]
+- status: 500
+  title: "Server error"
+  occurrences: 1
+  source_operations: ["obtainAllBillableOrganizations"]
+- status: 500
+  title: "Server error obtaining the organizations"
+  occurrences: 1
+  source_operations: ["obtainAllOrganizations"]
+- status: 500
+  title: "Server error while deleting shared check"
+  occurrences: 1
+  source_operations: ["deleteSharedCheck"]
+- status: 500
+  title: "Server error while deleting shared dashboard"
+  occurrences: 1
+  source_operations: ["deleteSharedDashboard"]
+- status: 500
+  title: "Server error while getting shared check"
+  occurrences: 1
+  source_operations: ["getSharedCheck"]
+- status: 500
+  title: "Server error while getting shared dashboard"
+  occurrences: 1
+  source_operations: ["getSharedDashboard"]
+- status: 500
+  title: "Server error while turning off sharing for this check"
+  occurrences: 1
+  source_operations: ["turnSharingOff"]
+- status: 500
+  title: "Server error while turning off sharing for this dashboard"
+  occurrences: 1
+  source_operations: ["turnSharingOffForDashboard"]
+- status: 500
+  title: "Sorry, there was a problem creating the comment."
+  occurrences: 1
+  source_operations: ["createComment"]
+- status: 500
+  title: "Sorry, there was a problem creating the currency."
+  occurrences: 1
+  source_operations: ["createCurrency"]
+- status: 500
+  title: "Sorry, there was a problem creating the reply."
+  occurrences: 1
+  source_operations: ["createReply"]
+- status: 500
+  title: "Sorry, there was a problem getting the calculation."
+  occurrences: 1
+  source_operations: ["getCalculation"]
+- status: 500
+  title: "Sorry, there was a problem getting the dashboard theme."
+  occurrences: 1
+  source_operations: ["getDashboardTheme"]
+- status: 500
+  title: "Sorry, there was a problem getting the dashboard themes."
+  occurrences: 1
+  source_operations: ["getDashboardThemesForUser"]
+- status: 500
+  title: "Sorry, there was a problem getting the group."
+  occurrences: 1
+  source_operations: ["getGroup"]
+- status: 500
+  title: "Sorry, there was a problem retrieving the groups."
+  occurrences: 1
+  source_operations: ["viewUsersGroups"]
+- status: 500
+  title: "Sorry, there was a problem retrieving the sensors."
+  occurrences: 1
+  source_operations: ["viewSensors"]
+- status: 500
+  title: "Sorry, there was a problem retrieving the shared information."
+  occurrences: 1
+  source_operations: ["getSharedSensorTypeSharedWith"]
+- status: 500
+  title: "Sorry, there was a problem unsharing the sensor type."
+  occurrences: 1
+  source_operations: ["unshareSensorType"]
+- status: 500
+  title: "There was a problem creating the assembly."
+  occurrences: 1
+  source_operations: ["createAssembly"]
+- status: 500
+  title: "There was a problem deleting the assembly."
+  occurrences: 1
+  source_operations: ["deleteAssembly"]
+- status: 500
+  title: "There was a problem updating the assembly."
+  occurrences: 1
+  source_operations: ["updateAssembly"]
+- status: 501
+  title: "Not yet implemented feature of the bulk edit."
+  occurrences: 3
+  source_operations: ["bulkEditDataSources", "putMap", "patchMap"]
+- status: 503
+  title: "One or more backing services are unavailable; the instance is not ready to serve traffic."
+  occurrences: 1
+  source_operations: ["health"]
+- status: 510
+  title: "Error - Organization membership partially deleted."
+  occurrences: 3
+  source_operations: ["deleteGroup", "deleteOrganization", "deleteOrganizationMembership"]
+- status: 510
+  title: "Error - configuration not updated."
+  occurrences: 2
+  source_operations: ["putDynamicConfiguration", "patchDynamicConfiguration"]
+- status: 510
+  title: "Error - app not uninstalled."
+  occurrences: 1
+  source_operations: ["uninstallApp"]
+- status: 510
+  title: "Error - configuration not deleted."
+  occurrences: 1
+  source_operations: ["deleteAppConfiguration"]
+- status: 510
+  title: "Error - dashboard theme not deleted."
+  occurrences: 1
+  source_operations: ["deleteDashboardTheme"]
+- status: 510
+  title: "Error - factory not removed."
+  occurrences: 1
+  source_operations: ["removeFactory"]
+- status: 510
+  title: "Error - location partially deleted."
+  occurrences: 1
+  source_operations: ["deleteLocation"]

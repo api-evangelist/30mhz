@@ -64,5 +64,30 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-30MHz is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/30mhz
+30MHz is a Rotterdam-based horticulture technology company that builds wireless in-crop sensors and the
+ZENSIE data platform for greenhouse and controlled-environment growers. Sensors capture temperature,
+humidity, PAR/light, CO2, substrate moisture and EC, stream it to ZENSIE over LoRa gateways, and surface
+it as dashboards, maps, alerts, cultivation strategies and AI-generated growing advice.
+
+## The API
+
+30MHz publishes the **ZENSIE API**, a Swagger 2.0 REST contract served by the API host itself at
+<https://api.30mhz.com/api/swagger.json> — **425 paths, 558 operations, 300 schema definitions**. It is
+not linked from the marketing site; the support centre's developer docs point at the Swagger UI at
+<https://api.30mhz.com/api/swagger>. Authentication is a bearer JWT API key created in the ZENSIE web app
+under Account Settings > Developer.
+
+- Developer docs: <https://support.30mhz.com/developer-docs>
+- Create an API key: <https://support.30mhz.com/create-an-api-key>
+- Company: <https://30mhz.com/> · Pricing: <https://www.30mhz.com/pricing/>
+
+## What this profile found
+
+Probed 2026-09-05. No `/.well-known/` document of any kind on any of the five hosts, no security.txt,
+no agent card, no MCP server, no AsyncAPI and no advertised webhooks, no public SDK on any registry
+(a first-party Python client exists but is only available on request through support), no CLI, no
+sandbox, no status page, no SLA, no deprecation policy, and no published rate limits. The contract
+itself is strong — every operation carries an operationId, 556 of 558 carry a summary, and 19
+operations are correctly marked deprecated as the `location` vocabulary migrates to `site` — but it
+ships zero in-spec examples, no `application/problem+json`, no idempotency key on any of its 240
+mutating operations, and pagination on only 2 of 558.

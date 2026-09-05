@@ -1,0 +1,91 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/30mhz-zensie-openapi.json
+note: >-
+  Derived from the published ZENSIE Swagger 2.0 contract and from what 30mhz.com and
+  support.30mhz.com actually publish. 30MHz makes no compliance or certification claim on its public
+  site — no trust centre, no SOC 2 / ISO 27001 / GDPR statement page, no security.txt — so no
+  Compliance or TrustCenter pointer is emitted. Horticulture has no widely-adopted API-level data
+  standard analogous to FHIR or SCIM; the nearest candidates (AgGateway ADAPT, ISO 11783 / ISOBUS,
+  the GS1 fresh-produce vocabularies) address farm machinery and supply chain rather than greenhouse
+  climate telemetry, and the contract declares none of them. The domain-standard slot is therefore
+  left unclaimed rather than filled — reward-only, and inventing one would be worse than an honest
+  absence.
+standards:
+- id: openapi-3
+  conforms: false
+  evidence: >-
+    Contract is Swagger 2.0 ("swagger": "2.0"), not OpenAPI 3.x. Modern tooling, agent frameworks and
+    the OpenAPI 3.1 JSON Schema alignment are all unavailable to consumers of this document.
+- id: swagger-2
+  conforms: true
+  evidence: https://api.30mhz.com/api/swagger.json declares swagger 2.0 with 425 paths and 558 operations
+- id: oauth2
+  conforms: false
+  evidence: >-
+    securityDefinitions declares one scheme, an apiKey named Authorization in the header carrying a
+    JWT. There is no authorizationUrl, no tokenUrl, no flows and no scopes anywhere in the contract.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on 30mhz.com, api.30mhz.com and support.30mhz.com
+- id: jwt-rfc7519
+  conforms: true
+  evidence: >-
+    An unauthenticated call to https://api.30mhz.com/api returns 401 {"message":"Could not decode JWT
+    token"}; the API key issued from Account Settings > Developer is a bearer JWT.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere in the contract. 1,084 declared 4xx/5xx responses carry a
+    human-readable description; 30 declare a bare string schema; none declares a problem type.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header declared; 19 operations are marked deprecated with no removal date.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on every host probed 2026-09-05
+- id: rfc8615-well-known
+  conforms: false
+  evidence: well-known/30mhz-well-known.yml — 0 documents served across 5 hosts
+- id: iso8601-timestamps
+  conforms: true
+  evidence: >-
+    Five operations declare the 400 "The provided date must be a valid date: ISO 8601 date. E.g.:
+    '2016-03-03T00:00:00Z'"; date path parameters and DataExport fields use ISO 8601 throughout.
+- id: json-api
+  conforms: false
+  evidence: Plain JSON resources; no JSON:API media type, document structure or included/links envelope.
+- id: idempotency
+  conforms: false
+  evidence: conventions/30mhz-conventions.yml — idempotency.coverage none, no key header on 240 mutating operations
+- id: pagination
+  conforms: false
+  evidence: >-
+    Only 2 of 558 operations accept page/size. Collection reads return unbounded arrays; time-series
+    reads are bounded by explicit date-range path parameters instead.
+- id: asyncapi
+  conforms: false
+  evidence: asyncapi/30mhz-event-surface.yml — no AsyncAPI document and no advertised webhooks
+- id: dnssec
+  conforms: false
+  evidence: security/30mhz-domain-security.yml — dnssec false on 30mhz.com
+- id: hsts
+  conforms: false
+  evidence: >-
+    security/30mhz-domain-security.yml — HSTS is present on support.30mhz.com (max-age 31536000) but
+    absent on the apex 30mhz.com and on the API host api.30mhz.com.
+- id: dmarc
+  conforms: true
+  evidence: security/30mhz-domain-security.yml — DMARC present, policy p=none (monitor only, not enforcing)
+- id: spf
+  conforms: true
+  evidence: security/30mhz-domain-security.yml — SPF record present on 30mhz.com
+domain_standards:
+  market: controlled-environment horticulture / greenhouse climate telemetry
+  claimed: []
+  probed: [aggateway-adapt, iso-11783-isobus, gs1-fresh-produce, sensorthings-api, ogc-api]
+  note: >-
+    None is declared by the contract and none is claimed in the docs. The integration surface named on
+    30mhz.com/integrations is vendor-specific — Priva, Hoogendoorn and Ridder climate computers — and
+    is delivered through the generic import-check/ingest mechanism rather than through any published
+    standard. Recorded as absent, not as non-conformant.

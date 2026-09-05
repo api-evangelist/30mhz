@@ -1,0 +1,57 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the 30MHz ZENSIE API
+  version: 1.0.0
+extends: openapi/30mhz-zensie-openapi.json
+x-generated: '2026-09-05'
+x-method: generated
+x-source: >-
+  Derived from the harvested contract at https://api.30mhz.com/api/swagger.json plus the four
+  developer-docs articles 30MHz publishes. These are API Evangelist annotations; the harvested spec
+  is never mutated.
+actions:
+- target: $.info
+  update:
+    description: >-
+      The ZENSIE REST API is 30MHz's platform API for horticulture sensor data. It covers wireless
+      sensors and gateways, checks (data sources), time-series query and ingest, dashboards, widgets,
+      maps and zones, organizations and users, cultivations, notifications, apps, and the commercial
+      surface. Authentication is a bearer JWT API key created in the ZENSIE web app under Account
+      Settings > Developer.
+    contact:
+      name: 30MHz Support
+      email: support@30mhz.com
+      url: https://support.30mhz.com/get-help
+    termsOfService: https://30mhz.com/terms/
+    x-documentation: https://support.30mhz.com/developer-docs
+    x-getting-started: https://support.30mhz.com/create-an-api-key
+    x-apievangelist-harvested: '2026-09-05'
+    x-apievangelist-source: https://api.30mhz.com/api/swagger.json
+- target: $
+  update:
+    externalDocs:
+      description: 30MHz developer documentation
+      url: https://support.30mhz.com/developer-docs
+- target: $.info
+  update:
+    x-apievangelist-findings:
+      spec_version: swagger-2.0
+      operations: 558
+      paths: 425
+      definitions: 300
+      operations_with_operationid: 558
+      operations_with_summary: 556
+      operations_with_security: 550
+      deprecated_operations: 19
+      in_spec_examples: 0
+      problem_json: false
+      idempotency_key: false
+      rate_limit_headers: false
+      pagination_operations: 2
+- target: $.securityDefinitions.Bearer
+  update:
+    description: >-
+      Bearer JWT API key. Create it in the ZENSIE web app: Account Settings > Developer > Request new
+      API key. Send it as `Authorization: Bearer <key>`. An unauthenticated call returns HTTP 401 with
+      the body {"message":"Could not decode JWT token"}.
+    x-docs: https://support.30mhz.com/create-an-api-key

@@ -1,0 +1,73 @@
+generated: '2026-09-05'
+method: derived
+status: candidate
+source: openapi/30mhz-zensie-openapi.json
+note: >-
+  30MHz publishes no MCP server. Searched 2026-09-05: no /mcp or /sse endpoint on api.30mhz.com,
+  zensie.30mhz.com or support.30mhz.com; no @30mhz or zensie package on npm (registry search returned
+  0 results for both "30mhz" and "zensie"); no MCP repository in the github.com/30mhz organization
+  (14 public repos, all infrastructure forks and pre-2022 hardware/tooling projects); no mention of
+  MCP, agents or model context protocol anywhere in the developer documentation at
+  support.30mhz.com/developer-docs. The tools below are a CANDIDATE set derived from the published
+  ZENSIE Swagger contract to show what an MCP server over this API would expose. Nobody ships it.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+server:
+  name: 30mhz-zensie
+  transport: null
+  url: null
+tools:
+- name: get_sensor_data
+  description: Retrieve time-series measurements for one or more data sources (checks) over a period.
+  source_operation: openapi/30mhz-zensie-openapi.json#getDataForSensors
+- name: list_organization_checks
+  description: List every data source (check) in an organization, with sensor type and location.
+  source_operation: openapi/30mhz-zensie-openapi.json#getOrganizationChecks
+- name: get_check
+  description: Get a single data source (check) by checkId.
+  source_operation: openapi/30mhz-zensie-openapi.json#getCheck
+- name: get_check_last_state
+  description: Get the most recently recorded value and state for a data source.
+  source_operation: openapi/30mhz-zensie-openapi.json#getCheckLastRecordedState
+- name: get_check_stats_by_time_range
+  description: Aggregated statistics for one data source between a start and end date.
+  source_operation: openapi/30mhz-zensie-openapi.json#getCheckStatsByTimeInterval
+- name: get_checks_stats_by_time_range
+  description: Aggregated statistics for a set of data sources between a start and end date.
+  source_operation: openapi/30mhz-zensie-openapi.json#getChecksStatsByTimeInterval
+- name: get_network_status
+  description: Network status overview for an organization's gateways and sensors.
+  source_operation: openapi/30mhz-zensie-openapi.json#getNetworkStatusOverview
+- name: get_gateway_status
+  description: Connectivity status for a set of LoRa gateways.
+  source_operation: openapi/30mhz-zensie-openapi.json#getStatusForGateways
+- name: list_organizations
+  description: List the organizations the authenticated user belongs to.
+  source_operation: openapi/30mhz-zensie-openapi.json#getOrganizations_1
+- name: list_dashboards
+  description: List dashboards in an organization.
+  source_operation: openapi/30mhz-zensie-openapi.json#getDashboards
+- name: list_cultivations
+  description: List cultivations (crop cycles) for an organization.
+  source_operation: openapi/30mhz-zensie-openapi.json#getCultivationsByOrganization
+- name: list_notifications
+  description: List alert notifications configured in an organization.
+  source_operation: openapi/30mhz-zensie-openapi.json#getNotificationsInOrganization
+- name: ingest_import_check_data
+  description: Push external measurements into the platform through the data-integration ingest surface.
+  source_operation: openapi/30mhz-zensie-openapi.json#ingestImportChecks
+- name: create_data_export
+  description: Create a data export job for an organization.
+  source_operation: openapi/30mhz-zensie-openapi.json#createDataExport
+coverage:
+  rest_operations_total: 558
+  tools_derived: 14
+  note: >-
+    A candidate subset covering the marquee read + ingest flows. The full contract carries 558
+    operations across 127 tags, most of them platform administration, billing and dealer-facing
+    surfaces that would not belong in an agent tool set.

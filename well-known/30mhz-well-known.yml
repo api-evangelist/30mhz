@@ -1,0 +1,110 @@
+generated: '2026-09-05'
+method: probed
+source: live GET of each named path on every host in the record
+hit_count: 0
+path_echo_control: passed
+note: >-
+  Every named /.well-known/ path plus /apis.json, /apis.yml and /llms.txt was probed on all five hosts
+  the record knows. Nothing is served. Three of the hosts answer honestly with a 404 (30mhz.com on
+  WordPress, api.30mhz.com on Jetty, support.30mhz.com on HubSpot); www.30mhz.com 301-redirects to the
+  apex. zensie.30mhz.com is a single-page-app CATCH-ALL: it returns HTTP 200 with the same 11,103-byte
+  Angular shell for every path requested, including a negative-control path that cannot exist
+  (/.well-known/30mhz-negative-control-5yinq9lx.json). Those 200s are NOT documents and are recorded
+  with file: null. No WellKnown, SecurityTxt or AgentCard pointer is emitted for this provider.
+soft_404_control:
+  host: https://zensie.30mhz.com
+  path: /.well-known/30mhz-negative-control-5yinq9lx.json
+  status: 200
+  bytes: 11103
+  content_type: text/html
+  verdict: catch-all SPA shell — every 200 on this host is a false positive
+hosts:
+- host: https://30mhz.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/api-catalog.json, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/ucp.json, status: 404, file: null}
+  - {path: /.well-known/acp.json, status: 404, file: null}
+  - {path: /.well-known/aauth-resource.json, status: 404, file: null}
+  - {path: /.well-known/apis.json, status: 404, file: null}
+  - {path: /apis.json, status: 404, file: null}
+  - {path: /apis.yml, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+  - {path: /llms.txt, status: 404, file: null}
+- host: https://www.30mhz.com
+  note: 301 redirect to https://30mhz.com for every path
+  documents:
+  - {path: /.well-known/security.txt, status: 301, file: null}
+  - {path: /.well-known/openid-configuration, status: 301, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 301, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 301, file: null}
+  - {path: /.well-known/api-catalog, status: 301, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 301, file: null}
+  - {path: /.well-known/aauth-resource.json, status: 301, file: null}
+  - {path: /.well-known/apis.json, status: 301, file: null}
+  - {path: /apis.json, status: 301, file: null}
+  - {path: /apis.yml, status: 301, file: null}
+  - {path: /.well-known/agent-card.json, status: 301, file: null}
+  - {path: /.well-known/agent.json, status: 301, file: null}
+  - {path: /llms.txt, status: 301, file: null}
+- host: https://api.30mhz.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/api-catalog.json, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/ucp.json, status: 404, file: null}
+  - {path: /.well-known/acp.json, status: 404, file: null}
+  - {path: /.well-known/aauth-resource.json, status: 404, file: null}
+  - {path: /.well-known/apis.json, status: 404, file: null}
+  - {path: /apis.json, status: 404, file: null}
+  - {path: /apis.yml, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+  - {path: /llms.txt, status: 404, file: null}
+- host: https://zensie.30mhz.com
+  note: catch-all SPA — 200 + 11103-byte HTML shell on every path, negative control included
+  documents:
+  - {path: /.well-known/security.txt, status: 200, file: null}
+  - {path: /.well-known/openid-configuration, status: 200, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 200, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 200, file: null}
+  - {path: /.well-known/api-catalog, status: 200, file: null}
+  - {path: /.well-known/api-catalog.json, status: 200, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 200, file: null}
+  - {path: /.well-known/ucp.json, status: 200, file: null}
+  - {path: /.well-known/acp.json, status: 200, file: null}
+  - {path: /.well-known/aauth-resource.json, status: 200, file: null}
+  - {path: /.well-known/apis.json, status: 200, file: null}
+  - {path: /apis.json, status: 200, file: null}
+  - {path: /apis.yml, status: 200, file: null}
+  - {path: /.well-known/agent-card.json, status: 200, file: null}
+  - {path: /.well-known/agent.json, status: 200, file: null}
+  - {path: /llms.txt, status: 200, file: null}
+- host: https://support.30mhz.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404, file: null}
+  - {path: /.well-known/openid-configuration, status: 404, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+  - {path: /.well-known/oauth-protected-resource, status: 404, file: null}
+  - {path: /.well-known/api-catalog, status: 404, file: null}
+  - {path: /.well-known/api-catalog.json, status: 404, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+  - {path: /.well-known/ucp.json, status: 404, file: null}
+  - {path: /.well-known/acp.json, status: 404, file: null}
+  - {path: /.well-known/aauth-resource.json, status: 404, file: null}
+  - {path: /.well-known/apis.json, status: 404, file: null}
+  - {path: /apis.json, status: 404, file: null}
+  - {path: /apis.yml, status: 404, file: null}
+  - {path: /.well-known/agent-card.json, status: 404, file: null}
+  - {path: /.well-known/agent.json, status: 404, file: null}
+  - {path: /llms.txt, status: 404, file: null}

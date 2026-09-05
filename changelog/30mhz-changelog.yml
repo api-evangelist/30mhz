@@ -1,0 +1,60 @@
+generated: '2026-09-05'
+method: searched
+source: https://support.30mhz.com/whats-new
+scheme: none
+current_version: '2.0'
+dated: false
+api_specific: false
+note: >-
+  30MHz publishes a "What's new?" section in its support centre, split into "Monthly updates" and
+  "Big platform updates". It is a PRODUCT changelog, not an API changelog, and it carries no dates
+  and no version numbers — entries are titled by month name only ("February platform updates",
+  "March platform update", "January updates: week numbers and weather data") with no year, and the
+  article bodies contain no publication or update date. The underlying article IDs are legacy Zendesk
+  360xxxxxxxx ids now served from HubSpot, and the newest entries describe chart and widget changes,
+  so the section appears to have stopped being maintained. Nothing in it announces an API change, a
+  new endpoint, a deprecation or a breaking change; the 19 operations marked deprecated in the
+  contract are not mentioned. A consumer of the ZENSIE API has no changelog to watch.
+entries:
+- title: February platform updates
+  url: https://support.30mhz.com/hc/en-us/articles/360018334838-february-platform-updates-
+  date: null
+  category: monthly
+  breaking: false
+  highlights: [Search bar, Chart settings in groups]
+- title: March platform update
+  url: https://support.30mhz.com/hc/en-us/articles/360018983857-march-platform-update-
+  date: null
+  category: monthly
+- title: 'January updates: week numbers and weather data'
+  url: https://support.30mhz.com/hc/en-us/articles/360017605918-january-updates-week-numbers-and-weather-data-
+  date: null
+  category: monthly
+- title: November updates in the 30MHz platform
+  url: https://support.30mhz.com/hc/en-us/articles/360016502618-november-updates-in-the-30mhz-platform-
+  date: null
+  category: monthly
+- title: October updates in the 30MHz platform
+  url: https://support.30mhz.com/hc/en-us/articles/360015298678-october-updates-in-the-30mhz-platform
+  date: null
+  category: monthly
+- title: September updates in the 30MHz platform
+  url: https://support.30mhz.com/hc/en-us/articles/360014289757-september-updates-in-the-30mhz-platform
+  date: null
+  category: monthly
+- title: New weather forecast provider, Meteomatics!
+  url: https://support.30mhz.com/hc/en-us/articles/360017068118-new-weather-forecast-provider-meteomatics-
+  date: null
+  category: big-platform-update
+- title: New color situation in our charts
+  url: https://support.30mhz.com/hc/en-us/articles/360008659537-new-color-situation-in-our-charts
+  date: null
+  category: big-platform-update
+- title: The y-axes are improved!
+  url: https://support.30mhz.com/hc/en-us/articles/360013552857-the-y-axes-are-improved-
+  date: null
+  category: big-platform-update
+- title: Edit and create of widgets is improved
+  url: https://support.30mhz.com/hc/en-us/articles/360012418297-edit-and-create-of-widgets-is-improved
+  date: null
+  category: big-platform-update

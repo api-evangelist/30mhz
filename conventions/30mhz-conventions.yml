@@ -1,0 +1,137 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/30mhz-zensie-openapi.json
+docs: https://support.30mhz.com/developer-docs
+note: >-
+  Derived from the published ZENSIE Swagger 2.0 contract and the four developer-docs articles 30MHz
+  publishes (create-an-api-key, api-endpoints-documentation-new, push-data-to-the-30mhz-platform,
+  query-data-from-the-30mhz-platform). 30MHz publishes no written API style guide, so every field
+  below is read from the contract itself or from those articles; where neither states a rule, this
+  file says so rather than inferring one.
+authentication:
+  style: bearer-jwt-api-key
+  scheme_name: Bearer
+  location: header
+  parameter: Authorization
+  issuance: >-
+    Self-service from the ZENSIE web app — Account Settings > Developer > Request new API key.
+  docs: https://support.30mhz.com/create-an-api-key
+  applied_to_operations: 550
+  operations_total: 558
+  detail: openapi/30mhz-zensie-openapi.json
+  artifact: authentication/30mhz-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  retention: null
+  evidence: >-
+    No Idempotency-Key (or any equivalent) header parameter appears anywhere in the 558-operation
+    contract; the only header parameter declared across the whole spec is content-length, on 7
+    operations. The developer docs do not mention retries, replay protection or safe re-submission.
+    240 mutating operations (203 POST, 19 PUT, 18 PATCH) carry no replay protection, so an agent that
+    retries a timed-out create has no way to avoid duplicating it.
+reversibility:
+  grade: documented
+  window_stated: false
+  note: >-
+    Reversal paths exist for a narrow slice of the write surface and no reversal WINDOW is stated
+    anywhere in the contract or the docs. Soft delete is offered as an optional `permanently` boolean
+    query parameter on four delete operations; activate/deactivate pairs exist for sites, locations,
+    app installations and integrations. Nothing states how long a soft-deleted object is recoverable,
+    and no operation exists to restore one — the reversal for `permanently=false` is undocumented.
+  reversible_operations:
+  - operation: deactivateSite
+    reverses: activateSite
+    window: null
+  - operation: deactivateLocation
+    reverses: activateLocation
+    window: null
+  - operation: deactivateAppInstallation
+    reverses: activateAppInstallation
+    window: null
+  - operation: deactivateIntegration
+    reverses: activateIntegration
+    window: null
+  soft_delete:
+    mechanism: optional `permanently` boolean query parameter (default is a soft delete)
+    operations: [removeGatewayCluster, deleteSubscriptionLocation, uninstallApp, deleteApp]
+    restore_operation: null
+    window: null
+  irreversible_examples:
+  - removeCheck
+  - removeChecks
+  - removeDashboard
+  - deleteData
+  - deleteOrganization
+dry_run_mode:
+  supported: false
+  evidence: >-
+    No dry-run, preview, validate or simulate parameter or operation appears in the contract. The
+    closest surface is getIngestImportCheckTemplate, which returns an example ingest call for an
+    import check but does not validate a submitted payload.
+pagination:
+  style: page-and-size
+  coverage: partial
+  params: [page, size]
+  operations: [getPaginatedCommentsFeedForGroup, getPaginatedCommentsFeedForOrganization]
+  response_fields: null
+  note: >-
+    Only two operations in the whole contract are paginated, both on the comment feed. Every other
+    collection endpoint — including getOrganizationChecks and getDataForSensors — returns an unbounded
+    array. Time-series reads are instead bounded by explicit date range or interval path parameters
+    (from/{startDate}/until/{endDate}, interval/{interval}), which is the de-facto windowing mechanism.
+field_selection:
+  sparse_fields:
+    param: fields
+    operations_count: 6
+  expansion:
+    params: [expandCoordinates, expandCoordinateHistory, expandSites]
+    operations_count: 8
+time_and_locale:
+  date_format: ISO 8601 with Z offset
+  evidence: >-
+    Five operations declare the 400 message "The provided date must be a valid date: ISO 8601 date.
+    E.g.: '2016-03-03T00:00:00Z'".
+  timezone_param: timezoneOffset
+  timezone_operations_count: 11
+  language_param: language
+  language_operations_count: 6
+request_tracing:
+  header: null
+  supported: false
+  note: No request-id, correlation-id or trace header is declared in the contract or the docs.
+versioning:
+  scheme: none-in-path
+  current: '2.0'
+  evidence: >-
+    info.version is "2.0" and the base path is a bare /api with no version segment; the host does not
+    serve a /v1 or /v2 prefix. There is no documented version negotiation, no Accept-version header,
+    and no dated version train. A breaking change would land on the same URL.
+  artifact: lifecycle/30mhz-lifecycle.yml
+error_envelope:
+  format: none
+  content_type: application/json
+  shape: '{"message": "<text>"}'
+  shape_source: >-
+    Observed live on an unauthenticated GET https://api.30mhz.com/api (HTTP 401). NOT declared in the
+    contract — 1,084 of the declared 4xx/5xx responses carry a human description and no schema, and
+    30 declare a bare string.
+  problem_json: false
+  error_codes: false
+  artifact: errors/30mhz-problem-types.yml
+rate_limiting:
+  documented: false
+  response_headers: []
+  exhaustion_status: null
+  artifact: rate-limits/30mhz-rate-limits.yml
+  note: >-
+    One quantitative limit is declared in the contract — HTTP 413 "Too many events sent. A maximum of
+    100 events are allowed per call" — but that is a payload-size cap, not a request rate limit.
+bulk_operations:
+  supported: true
+  operations: [removeChecks, getDataForSensors, getChecksLastRecordedStatInfo, getChecksStatsByInterval, getChecksStatsByTimeInterval, ingestImportChecks]
+  note: >-
+    The data and stats reads are POST-bodied specifically so a caller can request many checkIds at
+    once, which is the intended pattern for pulling a whole greenhouse in one call.
