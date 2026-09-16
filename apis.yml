@@ -41,36 +41,2040 @@ tags_raw:
 - data-platform
 - netherlands
 apis:
-- name: ZENSIE API
-  description: >-
-    The ZENSIE REST API is 30MHz's public platform API, documented in Swagger at
-    https://api.30mhz.com/api/swagger and served from https://api.30mhz.com/api. It carries 558
-    operations across 425 paths covering sensors and sensor types, gateways and gateway clusters,
-    checks (data sources), data query and data-upload/ingest, dashboards, widgets and charts, maps
-    and zones, organizations, users, groups and notifications, cultivations and cultivation targets,
-    apps (irrigation, GDD, RTR, CultiWatch), export partners, and the commercial surface (licenses,
-    subscriptions, quotes, orders, invoices, pricing). Authentication is a bearer JWT API key issued
-    from the ZENSIE Account Settings > Developer page and sent in the Authorization header.
-  image: https://www.30mhz.com/wp-content/uploads/2026/04/Infographic-for-greenbg-1536x571.png
+- aid: 30mhz:30mhz-admin-api
+  name: 30MHz Admin API
+  description: The admin API from 30MHz — 6 operation(s) for admin.
   humanURL: https://support.30mhz.com/api-endpoints-documentation-new
   baseURL: https://api.30mhz.com/api
   tags:
-  - Horticulture
-  - Sensors
-  - Internet of Things
-  - Greenhouse
-  - Climate Monitoring
-  - Time Series Data
-  tags_raw:
-  - horticulture
-  - sensors
-  - internet-of-things
-  - greenhouse
-  - climate-monitoring
-  - time-series-data
+  - admin
   properties:
   - type: OpenAPI
-    url: openapi/30mhz-zensie-openapi.json
+    url: openapi/30mhz-admin-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-agent-api
+  name: 30MHz Agent API
+  description: The agent API from 30MHz — 2 operation(s) for agent.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - agent
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-agent-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-api
+  name: 30MHz App API
+  description: The app API from 30MHz — 7 operation(s) for app.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-cultiwatch-api
+  name: 30MHz App Cultiwatch API
+  description: The app-cultiwatch API from 30MHz — 2 operation(s) for app-cultiwatch.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-cultiwatch
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-cultiwatch-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-installation-api
+  name: 30MHz App Installation API
+  description: The app-installation API from 30MHz — 10 operation(s) for app-installation.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-installation
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-installation-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-installation-update-api
+  name: 30MHz App Installation Update API
+  description: The app-installation-update API from 30MHz — 1 operation(s) for app-installation-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-installation-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-installation-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-irrigation-api
+  name: 30MHz App Irrigation API
+  description: The app-irrigation API from 30MHz — 1 operation(s) for app-irrigation.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-irrigation
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-irrigation-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-update-api
+  name: 30MHz App Update API
+  description: The app-update API from 30MHz — 3 operation(s) for app-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-assembly-api
+  name: 30MHz Assembly API
+  description: The assembly API from 30MHz — 5 operation(s) for assembly.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - assembly
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-assembly-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-assembly-update-api
+  name: 30MHz Assembly Update API
+  description: The assembly-update API from 30MHz — 1 operation(s) for assembly-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - assembly-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-assembly-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-authorization-api
+  name: 30MHz Authorization API
+  description: The authorization API from 30MHz — 15 operation(s) for authorization.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-billing-history-api
+  name: 30MHz Billing History API
+  description: The billing-history API from 30MHz — 6 operation(s) for billing-history.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - billing-history
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-billing-history-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-billing-history-details-api
+  name: 30MHz Billing History Details API
+  description: The billing-history-details API from 30MHz — 4 operation(s) for billing-history-details.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - billing-history-details
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-billing-history-details-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-billing-history-details-update-api
+  name: 30MHz Billing History Details Update API
+  description: >-
+    The billing-history-details-update API from 30MHz — 2 operation(s) for billing-history-details-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - billing-history-details-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-billing-history-details-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-billing-history-update-api
+  name: 30MHz Billing History Update API
+  description: The billing-history-update API from 30MHz — 1 operation(s) for billing-history-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - billing-history-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-billing-history-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-calculation-api
+  name: 30MHz Calculation API
+  description: The calculation API from 30MHz — 2 operation(s) for calculation.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - calculation
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-calculation-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-calculation-update-api
+  name: 30MHz Calculation Update API
+  description: The calculation-update API from 30MHz — 1 operation(s) for calculation-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - calculation-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-calculation-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-chart-api
+  name: 30MHz Chart API
+  description: The chart API from 30MHz — 2 operation(s) for chart.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - chart
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-chart-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-check-api
+  name: 30MHz Check API
+  description: The check API from 30MHz — 8 operation(s) for check.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - check
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-check-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-check-update-api
+  name: 30MHz Check Update API
+  description: The check-update API from 30MHz — 5 operation(s) for check-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - check-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-check-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-comment-api
+  name: 30MHz Comment API
+  description: The comment API from 30MHz — 12 operation(s) for comment.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - comment
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-comment-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-comment-update-api
+  name: 30MHz Comment Update API
+  description: The comment-update API from 30MHz — 2 operation(s) for comment-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - comment-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-comment-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-company-details-api
+  name: 30MHz Company Details API
+  description: The company-details API from 30MHz — 2 operation(s) for company-details.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - company-details
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-company-details-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-company-details-update-api
+  name: 30MHz Company Details Update API
+  description: The company-details-update API from 30MHz — 1 operation(s) for company-details-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - company-details-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-company-details-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-crop-api
+  name: 30MHz Crop API
+  description: The crop API from 30MHz — 3 operation(s) for crop.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - crop
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-crop-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-cultivation-api
+  name: 30MHz Cultivation API
+  description: The cultivation API from 30MHz — 4 operation(s) for cultivation.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - cultivation
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-cultivation-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-cultivation-target-api
+  name: 30MHz Cultivation Target API
+  description: The cultivation-target API from 30MHz — 3 operation(s) for cultivation-target.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - cultivation-target
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-cultivation-target-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-currency-api
+  name: 30MHz Currency API
+  description: The currency API from 30MHz — 2 operation(s) for currency.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - currency
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-currency-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-currency-rates-api
+  name: 30MHz Currency Rates API
+  description: The currency-rates API from 30MHz — 1 operation(s) for currency-rates.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - currency-rates
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-currency-rates-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-registration-api
+  name: 30MHz Customer Registration API
+  description: The customer-registration API from 30MHz — 3 operation(s) for customer-registration.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-registration
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-registration-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-request-api
+  name: 30MHz Customer Request API
+  description: The customer-request API from 30MHz — 3 operation(s) for customer-request.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-request
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-request-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-request-item-api
+  name: 30MHz Customer Request Item API
+  description: The customer-request-item API from 30MHz — 2 operation(s) for customer-request-item.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-request-item
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-request-item-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-request-item-update-api
+  name: 30MHz Customer Request Item Update API
+  description: >-
+    The customer-request-item-update API from 30MHz — 1 operation(s) for customer-request-item-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-request-item-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-request-item-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-request-update-api
+  name: 30MHz Customer Request Update API
+  description: The customer-request-update API from 30MHz — 1 operation(s) for customer-request-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-request-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-request-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dashboard-api
+  name: 30MHz Dashboard API
+  description: The dashboard API from 30MHz — 5 operation(s) for dashboard.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dashboard-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dashboard-theme-api
+  name: 30MHz Dashboard Theme API
+  description: The dashboard-theme API from 30MHz — 5 operation(s) for dashboard-theme.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dashboard-theme
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dashboard-theme-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dashboard-theme-update-api
+  name: 30MHz Dashboard Theme Update API
+  description: The dashboard-theme-update API from 30MHz — 1 operation(s) for dashboard-theme-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dashboard-theme-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dashboard-theme-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dashboard-update-api
+  name: 30MHz Dashboard Update API
+  description: The dashboard-update API from 30MHz — 4 operation(s) for dashboard-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dashboard-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dashboard-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-data-api
+  name: 30MHz Data API
+  description: The data API from 30MHz — 1 operation(s) for data.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - data
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-data-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-data-export-api
+  name: 30MHz Data Export API
+  description: The data-export API from 30MHz — 4 operation(s) for data-export.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - data-export
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-data-export-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-data-source-api
+  name: 30MHz Data Source API
+  description: The data-source API from 30MHz — 1 operation(s) for data-source.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - data-source
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-data-source-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-data-source-coordinates-api
+  name: 30MHz Data Source Coordinates API
+  description: The data-source-coordinates API from 30MHz — 3 operation(s) for data-source-coordinates.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - data-source-coordinates
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-data-source-coordinates-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-data-upload-api
+  name: 30MHz Data Upload API
+  description: The data-upload API from 30MHz — 3 operation(s) for data-upload.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - data-upload
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-data-upload-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dealer-api
+  name: 30MHz Dealer API
+  description: The dealer API from 30MHz — 2 operation(s) for dealer.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dealer
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dealer-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-dealer-update-api
+  name: 30MHz Dealer Update API
+  description: The dealer-update API from 30MHz — 1 operation(s) for dealer-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - dealer-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-dealer-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-device-api
+  name: 30MHz Device API
+  description: The device API from 30MHz — 5 operation(s) for device.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - device
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-device-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-downtime-api
+  name: 30MHz Downtime API
+  description: The downtime API from 30MHz — 3 operation(s) for downtime.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - downtime
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-downtime-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-export-partner-api
+  name: 30MHz Export Partner API
+  description: The export-partner API from 30MHz — 2 operation(s) for export-partner.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - export-partner
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-export-partner-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-export-partner-job-api
+  name: 30MHz Export Partner Job API
+  description: The export-partner-job API from 30MHz — 3 operation(s) for export-partner-job.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - export-partner-job
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-export-partner-job-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-export-partner-job-update-api
+  name: 30MHz Export Partner Job Update API
+  description: >-
+    The export-partner-job-update API from 30MHz — 1 operation(s) for export-partner-job-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - export-partner-job-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-export-partner-job-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-export-partner-update-api
+  name: 30MHz Export Partner Update API
+  description: The export-partner-update API from 30MHz — 1 operation(s) for export-partner-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - export-partner-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-export-partner-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-gateway-api
+  name: 30MHz Gateway API
+  description: The gateway API from 30MHz — 3 operation(s) for gateway.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-gateway-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-gateway-cluster-api
+  name: 30MHz Gateway Cluster API
+  description: The gateway-cluster API from 30MHz — 5 operation(s) for gateway-cluster.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - gateway-cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-gateway-cluster-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-gateway-update-api
+  name: 30MHz Gateway Update API
+  description: The gateway-update API from 30MHz — 1 operation(s) for gateway-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - gateway-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-gateway-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-group-api
+  name: 30MHz Group API
+  description: The group API from 30MHz — 6 operation(s) for group.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - group
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-group-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-group-update-api
+  name: 30MHz Group Update API
+  description: The group-update API from 30MHz — 1 operation(s) for group-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - group-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-group-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-health-api
+  name: 30MHz Health API
+  description: The health API from 30MHz — 1 operation(s) for health.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-health-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-highlight-api
+  name: 30MHz Highlight API
+  description: The highlight API from 30MHz — 3 operation(s) for highlight.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - highlight
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-highlight-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-import-check-api
+  name: 30MHz Import Check API
+  description: The import-check API from 30MHz — 12 operation(s) for import-check.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - import-check
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-import-check-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-import-check-update-api
+  name: 30MHz Import Check Update API
+  description: The import-check-update API from 30MHz — 4 operation(s) for import-check-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - import-check-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-import-check-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-ingest-api
+  name: 30MHz Ingest API
+  description: The ingest API from 30MHz — 5 operation(s) for ingest.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - ingest
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-ingest-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-ingest-update-api
+  name: 30MHz Ingest Update API
+  description: The ingest-update API from 30MHz — 1 operation(s) for ingest-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - ingest-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-ingest-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-integrate-api
+  name: 30MHz Integrate API
+  description: The integrate API from 30MHz — 13 operation(s) for integrate.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - integrate
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-integrate-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-integration-api
+  name: 30MHz Integration API
+  description: The integration API from 30MHz — 2 operation(s) for integration.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - integration
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-integration-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-integrity-check-api
+  name: 30MHz Integrity Check API
+  description: The integrity-check API from 30MHz — 3 operation(s) for integrity-check.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - integrity-check
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-integrity-check-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-invoice-api
+  name: 30MHz Invoice API
+  description: The invoice API from 30MHz — 3 operation(s) for invoice.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - invoice
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-invoice-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-invoice-update-api
+  name: 30MHz Invoice Update API
+  description: The invoice-update API from 30MHz — 1 operation(s) for invoice-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - invoice-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-invoice-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-license-api
+  name: 30MHz License API
+  description: The license API from 30MHz — 4 operation(s) for license.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - license
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-license-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-location-api
+  name: 30MHz Location API
+  description: The location API from 30MHz — 5 operation(s) for location.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - location
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-location-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-location-update-api
+  name: 30MHz Location Update API
+  description: The location-update API from 30MHz — 2 operation(s) for location-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - location-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-location-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-map-api
+  name: 30MHz Map API
+  description: The map API from 30MHz — 1 operation(s) for map.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - map
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-map-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-metric-api
+  name: 30MHz Metric API
+  description: The metric API from 30MHz — 3 operation(s) for metric.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - metric
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-metric-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-metric-update-api
+  name: 30MHz Metric Update API
+  description: The metric-update API from 30MHz — 1 operation(s) for metric-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - metric-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-metric-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-mother-api
+  name: 30MHz Mother API
+  description: The mother API from 30MHz — 7 operation(s) for mother.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - mother
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-mother-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-mother-template-api
+  name: 30MHz Mother Template API
+  description: The mother-template API from 30MHz — 2 operation(s) for mother-template.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - mother-template
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-mother-template-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-mother-template-update-api
+  name: 30MHz Mother Template Update API
+  description: The mother-template-update API from 30MHz — 1 operation(s) for mother-template-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - mother-template-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-mother-template-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-mother-update-api
+  name: 30MHz Mother Update API
+  description: The mother-update API from 30MHz — 1 operation(s) for mother-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - mother-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-mother-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-news-api
+  name: 30MHz News API
+  description: The news API from 30MHz — 1 operation(s) for news.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - news
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-news-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notes-api
+  name: 30MHz Notes API
+  description: The notes API from 30MHz — 3 operation(s) for notes.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notes
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notes-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-api
+  name: 30MHz Notification API
+  description: The notification API from 30MHz — 4 operation(s) for notification.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-follow-api
+  name: 30MHz Notification Follow API
+  description: The notification-follow API from 30MHz — 4 operation(s) for notification-follow.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-follow
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-follow-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-follow-update-api
+  name: 30MHz Notification Follow Update API
+  description: >-
+    The notification-follow-update API from 30MHz — 1 operation(s) for notification-follow-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-follow-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-follow-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-settings-api
+  name: 30MHz Notification Settings API
+  description: The notification-settings API from 30MHz — 3 operation(s) for notification-settings.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-settings
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-settings-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-settings-update-api
+  name: 30MHz Notification Settings Update API
+  description: >-
+    The notification-settings-update API from 30MHz — 1 operation(s) for notification-settings-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-settings-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-settings-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-topic-api
+  name: 30MHz Notification Topic API
+  description: The notification-topic API from 30MHz — 2 operation(s) for notification-topic.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-topic
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-topic-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-topic-follow-api
+  name: 30MHz Notification Topic Follow API
+  description: >-
+    The notification-topic-follow API from 30MHz — 4 operation(s) for notification-topic-follow.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-topic-follow
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-topic-follow-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-topic-follow-update-api
+  name: 30MHz Notification Topic Follow Update API
+  description: >-
+    The notification-topic-follow-update API from 30MHz — 1 operation(s) for notification-topic-follow-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-topic-follow-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-topic-follow-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-topic-update-api
+  name: 30MHz Notification Topic Update API
+  description: >-
+    The notification-topic-update API from 30MHz — 1 operation(s) for notification-topic-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-topic-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-topic-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-notification-update-api
+  name: 30MHz Notification Update API
+  description: The notification-update API from 30MHz — 1 operation(s) for notification-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - notification-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-notification-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-offer-api
+  name: 30MHz Offer API
+  description: The offer API from 30MHz — 2 operation(s) for offer.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - offer
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-offer-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-order-api
+  name: 30MHz Order API
+  description: The order API from 30MHz — 4 operation(s) for order.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - order
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-order-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-order-update-api
+  name: 30MHz Order Update API
+  description: The order-update API from 30MHz — 1 operation(s) for order-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - order-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-order-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-organization-api
+  name: 30MHz Organization API
+  description: The organization API from 30MHz — 15 operation(s) for organization.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - organization
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-organization-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-organization-update-api
+  name: 30MHz Organization Update API
+  description: The organization-update API from 30MHz — 2 operation(s) for organization-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - organization-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-organization-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-partner-api
+  name: 30MHz Partner API
+  description: The partner API from 30MHz — 2 operation(s) for partner.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - partner
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-partner-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-pricing-api
+  name: 30MHz Pricing API
+  description: The pricing API from 30MHz — 4 operation(s) for pricing.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - pricing
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-pricing-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-pricing-update-api
+  name: 30MHz Pricing Update API
+  description: The pricing-update API from 30MHz — 1 operation(s) for pricing-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - pricing-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-pricing-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-product-api
+  name: 30MHz Product API
+  description: The product API from 30MHz — 2 operation(s) for product.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - product
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-product-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-product-update-api
+  name: 30MHz Product Update API
+  description: The product-update API from 30MHz — 1 operation(s) for product-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - product-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-product-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-quote-api
+  name: 30MHz Quote API
+  description: The quote API from 30MHz — 3 operation(s) for quote.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - quote
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-quote-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-quote-update-api
+  name: 30MHz Quote Update API
+  description: The quote-update API from 30MHz — 1 operation(s) for quote-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - quote-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-quote-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-robocrops-api
+  name: 30MHz Robocrops API
+  description: The robocrops API from 30MHz — 13 operation(s) for robocrops.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - robocrops
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-robocrops-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-sensor-api
+  name: 30MHz Sensor API
+  description: The sensor API from 30MHz — 3 operation(s) for sensor.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - sensor
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-sensor-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-sensor-type-api
+  name: 30MHz Sensor Type API
+  description: The sensor-type API from 30MHz — 8 operation(s) for sensor-type.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - sensor-type
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-sensor-type-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-sensor-type-update-api
+  name: 30MHz Sensor Type Update API
+  description: The sensor-type-update API from 30MHz — 1 operation(s) for sensor-type-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - sensor-type-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-sensor-type-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-share-sensor-type-api
+  name: 30MHz Share Sensor Type API
+  description: The share-sensor-type API from 30MHz — 9 operation(s) for share-sensor-type.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - share-sensor-type
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-share-sensor-type-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-shared-check-api
+  name: 30MHz Shared Check API
+  description: The shared-check API from 30MHz — 7 operation(s) for shared-check.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - shared-check
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-shared-check-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-shared-dashboard-api
+  name: 30MHz Shared Dashboard API
+  description: The shared-dashboard API from 30MHz — 6 operation(s) for shared-dashboard.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - shared-dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-shared-dashboard-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-shared-dashboard-update-api
+  name: 30MHz Shared Dashboard Update API
+  description: The shared-dashboard-update API from 30MHz — 1 operation(s) for shared-dashboard-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - shared-dashboard-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-shared-dashboard-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-site-api
+  name: 30MHz Site API
+  description: The site API from 30MHz — 3 operation(s) for site.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - site
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-site-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-soil-api
+  name: 30MHz Soil API
+  description: The soil API from 30MHz — 3 operation(s) for soil.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - soil
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-soil-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-stats-api
+  name: 30MHz Stats API
+  description: The stats API from 30MHz — 11 operation(s) for stats.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - stats
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-stats-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-status-api
+  name: 30MHz Status API
+  description: The status API from 30MHz — 12 operation(s) for status.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - status
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-status-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-subscription-api
+  name: 30MHz Subscription API
+  description: The subscription API from 30MHz — 3 operation(s) for subscription.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - subscription
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-subscription-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-subscription-assignment-api
+  name: 30MHz Subscription Assignment API
+  description: The subscription-assignment API from 30MHz — 3 operation(s) for subscription-assignment.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - subscription-assignment
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-subscription-assignment-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-swagger-api
+  name: 30MHz Swagger API
+  description: The swagger API from 30MHz — 4 operation(s) for swagger.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - swagger
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-swagger-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-timezone-api
+  name: 30MHz Timezone API
+  description: The timezone API from 30MHz — 1 operation(s) for timezone.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - timezone
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-timezone-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-uptime-api
+  name: 30MHz Uptime API
+  description: The uptime API from 30MHz — 3 operation(s) for uptime.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - uptime
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-uptime-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-user-api
+  name: 30MHz User API
+  description: The user API from 30MHz — 18 operation(s) for user.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - user
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-user-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-user-update-api
+  name: 30MHz User Update API
+  description: The user-update API from 30MHz — 2 operation(s) for user-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - user-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-user-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-userconfig-api
+  name: 30MHz Userconfig API
+  description: The userconfig API from 30MHz — 2 operation(s) for userconfig.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - userconfig
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-userconfig-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-util-api
+  name: 30MHz Util API
+  description: The util API from 30MHz — 3 operation(s) for util.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - util
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-util-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-widget-api
+  name: 30MHz Widget API
+  description: The widget API from 30MHz — 4 operation(s) for widget.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - widget
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-widget-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-widget-update-api
+  name: 30MHz Widget Update API
+  description: The widget-update API from 30MHz — 1 operation(s) for widget-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - widget-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-widget-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-xbee-factory-api
+  name: 30MHz Xbee Factory API
+  description: The xbee-factory API from 30MHz — 3 operation(s) for xbee-factory.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - xbee-factory
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-xbee-factory-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-xbee-factory-update-api
+  name: 30MHz Xbee Factory Update API
+  description: The xbee-factory-update API from 30MHz — 1 operation(s) for xbee-factory-update.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - xbee-factory-update
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-xbee-factory-update-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-zone-api
+  name: 30MHz Zone API
+  description: The zone API from 30MHz — 2 operation(s) for zone.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - zone
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-zone-api-openapi.yml
   - type: Documentation
     url: https://support.30mhz.com/developer-docs
   - type: APIReference
