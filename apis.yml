@@ -105,22 +105,6 @@ apis:
     url: https://api.30mhz.com/api/swagger
   - type: GettingStarted
     url: https://support.30mhz.com/create-an-api-key
-- aid: 30mhz:30mhz-app-installation-api
-  name: 30MHz App Installation API
-  description: The app-installation API from 30MHz — 10 operation(s) for app-installation.
-  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
-  baseURL: https://api.30mhz.com/api
-  tags:
-  - app-installation
-  properties:
-  - type: OpenAPI
-    url: openapi/30mhz-app-installation-api-openapi.yml
-  - type: Documentation
-    url: https://support.30mhz.com/developer-docs
-  - type: APIReference
-    url: https://api.30mhz.com/api/swagger
-  - type: GettingStarted
-    url: https://support.30mhz.com/create-an-api-key
 - aid: 30mhz:30mhz-app-installation-update-api
   name: 30MHz App Installation Update API
   description: The app-installation-update API from 30MHz — 1 operation(s) for app-installation-update.
@@ -500,22 +484,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/30mhz-currency-rates-api-openapi.yml
-  - type: Documentation
-    url: https://support.30mhz.com/developer-docs
-  - type: APIReference
-    url: https://api.30mhz.com/api/swagger
-  - type: GettingStarted
-    url: https://support.30mhz.com/create-an-api-key
-- aid: 30mhz:30mhz-customer-registration-api
-  name: 30MHz Customer Registration API
-  description: The customer-registration API from 30MHz — 3 operation(s) for customer-registration.
-  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
-  baseURL: https://api.30mhz.com/api
-  tags:
-  - customer-registration
-  properties:
-  - type: OpenAPI
-    url: openapi/30mhz-customer-registration-api-openapi.yml
   - type: Documentation
     url: https://support.30mhz.com/developer-docs
   - type: APIReference
@@ -2075,6 +2043,38 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/30mhz-zone-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-app-installation-api
+  name: 30MHz App Installation API
+  description: The app-installation API from 30MHz — 10 operation(s) for app-installation.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - app-installation
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-app-installation-api-openapi.yml
+  - type: Documentation
+    url: https://support.30mhz.com/developer-docs
+  - type: APIReference
+    url: https://api.30mhz.com/api/swagger
+  - type: GettingStarted
+    url: https://support.30mhz.com/create-an-api-key
+- aid: 30mhz:30mhz-customer-registration-api
+  name: 30MHz Customer Registration API
+  description: The customer-registration API from 30MHz — 3 operation(s) for customer-registration.
+  humanURL: https://support.30mhz.com/api-endpoints-documentation-new
+  baseURL: https://api.30mhz.com/api
+  tags:
+  - customer-registration
+  properties:
+  - type: OpenAPI
+    url: openapi/30mhz-customer-registration-api-openapi.yml
   - type: Documentation
     url: https://support.30mhz.com/developer-docs
   - type: APIReference
