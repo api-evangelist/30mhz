@@ -1,0 +1,355 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Ingest API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Ingest
+paths:
+  /ingest/manual-input-delete:
+    post:
+      tags:
+      - Ingest
+      summary: Delete manual import check data based on keys
+      description: Authentication required for this operation.
+      operationId: deleteDataManualImportChecks
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Import checks event deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckStatsResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckStatsResponse'
+        '400':
+          description: Bad request while deleting manual data
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventDelete'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventDelete'
+  /ingest/organization/{organizationId}/import-check/{importCheckId}/example-call:
+    get:
+      tags:
+      - Ingest
+      summary: Import check event template
+      description: Authentication required for this operation.
+      operationId: getIngestImportCheckTemplate
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: importCheckId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Import check event template.
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+  /ingest/organization/{organizationId}:
+    post:
+      tags:
+      - Ingest
+      summary: Ingest external sensor data.Supports multiple events (100 max) except for…
+      description: 'Authentication required for this operation.
+
+        A maximum of 100 events are allowed per call.
+
+
+        Event failure codes:
+
+        1: Import check does not exist.
+
+
+        2: Import check is currently disabled. The import check must be enabled in order to receive data.
+
+
+        3: Sensor type for import check does not exist.
+
+
+        4: Status field should contain one of the values: "ok" or "fail" .
+
+
+        5: Timestamp field should contain a valid ISO 8601 DateTime format value with an explicitly set timezone value (e.g. 2017-01-17T19:23:02+06:45, 2017-01-17T19:23:02Z).
+
+
+        6: Timestamp must be after 2015-01-01.
+
+
+        8: The import check does not belong to the organization.
+
+
+        9: Sensor type is not external.
+
+
+        10: Sensor fields or the data types of the event are invalid (not matching the ones defined in sensor type table).
+
+
+        11: Event could not be added to database.
+
+
+        12: Event could not be added to notification system (notifications will not run for this event).
+
+
+        14: Imported string value is too long.
+
+
+        15: Sensor field defined in unit override is invalid.
+
+
+        16: Unit defined for a sensor field is invalid.
+
+
+        17: Collection not found
+
+
+        18: Failed to create new manual input event.'
+      operationId: ingestImportChecks
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Import checks events processed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportCheckEventsResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ImportCheckEventsResponse'
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+        '413':
+          description: Too many events sent. A maximum of 100 events are allowed per call
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportCheckEvent'
+          application/xml:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportCheckEvent'
+  /ingest/manual-input-update:
+    post:
+      tags:
+      - Ingest
+      summary: Update manual data
+      description: Authentication required for this operation.
+      operationId: updateManualImportChecks
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Import check event processed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckEventUpdateResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckEventUpdateResponse'
+        '400':
+          description: Bad request while ingesting manual data
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+        '404':
+          description: Event not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventUpdate'
+  /ingest/manual-input-update/{id}:
+    post:
+      tags:
+      - Ingest
+      summary: Update manual data by event id
+      description: Authentication required for this operation.
+      operationId: updateManualImportChecksWithId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Import check event processed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckEventUpdateResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ManualImportCheckEventUpdateResponse'
+        '400':
+          description: Bad request while ingesting manual data
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ManualImportCheckEventUpdate'
+components:
+  schemas:
+    ManualImportCheckStatsResponse:
+      type: object
+      required:
+      - data
+      properties:
+        collectionId:
+          type: string
+        data:
+          type: object
+        dateEntryId:
+          type: string
+        id:
+          type: string
+    ManualImportCheckEventUpdateResponse:
+      type: object
+      required:
+      - checkId
+      properties:
+        checkId:
+          type: string
+        collectionId:
+          type: string
+        dateEntryId:
+          type: string
+        id:
+          type: string
+    ImportCheckEventsResponse:
+      type: object
+      required:
+      - failedEvents
+      properties:
+        failedEvents:
+          type: array
+          description: List of failed ingests in the batch.
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImportCheckEventFailure'
+        failedEventsNo:
+          type: integer
+          format: int32
+          description: Number of failed ingests in the batch.
+        ingestedDocId:
+          type: string
+          description: Id of the created manual input event if any. It is always one single id since multiple events creation is not supported.
+        okEventsNo:
+          type: integer
+          format: int32
+          description: Number of successful ingests in the batch.
+    ManualImportCheckEventUpdate:
+      type: object
+      required:
+      - data
+      properties:
+        checkId:
+          type: string
+        collectionId:
+          type: string
+        data:
+          type: object
+        dateEntryId:
+          type: string
+    ImportCheckEvent:
+      type: object
+      required:
+      - data
+      - timestamp
+      properties:
+        checkId:
+          type: string
+          description: Id of the check to import an event for.
+        collectionId:
+          type: string
+          description: Optional collection id of the event.
+        data:
+          type: object
+          description: 'Data as a map of sensor fields to their corresponding value, e.g. {''temperature'': 21.5}.'
+        error:
+          type: string
+          description: Optional error for when status is 'fail'.
+        status:
+          type: string
+          description: Optional 'ok' or 'fail' values representing the event success status.
+        timestamp:
+          type: string
+          description: ISO 8601 DateTime format value with an explicitly set timezone value * (e.g. 2017-01-17T19:23:02+06:45, 2017-01-17T19:23:02Z)
+        unitsOverride:
+          type: object
+          description: 'A map that defines unitId used in data values for each sensor field, e.g.  { ''radiation'': ''umol_m2_s1'' }. If not defined, value is assumed to be in the metric''s default unit.'
+          additionalProperties:
+            type: string
+        updateData:
+          type: boolean
+          description: Whether to update an existing event at the given timestamp for the given checkId or to create a new one. Default is false, so if not set, a new event will be created. Multiple events for the same checkId at the same timestamp are aggregated when they are retrieved.
+    ImportCheckEventFailure:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/ImportCheckEvent'
+        errorCode:
+          type: integer
+          format: int32
+        errorText:
+          type: string
+    ManualImportCheckEventDelete:
+      type: object
+      required:
+      - jsonKeys
+      properties:
+        checkId:
+          type: string
+        dateEntryId:
+          type: string
+        id:
+          type: string
+        jsonKeys:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,242 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE User Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: user-update
+paths:
+  /user-update/{email}:
+    post:
+      tags:
+      - user-update
+      summary: Update an user
+      description: 'Authentication required for this operation.Preconditions:Authenticated user has to request to update himself (herself) or in case of requesting to change other users: to be owner of the organization, or be an admin in the platform.'
+      operationId: updateUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: An user with that email doesn't exist
+        '406':
+          description: The user's first name and last name cannot be empty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEditable'
+  /user-update/{email}/favoritePage:
+    post:
+      tags:
+      - user-update
+      summary: Add a favorite page to a user
+      description: Authentication required for this operation.
+      operationId: addFavoritePage
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: User is not authorized to perform this operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebPageReference'
+    delete:
+      tags:
+      - user-update
+      summary: Remove a favorite page for a user
+      description: Authentication required for this operation.
+      operationId: removeFavoritePage
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: url
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: User is not authorized to perform this operation.
+components:
+  schemas:
+    User:
+      type: object
+      required:
+      - email
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        activatedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of activation, e.g. e.g 2023-12-12T15:00:00Z.
+        email:
+          type: string
+          description: Email address.
+        invitedBy:
+          type: string
+          description: Email address of user that sent the invite.
+        systemRole:
+          type: string
+          description: 'System-wide role like: ''admin'''
+        userId:
+          type: string
+          description: Universally unique identifier of a user.
+      description: A person who uses the platform
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
+    UserEditable:
+      type: object
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        rateLimitTier:
+          type: string
+          enum:
+          - tier1
+          - tier2
+          - tier3
+          - tier4
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+      description: Object holding the editable properties of a user
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

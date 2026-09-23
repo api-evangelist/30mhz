@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Xbee Factory Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: xbee-factory-update
+paths:
+  /xbee-factory-update/{macAddress}:
+    post:
+      tags:
+      - xbee-factory-update
+      summary: Update an XBee factory configuration
+      description: Authentication required for this operation
+      operationId: updateFactoryConfiguration
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: XBee factory configuration updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+        '400':
+          description: Configuration values must be either strings or json objects.
+        '403':
+          description: User must be an admin.
+        '500':
+          description: Error while updating the app installation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XBeeFactoryEditable'
+components:
+  schemas:
+    XBeeFactory:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: Check Id this XBee factory belongs to.
+        remarks:
+          type: string
+          description: Remarks regarding this factory.
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+        testResults:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+        lastChanged:
+          type: string
+        macAddress:
+          type: string
+          description: MAC Address.
+    XBeeFactoryEditable:
+      type: object
+      properties:
+        checkId:
+          type: string
+        remarks:
+          type: string
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+        testResults:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

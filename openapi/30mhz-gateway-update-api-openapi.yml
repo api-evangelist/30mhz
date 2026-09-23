@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Gateway Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: gateway-update
+paths:
+  /gateway-update/{gatewayId}:
+    post:
+      tags:
+      - gateway-update
+      summary: Update a gateway
+      description: Authentication required for this operation
+      operationId: updateGateway
+      parameters:
+      - name: gatewayId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Gateway updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while updating the gateway.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatewayEditable'
+components:
+  schemas:
+    Gateway:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+        gatewayId:
+          type: string
+          description: Gateway Id.
+        macAddress:
+          type: string
+          description: The mac address of the gateway.
+        monitoringCheckId:
+          type: string
+          description: Id of the gateway monitoring check.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+        createdAt:
+          type: string
+          description: The date and time a gateway was created.
+        deletedAt:
+          type: string
+          description: The date and time a gateway was deleted.
+        deletedBy:
+          type: string
+          description: User that deleted the gateway.
+        deployedAt:
+          type: string
+          description: The date and time a gateway was deployed.
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        updatedAt:
+          type: string
+          description: The date and time a gateway was last updated.
+    GatewayEditable:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        greengrassCertificateArn:
+          type: string
+          description: The greengrass certificate arn.
+        greengrassCertificatePem:
+          type: string
+          description: The greengrass certificate pem.
+        greengrassKeyPair:
+          type: string
+          description: The greengrass key pair that is used to securely connect to the  greengrass core device.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

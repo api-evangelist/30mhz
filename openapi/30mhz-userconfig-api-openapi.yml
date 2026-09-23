@@ -1,0 +1,248 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Userconfig API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: userconfig
+paths:
+  /user/{email}/config:
+    get:
+      tags:
+      - userconfig
+      summary: Return all configs for a user
+      description: Authentication required for this operation.
+      operationId: getAllConfigsForUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all configs for the user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserConfig'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserConfig'
+        '403':
+          description: Not enough permissions to perform the operation.
+    post:
+      tags:
+      - userconfig
+      summary: Create a new config for a user
+      description: Authentication required for this operation.
+      operationId: createUserConfig
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New user config created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+        '403':
+          description: User not authorized.
+        '410':
+          description: Config already exists.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfigEditable'
+  /user/{email}/config/{configKey}:
+    get:
+      tags:
+      - userconfig
+      summary: Return a config for a user
+      description: Authentication required for this operation.
+      operationId: getUserConfigForUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: configKey
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The user config.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: The config key for the user is not found.
+    put:
+      tags:
+      - userconfig
+      summary: Update a config for a user
+      description: Authentication required for this operation.
+      operationId: putUserConfig
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: configKey
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: UserConfig updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the userconfig.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfigEditable'
+    delete:
+      tags:
+      - userconfig
+      summary: Delete a config for a user
+      description: Authentication required for this operation.
+      operationId: deleteUserConfig
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: configKey
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: UserConfig has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: UserConfig not found.
+    patch:
+      tags:
+      - userconfig
+      summary: Patch a config for user
+      description: Authentication required for this operation.
+      operationId: patchUserConfig
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: configKey
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: UserConfig patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserConfig'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while patching the userconfig.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfigEditable'
+components:
+  schemas:
+    UserConfigEditable:
+      type: object
+      properties:
+        configKey:
+          type: string
+          description: The key of the user config key-value pair
+        configValue:
+          type: string
+          description: The value of the user config key-value pair
+    UserConfig:
+      type: object
+      required:
+      - configKey
+      - configValue
+      properties:
+        configKey:
+          type: string
+          description: The key of the user config key-value pair
+        configValue:
+          type: string
+          description: The key of the user config key-value pair
+        createdAt:
+          type: string
+          description: The time the config was created at
+        email:
+          type: string
+          description: Email address of the user
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

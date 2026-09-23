@@ -1,0 +1,123 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Company Details Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: company-details-update
+paths:
+  /company-details-update/{companyDetailsId}:
+    post:
+      tags:
+      - company-details-update
+      summary: Update company details
+      description: Only organization owners and administrators of ZENSIE are authorised to call this operation.
+      operationId: updateCompanyDetails
+      parameters:
+      - name: companyDetailsId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Company details updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDetailsUpdate'
+components:
+  schemas:
+    CompanyDetails:
+      type: object
+      required:
+      - active
+      properties:
+        accountManager:
+          type: string
+          description: CompanyDetails's account manager.
+        active:
+          type: boolean
+          description: The state of the company detail
+        address:
+          type: string
+          description: The address of the company details
+        city:
+          type: string
+          description: The city of the company details
+        companyDetailsId:
+          type: string
+          description: Company details id
+        companyName:
+          type: string
+          description: The company name of the company details
+        country:
+          type: string
+          description: The country of the company details
+        countryCode:
+          type: string
+          description: The code of the country of the company details
+        debtorId:
+          type: integer
+          format: int32
+          description: The debtor id of the company details
+        invoiceEmail:
+          type: string
+          description: CompanyDetails's invoice email.
+        organizationId:
+          type: string
+          description: The organization id of the company details
+        postalCode:
+          type: string
+          description: The postal code of the company details
+        telephoneNumber:
+          type: string
+          description: The address of the company details
+        vatNumber:
+          type: string
+          description: The vat number of the company details
+    CompanyDetailsUpdate:
+      type: object
+      properties:
+        accountManager:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        companyName:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        debtorId:
+          type: integer
+          format: int32
+        invoiceEmail:
+          type: string
+        postalCode:
+          type: string
+        telephoneNumber:
+          type: string
+        vatNumber:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

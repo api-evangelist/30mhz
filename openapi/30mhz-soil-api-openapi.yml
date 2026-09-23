@@ -1,0 +1,321 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Soil API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Soil
+paths:
+  /soil:
+    get:
+      tags:
+      - Soil
+      summary: Return all soils
+      description: Authentication required for this operation.
+      operationId: getPublicSoils
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all soils.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Soil'
+        '403':
+          description: Not enough permissions to perform the operation.
+    post:
+      tags:
+      - Soil
+      summary: Create a new soil
+      description: Authentication required for this operation.
+      operationId: createSoil
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New soil created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+        '403':
+          description: User not authorized.
+        '409':
+          description: Soil already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSoil'
+  /soil/{soilId}:
+    get:
+      tags:
+      - Soil
+      summary: Return the soil with the given id
+      description: Authentication required for this operation.
+      operationId: getSoilById
+      parameters:
+      - name: soilId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The soil.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+        '403':
+          description: Not enough permissions to perform the operation.
+    put:
+      tags:
+      - Soil
+      summary: Update a soil
+      description: Authentication required for this operation.
+      operationId: putSoil
+      parameters:
+      - name: soilId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Soil updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the soil.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SoilEditable'
+    delete:
+      tags:
+      - Soil
+      summary: Delete a soil
+      description: Authentication required for this operation.
+      operationId: deleteSoil
+      parameters:
+      - name: soilId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Soil has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Soil not found.
+    patch:
+      tags:
+      - Soil
+      summary: Patch a soil
+      description: Authentication required for this operation.
+      operationId: patchSoil
+      parameters:
+      - name: soilId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Soil patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Soil'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while patching the soil.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SoilEditable'
+  /soil/organization/{organizationId}:
+    get:
+      tags:
+      - Soil
+      summary: Return soils available to the organization
+      description: Authentication required for this operation.
+      operationId: getSoilsForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return soils available to the organization, i.e public soils and the organization's custom soils.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Soil'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Soil'
+        '403':
+          description: Not enough permissions to perform the operation.
+components:
+  schemas:
+    NewSoil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
+    SoilEditable:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+    Soil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

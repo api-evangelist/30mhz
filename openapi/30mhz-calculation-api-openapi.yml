@@ -1,0 +1,209 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Calculation API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: calculation
+paths:
+  /calculation/{calculationId}:
+    get:
+      tags:
+      - calculation
+      summary: Get a calculation
+      description: ''
+      operationId: getCalculation
+      parameters:
+      - name: calculationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Calculation retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+        '403':
+          description: User not allowed to view the calculation
+        '500':
+          description: Sorry, there was a problem getting the calculation.
+    post:
+      tags:
+      - calculation
+      summary: Perform calculation
+      description: ''
+      operationId: calculate
+      parameters:
+      - name: calculationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: lastValueOnly
+        in: query
+        description: Optional - Only return the calculated value corresponding to the latest timestamp. Leave empty or set to false to return all values
+        required: false
+        schema:
+          type: boolean
+          default: false
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Calculation has been performed.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '403':
+          description: User is not authorized to perform this operation.
+        '404':
+          description: Calculation not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculationSettings'
+    delete:
+      tags:
+      - calculation
+      summary: Remove calculation
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: deleteCalculation
+      parameters:
+      - name: calculationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Calculation has been removed.
+        '403':
+          description: User is not authorized to perform this operation, they must be an admin.
+        '404':
+          description: Calculation not found.
+  /calculation:
+    post:
+      tags:
+      - calculation
+      summary: Create a new calculation
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: createCalculation
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New calculation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+        '403':
+          description: User must be an admin.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCalculation'
+components:
+  schemas:
+    CalculationSettings:
+      type: object
+      required:
+      - inputParams
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: object
+      description: Settings used to perform a calculation.
+    NewCalculation:
+      type: object
+      required:
+      - calculationId
+      - name
+      properties:
+        aggregationKey:
+          type: string
+          description: Key of the selected aggregation from the calculation response
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
+        name:
+          type: string
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+        template:
+          type: string
+          description: Template for the calculation
+        templateId:
+          type: string
+          description: Unique identifier for the calculation template
+      description: Object holding the properties of a new calculation.
+    Calculation:
+      type: object
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
+        name:
+          type: string
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+      description: Calculations allow querying data through operations and aggregations.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

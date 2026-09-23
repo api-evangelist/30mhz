@@ -1,0 +1,176 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Subscription Assignment API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: subscription-assignment
+paths:
+  /subscription-assignment:
+    get:
+      tags:
+      - subscription-assignment
+      summary: Return all subscription assignments
+      description: Authentication required for this operation.
+      operationId: getAllSubscriptionAssignments
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all subscription assignments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionAssignment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionAssignment'
+        '403':
+          description: Not enough permissions to perform the operation.
+      x-admin-only: true
+    post:
+      tags:
+      - subscription-assignment
+      summary: Create a new subscription assignment
+      description: Authentication required for this operation.
+      operationId: createSubscriptionAssignment
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New subscription assignment created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionAssignment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionAssignment'
+        '403':
+          description: User not authorized.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionAssignment'
+  /subscription-assignment/license/{licenseId}/subscription/{subscriptionId}/organization/{organizationId}:
+    delete:
+      tags:
+      - subscription-assignment
+      summary: Delete a subscription assignment
+      description: Authentication required for this operation.
+      operationId: deleteSubscriptionAssignment
+      parameters:
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: SubscriptionAssignment has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: SubscriptionAssignment not found.
+  /subscription-assignment/organization/{organizationId}:
+    get:
+      tags:
+      - subscription-assignment
+      summary: Return the subscription assignment in the given organization
+      description: Authentication required for this operation.
+      operationId: getSubscriptionAssignmentForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The subscription assignment.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionAssignment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionAssignment'
+        '403':
+          description: Not enough permissions to perform the operation.
+components:
+  schemas:
+    SubscriptionAssignment:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        organizationId:
+          type: string
+          description: Id of the subscribed organization.
+        subscription:
+          description: The subscription of the organization
+          $ref: '#/components/schemas/Subscription'
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+    Subscription:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+      description: Object holding the editable properties of a subscription
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

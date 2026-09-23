@@ -1,0 +1,173 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Topic API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-topic
+paths:
+  /notification-topic:
+    get:
+      tags:
+      - notification-topic
+      summary: Return all the notifications topics
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getNotificationTopics
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the list of notification topics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: User not allowed to perform the operation
+    post:
+      tags:
+      - notification-topic
+      summary: Create a new notification topic
+      description: Only administrators of ZENSIE are authorised to call this operation.
+      operationId: createNotificationTopic
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New notification topic created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: User not allowed to perform the operation
+        '409':
+          description: A notification topic with the given id already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNotificationTopic'
+  /notification-topic/{notificationTopicId}:
+    get:
+      tags:
+      - notification-topic
+      summary: Retrieve a notification topic with the given id
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getNotificationTopic
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification topic
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: User not allowed to perform the operation
+    delete:
+      tags:
+      - notification-topic
+      summary: Delete a notification topic with the given id
+      description: Only administrators of ZENSIE are authorised to call this operation.
+      operationId: deleteNotificationTopic
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: User not allowed to perform the operation
+components:
+  schemas:
+    NewNotificationTopic:
+      type: object
+      properties:
+        conditionDescription:
+          type: string
+        description:
+          type: string
+        notificationTopicId:
+          type: string
+    NotificationTopic:
+      type: object
+      properties:
+        conditionDescription:
+          type: string
+        description:
+          type: string
+        notificationTopicId:
+          type: string
+      description: Notification topic
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

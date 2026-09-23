@@ -1,0 +1,185 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Pricing API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Pricing
+paths:
+  /pricing/default/{currencyId}:
+    post:
+      tags:
+      - Pricing
+      summary: Pricing
+      description: Authentication required for this operation.
+      operationId: addDefaultPricingForCurrency
+      parameters:
+      - name: currencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Pricing entry created
+        '403':
+          description: Not enough permissions to perform the operation
+        '400':
+          description: The pricing record already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pricing'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pricing'
+  /pricing:
+    post:
+      tags:
+      - Pricing
+      summary: Pricing
+      description: Authentication required for this operation.
+      operationId: addPricingToOrganization
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Pricing entry created
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization does not exist
+        '400':
+          description: The pricing record already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pricing'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pricing'
+  /pricing/organization/{organizationId}:
+    get:
+      tags:
+      - Pricing
+      summary: Return pricing for organization
+      description: Authentication required for this operation.
+      operationId: getPricingByOrganizationId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Pricing for the organization
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Pricing does not exist for the organization
+  /pricing/organization/{organizationId}/year/{year}/month/{month}:
+    get:
+      tags:
+      - Pricing
+      summary: Return pricing for organization for the given year and month.
+      description: Authentication required for this operation.
+      operationId: getPricingByOrganizationIdByYearAndMonth
+      parameters:
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Pricing for the organization
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Pricing does not exist for the organization
+components:
+  schemas:
+    Pricing:
+      type: object
+      properties:
+        checks:
+          type: object
+          description: The values for the checks component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        currency:
+          type: string
+          description: The currency of the pricing record.
+        discountPercentage:
+          type: number
+          format: float
+          description: The discount percentage for the pricing record.
+        email:
+          type: object
+          description: The values for the checks component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        json:
+          type: array
+          description: The values for the json hits component of the pricing record.
+          items:
+            type: object
+            additionalProperties:
+              type: number
+              format: double
+        mothers:
+          type: object
+          description: The values for the mothers component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        organizationId:
+          type: string
+          description: Organization id for the pricing record.
+        regular:
+          type: array
+          description: The values for the regular hits component of the pricing record.
+          items:
+            type: object
+            additionalProperties:
+              type: number
+              format: double
+        sms:
+          type: object
+          description: The values for the sms component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        vatPercentage:
+          type: number
+          format: float
+          description: The VAT (value-added tax) percentage for the pricing record.
+      description: Pricing
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,81 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Customer Request Item Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: customer-request-item-update
+paths:
+  /customer-request-item-update:
+    post:
+      tags:
+      - customer-request-item-update
+      summary: Updates customer request items
+      description: The authenticated user must be an administrator.
+      operationId: updateCustomerRequestItem
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Customer request items updated
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A customer request item with that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CustomerRequestItemUpdate'
+components:
+  schemas:
+    CustomerRequestItemUpdate:
+      type: object
+      properties:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        customerRequestItemId:
+          type: string
+          description: Customer request item id.
+        description:
+          type: string
+          description: The description for the quote item.
+        lineTotal:
+          type: number
+          format: float
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother ids for the customer request item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
+          type: integer
+          format: int32
+          description: CustomerRequest item's units.
+      description: Update quote item properties
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

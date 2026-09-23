@@ -1,0 +1,58 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Integrity Check API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: integrity-check
+paths:
+  /integrity-check/unique-mother-assignment:
+    get:
+      tags:
+      - integrity-check
+      summary: The mothers in the mothers table are referenced in ONE (not less, not more)…
+      description: Authentication required for this operation.
+      operationId: uniqueMother
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mothers in the mothers table are referenced in ONE (not less, not more) location of the locations table.
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+  /integrity-check/location-mothers-exist:
+    get:
+      tags:
+      - integrity-check
+      summary: The mother ids mentioned in the locations table exist in the mothers table
+      description: Authentication required for this operation.
+      operationId: motherIdsInLocationsExist
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mother ids mentioned in the locations table exist in the mothers table.
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+  /integrity-check/sensor-location-mother:
+    get:
+      tags:
+      - integrity-check
+      summary: Checks if a location has sensor checks but no mother assigned to it
+      description: Authentication required for this operation.
+      operationId: sensorLocationHasMother
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: There are no locations with sensor checks which do not have a mother assigned.
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+components:
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,362 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Zone API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Zone
+paths:
+  /zone/organization/{organizationId}/site/{siteId}/zone/{zoneId}:
+    put:
+      tags:
+      - Zone
+      summary: Patch a zone (PUT not supported)
+      description: Authentication required for this operation.
+      operationId: putZone
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Zone patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Zone not found.
+        '500':
+          description: Error while patching the zone.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneEditable'
+    delete:
+      tags:
+      - Zone
+      summary: Delete a zone
+      description: Authentication required for this operation.
+      operationId: deleteZone
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Zone has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Zone not found.
+    patch:
+      tags:
+      - Zone
+      summary: Patch a zone
+      description: Authentication required for this operation.
+      operationId: patchZone
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: zoneId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Zone patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '404':
+          description: Zone not found.
+        '500':
+          description: Error while patching the zone.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneEditable'
+  /zone/organization/{organizationId}/site/{siteId}:
+    post:
+      tags:
+      - Zone
+      summary: Create a new zone
+      description: Authentication required for this operation.
+      operationId: createZone
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New zone created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+        '403':
+          description: User not authorized.
+        '404':
+          description: Zone not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ZoneNew'
+components:
+  schemas:
+    ZoneEditable:
+      type: object
+      properties:
+        color:
+          type: string
+          description: Color of the zone in the map
+        cropId:
+          type: string
+          description: Zone's crop type.
+        floorArea:
+          type: number
+          format: double
+          description: Zone's floor area in m2.
+        name:
+          type: string
+          description: Name of the zone
+        polygon:
+          type: array
+          description: List of coordinates that define the polygon.
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+          maxItems: 2147483647
+          minItems: 4
+        soilId:
+          type: string
+          description: Zone's soil type id.
+      description: Object holding the editable properties of a Zone.
+    Soil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
+    ZoneNew:
+      type: object
+      required:
+      - name
+      properties:
+        color:
+          type: string
+          description: Color of the zone in the map
+        cropId:
+          type: string
+          description: Zone's crop type.
+        floorArea:
+          type: number
+          format: double
+          description: Zone's floor area in m2.
+        name:
+          type: string
+          description: Name of the zone
+        polygon:
+          type: array
+          description: List of coordinates that define the polygon.
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+          maxItems: 2147483647
+          minItems: 4
+        soilId:
+          type: string
+          description: Zone's soil type id.
+      description: Object holding the required properties to create a new Zone.
+    Zone:
+      type: object
+      required:
+      - id
+      - name
+      - organizationId
+      - siteId
+      properties:
+        color:
+          type: string
+          description: Color of the zone in the map
+        cropId:
+          type: string
+          description: Zone's crop type.
+        floorArea:
+          type: number
+          format: double
+          description: Zone's floor area in m2.
+        name:
+          type: string
+          description: Name of the zone
+        soilId:
+          type: string
+          description: Zone's soil type id.
+        crop:
+          description: The crop being grown in this zone.
+          $ref: '#/components/schemas/Crop'
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        id:
+          type: string
+          description: Identifier of the zone within the site
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        soil:
+          description: The soil this zone uses.
+          $ref: '#/components/schemas/Soil'
+        uuid:
+          type: string
+          description: Universally unique identifier.
+      description: A Zone is a physical subsection in a site.
+    Crop:
+      type: object
+      required:
+      - category
+      - cropId
+      - maxAllowableDepletion
+      properties:
+        category:
+          type: string
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the crop.
+        createdAt:
+          type: integer
+          format: int64
+          description: The date and time the crop was created.
+        cropId:
+          type: string
+          description: Id of the crop.
+        organizationId:
+          type: string
+          description: The organization the crop belongs to.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

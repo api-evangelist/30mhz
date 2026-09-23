@@ -1,0 +1,52 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Timezone API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Timezone
+paths:
+  /timezone:
+    get:
+      tags:
+      - Timezone
+      summary: Get the supported timezones
+      description: ''
+      operationId: getTimezones
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimezoneDetails'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimezoneDetails'
+                uniqueItems: true
+components:
+  schemas:
+    TimezoneDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        offset:
+          type: integer
+          format: int64
+        readableOffset:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

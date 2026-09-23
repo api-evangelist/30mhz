@@ -1,0 +1,118 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Shared Dashboard Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: shared-dashboard-update
+paths:
+  /shared-dashboard-update/{sharedDashboardId}:
+    post:
+      tags:
+      - shared-dashboard-update
+      summary: Apply an update to the given dashboard
+      description: Only admins and the user this shared dashboard belongs to can edit it
+      operationId: updateSharedDashboard
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: sharedDashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/SharedDashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SharedDashboardUpdate'
+components:
+  schemas:
+    SharedDashboardUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+      description: Updating shared dashboard properties
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    DashboardSummary:
+      type: object
+      properties:
+        dashboardId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+      description: Summary of a dashboard
+    SharedDashboard:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time a dashboard was shared. It can be blank for older shared dashboards
+        dashboardId:
+          type: string
+          description: Id of the original dashboard that is being shared
+        dashboardSummary:
+          description: The underlying dashboard that is shared
+          $ref: '#/components/schemas/DashboardSummary'
+        name:
+          type: string
+          description: Name of the shared-dashboard itself
+        organizationId:
+          type: string
+          description: ID of the organization to which the shared dashboard belongs
+        organizationName:
+          type: string
+          description: Name of the organization to which the shared dashboard belongs
+        sharedByUser:
+          type: string
+          description: User who shared the dashboard
+        sharedByUserDetails:
+          $ref: '#/components/schemas/SharedByUserDetails'
+        sharedDashboardId:
+          type: string
+          description: Id of the shared-dashboard itself
+        sharedWithUser:
+          type: string
+          description: User who the dashboard has been shared with
+        sharedWithUserDetails:
+          $ref: '#/components/schemas/SharedWithUserDetails'
+    SharedByUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

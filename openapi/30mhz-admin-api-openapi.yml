@@ -1,0 +1,206 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Admin API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Admin
+paths:
+  /admin/health/api-build-version:
+    get:
+      tags:
+      - Admin
+      summary: Returns the API build version
+      description: The authenticated user must be an administrator.
+      operationId: getApiBuildVersion
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the API build version.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+      x-admin-only: true
+  /admin/health/auth0:
+    get:
+      tags:
+      - Admin
+      summary: Returns the Auth0 health
+      description: The authenticated user must be an administrator.
+      operationId: getAuth0Health
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return the health of Auth0
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+      x-admin-only: true
+  /admin/health/dynamodb:
+    get:
+      tags:
+      - Admin
+      summary: Returns the DynamoDB health
+      description: The authenticated user must be an administrator.
+      operationId: getDynamoDbHealth
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return the list of sales statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+      x-admin-only: true
+  /admin/health/elasticsearch:
+    get:
+      tags:
+      - Admin
+      summary: Returns the Elasticsearch health
+      description: The authenticated user must be an administrator.
+      operationId: getElasticsearchHealth
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the Elasticsearch health.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '403':
+          description: Unauthorized to perform the operation.
+      x-admin-only: true
+  /admin/health/scheduler:
+    get:
+      tags:
+      - Admin
+      summary: Returns the Scheduler health
+      description: The authenticated user must be an administrator.
+      operationId: getSchedulerHealth
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+      x-admin-only: true
+  /admin/notification-follow/user/{email}:
+    delete:
+      tags:
+      - Admin
+      summary: Delete all notification follows of a user (i.e.
+      description: ''
+      operationId: deleteAllNotificationFollowsOfUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notifications have been deleted
+        '403':
+          description: User not allowed to perform the operation
+      x-admin-only: true
+components:
+  schemas:
+    Throwable:
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/Throwable'
+        stackTrace:
+          type: array
+          items:
+            $ref: '#/components/schemas/StackTraceElement'
+        message:
+          type: string
+        suppressed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Throwable'
+        localizedMessage:
+          type: string
+    Result:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+        message:
+          type: string
+        error:
+          $ref: '#/components/schemas/Throwable'
+        details:
+          type: object
+          additionalProperties:
+            type: object
+        time:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+    StackTraceElement:
+      type: object
+      properties:
+        classLoaderName:
+          type: string
+        moduleName:
+          type: string
+        moduleVersion:
+          type: string
+        methodName:
+          type: string
+        fileName:
+          type: string
+        lineNumber:
+          type: integer
+          format: int32
+        className:
+          type: string
+        nativeMethod:
+          type: boolean
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

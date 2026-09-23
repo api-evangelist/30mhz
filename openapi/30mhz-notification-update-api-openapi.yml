@@ -1,0 +1,304 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-update
+paths:
+  /notification-update/{notificationId}:
+    post:
+      tags:
+      - notification-update
+      summary: Update a notification in the notification id
+      description: Only organization owners, editors and administrators of ZENSIE are authorised to call this operation.
+      operationId: updateNotification
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '201':
+          description: Notification updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationEditable'
+components:
+  schemas:
+    Notification:
+      type: object
+      required:
+      - notificationId
+      properties:
+        action:
+          type: string
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+          description: Identifier of the check.
+        condition:
+          type: string
+          description: Conditional that defines the trigger of this notification
+        description:
+          type: string
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+        check:
+          description: Summary of the check that is linked to this notification
+          $ref: '#/components/schemas/CheckSummary'
+        createdBy:
+          type: string
+          description: Identifier of the user that created this notification
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the notification was created
+        matched:
+          type: boolean
+          description: Matched attribute
+        matchedFor:
+          type: integer
+          format: int32
+          description: Matched for attribute
+        matchedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last matched notification was sent
+        notificationId:
+          type: string
+          description: Identifier of this notification object.
+        nrMatched:
+          type: integer
+          format: int32
+          description: Number of matches attribute
+        organizationId:
+          type: string
+          description: Identifier of the organization for which this notification is created
+        resolvedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last resolved notification was sent
+        structuredConditional:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          items:
+            $ref: '#/components/schemas/StructuredConditional'
+        widgetIds:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          uniqueItems: true
+          items:
+            type: string
+      description: Holds the editable properties of a Notification
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
+    CalculationSettings:
+      type: object
+      required:
+      - inputParams
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: object
+      description: Settings used to perform a calculation.
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
+    EventHook:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
+    NotificationEditable:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+          description: Identifier of the check.
+        condition:
+          type: string
+          description: Conditional that defines the trigger of this notification
+        description:
+          type: string
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+      description: Holds the editable properties of a Notification
+    CheckSummary:
+      type: object
+      properties:
+        calculationSettings:
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckCollection'
+        cultivationHierarchyId:
+          type: string
+        decimalsPerField:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        enabled:
+          type: boolean
+        locations:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        maxDecimals:
+          type: integer
+          format: int32
+        name:
+          type: string
+        organizationId:
+          type: string
+        rangePerJsonKey:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+        timezone:
+          type: string
+        timezoneOffset:
+          type: integer
+          format: int64
+        units:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Summary of a check
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

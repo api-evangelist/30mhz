@@ -1,0 +1,289 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Crop API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Crop
+paths:
+  /crop:
+    get:
+      tags:
+      - Crop
+      summary: Return all crops
+      description: Authentication required for this operation.
+      operationId: getPublicCrops
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all crops.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crop'
+        '403':
+          description: Not enough permissions to perform the operation.
+    post:
+      tags:
+      - Crop
+      summary: Create a new crop
+      description: Authentication required for this operation.
+      operationId: createCrop
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New crop created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+        '403':
+          description: User not authorized.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCrop'
+  /crop/{cropId}:
+    get:
+      tags:
+      - Crop
+      summary: Return the crop with the given id
+      description: Authentication required for this operation.
+      operationId: getCropById
+      parameters:
+      - name: cropId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The crop.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+        '403':
+          description: Not enough permissions to perform the operation.
+    put:
+      tags:
+      - Crop
+      summary: Update a crop
+      description: Authentication required for this operation.
+      operationId: putCrop
+      parameters:
+      - name: cropId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Crop updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the crop.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CropEditable'
+    delete:
+      tags:
+      - Crop
+      summary: Delete a crop
+      description: Authentication required for this operation.
+      operationId: deleteCrop
+      parameters:
+      - name: cropId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Crop has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Crop not found.
+    patch:
+      tags:
+      - Crop
+      summary: Patch a crop
+      description: Authentication required for this operation.
+      operationId: patchCrop
+      parameters:
+      - name: cropId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Crop patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Crop'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while patching the crop.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CropEditable'
+  /crop/organization/{organizationId}:
+    get:
+      tags:
+      - Crop
+      summary: Returns crops available to the organization, i.e public crops and the…
+      description: Authentication required for this operation.
+      operationId: getCropsForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns crops available to the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crop'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Crop'
+        '403':
+          description: Not enough permissions to perform the operation.
+components:
+  schemas:
+    NewCrop:
+      type: object
+      required:
+      - category
+      - cropId
+      - maxAllowableDepletion
+      properties:
+        category:
+          type: string
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the crop.
+        createdAt:
+          type: integer
+          format: int64
+          description: The date and time the crop was created.
+        cropId:
+          type: string
+          description: Id of the crop.
+        organizationId:
+          type: string
+          description: The organization the crop belongs to.
+    Crop:
+      type: object
+      required:
+      - category
+      - cropId
+      - maxAllowableDepletion
+      properties:
+        category:
+          type: string
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the crop.
+        createdAt:
+          type: integer
+          format: int64
+          description: The date and time the crop was created.
+        cropId:
+          type: string
+          description: Id of the crop.
+        organizationId:
+          type: string
+          description: The organization the crop belongs to.
+    CropEditable:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the crop.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

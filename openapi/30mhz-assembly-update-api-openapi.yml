@@ -1,0 +1,104 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Assembly Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: assembly-update
+paths:
+  /assembly-update/{serialNumber}:
+    post:
+      tags:
+      - assembly-update
+      summary: Update an assembly
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: updateAssembly
+      parameters:
+      - name: serialNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Assembly updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem updating the assembly.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssemblyEditable'
+components:
+  schemas:
+    AssemblyEditable:
+      type: object
+      properties:
+        battery1:
+          type: string
+        battery2:
+          type: string
+        pcb1:
+          type: string
+        pcb2:
+          type: string
+        productNumber:
+          type: string
+        remarks:
+          type: string
+        xbee1:
+          type: string
+        xbee2:
+          type: string
+    Assembly:
+      type: object
+      properties:
+        battery1:
+          type: string
+        battery2:
+          type: string
+        pcb1:
+          type: string
+        pcb2:
+          type: string
+        productNumber:
+          type: string
+        remarks:
+          type: string
+        xbee1:
+          type: string
+        xbee2:
+          type: string
+        serialNumber:
+          type: string
+          description: Serial number.
+        changedBy:
+          type: string
+        createdAt:
+          type: string
+        endDate:
+          type: string
+        startDate:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

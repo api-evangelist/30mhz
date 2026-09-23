@@ -1,0 +1,261 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Product API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Product
+paths:
+  /product:
+    get:
+      tags:
+      - Product
+      summary: Gets all the products
+      description: Authentication required for this operation.
+      operationId: getAllProducts
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: All the products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '403':
+          description: Not enough permissions to perform the operation
+    post:
+      tags:
+      - Product
+      summary: Create a new product
+      description: Authentication required for this operation.
+      operationId: createProduct
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Product created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad request - missing product or bad syntax in product data
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+  /product/{productId}:
+    get:
+      tags:
+      - Product
+      summary: Gets the product with the specified id
+      description: Authentication required for this operation.
+      operationId: getProduct
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The product with the specified id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '403':
+          description: Not enough permissions to perform the operation
+    delete:
+      tags:
+      - Product
+      summary: Remove product
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: deleteProduct
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Product has been removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '403':
+          description: User is not authorized to perform this operation. an admin.
+        '404':
+          description: Product not found.
+      x-admin-only: true
+components:
+  schemas:
+    NewProduct:
+      type: object
+      required:
+      - stock
+      properties:
+        prices:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        articleNumber:
+          type: string
+        availabilityDate:
+          type: string
+        batchSize:
+          type: integer
+          format: int32
+        configuration:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+        description:
+          type: string
+        landOfOrigin:
+          type: string
+        lockPrice:
+          type: boolean
+        phase:
+          type: string
+        productId:
+          type: string
+        productType:
+          type: string
+        remark:
+          type: string
+        sensorType:
+          type: string
+        status:
+          type: string
+        stock:
+          type: integer
+          format: int32
+        weight:
+          type: integer
+          format: int32
+        specificationSheetId:
+          type: string
+    Product:
+      type: object
+      required:
+      - stock
+      properties:
+        articleNumber:
+          type: string
+          description: Product's article number.
+        availabilityDate:
+          type: string
+          description: Product availability date.
+        batchSize:
+          type: integer
+          format: int32
+          description: Product batch size.
+        configuration:
+          type: object
+          description: Product configuration
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+          description: Product cost price.
+        createdAt:
+          type: string
+          description: The date and time the product was created.
+        description:
+          type: string
+          description: Product description.
+        landOfOrigin:
+          type: string
+          description: Land of origin.
+        lockPrice:
+          type: boolean
+          description: Lock price
+        phase:
+          type: string
+          description: Product phase.
+        prices:
+          type: object
+          example: '{''EUR'' : { ''price'' : 750.5 }, ''GBP'' : { ''priceEstimation'' : 100}}'
+          description: Product prices for multiple currency.
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        productId:
+          type: string
+          description: Product id.
+        productType:
+          type: string
+          description: Product type.
+        remark:
+          type: string
+          description: Product remark.
+        sensorType:
+          type: string
+          description: Product sensor type.
+        specificationSheet:
+          type: string
+        specificationSheetId:
+          type: string
+          description: Product specification sheet.
+        status:
+          type: string
+          description: Product status.
+        stock:
+          type: integer
+          format: int32
+          description: Product stock.
+        updatedAt:
+          type: string
+          description: The date and time the product was last updated.
+        weight:
+          type: integer
+          format: int32
+          description: Product weight in grams.
+      description: Product
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

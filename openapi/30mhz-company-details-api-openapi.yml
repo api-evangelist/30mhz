@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Company Details API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Company Details
+paths:
+  /company-details/{companyDetailsId}:
+    delete:
+      tags:
+      - Company Details
+      summary: Delete company details with the given id
+      description: Only members of the organization or administrators of ZENSIE are authorised to call this operation.
+      operationId: deleteCompanyDetails
+      parameters:
+      - name: companyDetailsId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Company details deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+        '403':
+          description: User not allowed to perform the operation
+  /company-details/organization/{organizationId}:
+    get:
+      tags:
+      - Company Details
+      summary: Returns a list of company details linked to an organization
+      description: Authentication required for this operation.
+      operationId: getCompanyDetailsByOrganizationId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The company details belonging to the organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+        '403':
+          description: Not enough permissions to perform the operation
+    post:
+      tags:
+      - Company Details
+      summary: Create new company details
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        Currently only admin users or owners of the organization are authorised to call this operation.'
+      operationId: createCompanyDetails
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New company details created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CompanyDetails'
+        '400':
+          description: Bad request - missing details or bad syntax in details data
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCompanyDetails'
+components:
+  schemas:
+    CompanyDetails:
+      type: object
+      required:
+      - active
+      properties:
+        accountManager:
+          type: string
+          description: CompanyDetails's account manager.
+        active:
+          type: boolean
+          description: The state of the company detail
+        address:
+          type: string
+          description: The address of the company details
+        city:
+          type: string
+          description: The city of the company details
+        companyDetailsId:
+          type: string
+          description: Company details id
+        companyName:
+          type: string
+          description: The company name of the company details
+        country:
+          type: string
+          description: The country of the company details
+        countryCode:
+          type: string
+          description: The code of the country of the company details
+        debtorId:
+          type: integer
+          format: int32
+          description: The debtor id of the company details
+        invoiceEmail:
+          type: string
+          description: CompanyDetails's invoice email.
+        organizationId:
+          type: string
+          description: The organization id of the company details
+        postalCode:
+          type: string
+          description: The postal code of the company details
+        telephoneNumber:
+          type: string
+          description: The address of the company details
+        vatNumber:
+          type: string
+          description: The vat number of the company details
+    NewCompanyDetails:
+      type: object
+      properties:
+        accountManager:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        companyName:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        invoiceEmail:
+          type: string
+        postalCode:
+          type: string
+        telephoneNumber:
+          type: string
+        vatNumber:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

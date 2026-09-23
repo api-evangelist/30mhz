@@ -1,0 +1,227 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Downtime API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Downtime
+paths:
+  /downtime/{checkId}/interval/{interval}:
+    get:
+      tags:
+      - Downtime
+      summary: Returns the date histogram aggregations recorded downtimes of the check at the…
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        The current user should be authorized to the check.
+
+        When there is no location specified at the query parameter all the locations associated to that check id will be queried.
+
+        The periodic data response is by default (when not specified) 200 times sliced.'
+      operationId: getCheckCurrentDowntime
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id
+        required: true
+        schema:
+          type: string
+      - name: interval
+        in: path
+        description: 'Intervals allowed : c, today, (f)1h, (f)2h, ..., (f)xh, (f)1d, (f)2d, ..., (f)xd, (f)1w, (f)2w, ..., (f)xw, (f)1M, (f)2M, ..., (f)xM. '
+        required: true
+        schema:
+          type: string
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: true
+        schema:
+          type: string
+          default: all
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Parsed downtime aggregations of the check at the requested interval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+        '400':
+          description: must be one of valid allowed Intervals
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: No downtime statistics found for the check
+  /downtime/{checkId}/{period}:
+    get:
+      tags:
+      - Downtime
+      summary: 'FOR BACKWARD COMPATIBILITY ONLY: Returns the date histogram aggregations…'
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        The current user should be authorized to the check.
+
+        When there is no location specified at the query parameter all the locations associated to that check id will be queried.
+
+        The periodic data response is by default (when not specified) 200 times sliced.'
+      operationId: getCheckCurrentDowntimeInfo
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id
+        required: true
+        schema:
+          type: string
+      - name: period
+        in: path
+        description: 'Periods allowed : hour, day, current (same as ''day''), month, week, all. '
+        required: true
+        schema:
+          type: string
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: true
+        schema:
+          type: string
+          default: all
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Parsed downtime aggregations of the check at the requested period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+        '400':
+          description: must be one of valid allowed Periods
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: No downtime statistics found for the check
+  /downtime/{checkId}/from/{startDate}/until/{endDate}:
+    get:
+      tags:
+      - Downtime
+      summary: Returns the date histogram aggregations related to the recorded downtimes of…
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        The current user should be authorized to the check.
+
+        When there is no location specified at the query parameter all the locations associated to that sensor will be queried.
+
+        The date validation process will include the precedence validation, so if endDate is previous to startDate the dates will be switched.
+
+        The periodic data response is by default (when not specified) 200 times sliced.'
+      operationId: getDowntimeInfoByPeriod
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: path
+        description: 'Initial date string.ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string.ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: true
+        schema:
+          type: string
+          default: all
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Parsed downtime aggregations of the check at the requested period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntry'
+        '400':
+          description: 'The provided date must be a valid date: ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: No downtime statistics found for the check
+        '500':
+          description: Error parsing the provided dates
+components:
+  schemas:
+    ResponseEntry:
+      type: object
+      properties:
+        response:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+      description: Aggregation statistical result entity
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

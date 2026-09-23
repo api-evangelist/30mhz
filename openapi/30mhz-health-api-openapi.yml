@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Health API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Health
+paths:
+  /health:
+    get:
+      tags:
+      - Health
+      summary: Deep readiness probe reporting the health of all backing services
+      description: ''
+      operationId: health
+      responses:
+        '200':
+          description: All gating backing services are healthy; the instance is ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: One or more backing services are unavailable; the instance is not ready to serve traffic.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        checks:
+          type: object
+          description: Per-dependency readiness, keyed by an opaque service name.
+          additionalProperties:
+            $ref: '#/components/schemas/ServiceHealth'
+        status:
+          type: string
+          description: 'Overall readiness: ''healthy'' when every gating dependency is up, otherwise ''unhealthy''.'
+        timestamp:
+          type: string
+          description: UTC ISO 8601 timestamp of when this readiness snapshot was computed.
+      description: Aggregate readiness of the API and its backing services.
+    ServiceHealth:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Dependency readiness, either 'up' or 'down'.
+        latency_ms:
+          type: integer
+          format: int64
+          description: Time in milliseconds the dependency's health check took to respond.
+      description: Readiness of a single backing service.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

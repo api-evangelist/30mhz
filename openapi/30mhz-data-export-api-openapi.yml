@@ -1,0 +1,330 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Data Export API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Data Export
+paths:
+  /data-export:
+    post:
+      tags:
+      - Data Export
+      summary: Data export
+      description: Authentication required for this operation.
+      operationId: createDataExport
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Created data export
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataExportBackgroundRequest'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataExportBackgroundRequest'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Location does not belong to the organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataExportRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/DataExportRequest'
+  /data-export/{dataExportId}/organization/{organizationId}:
+    get:
+      tags:
+      - Data Export
+      summary: Get a data export entry from dynamodb
+      description: Authentication required
+      operationId: getDataExport
+      parameters:
+      - name: dataExportId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data export
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataExportResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataExportResponse'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Data export does not exist
+    delete:
+      tags:
+      - Data Export
+      summary: Delete a data export
+      description: Authentication required
+      operationId: deleteDataExport
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dataExportId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data export deleted successfully
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Data export does not exist
+  /data-export/organization/{organizationId}:
+    get:
+      tags:
+      - Data Export
+      summary: Get data exports of the organization
+      description: Authentication required for this operation.
+      operationId: getDataExportForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of data exports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataExportResponse'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataExportResponse'
+        '403':
+          description: Not enough permissions to perform the operation
+  /data-export/count:
+    post:
+      tags:
+      - Data Export
+      summary: Number of results the data export will return
+      description: Authentication required for this operation.
+      operationId: getDataExportRowsCount
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data export request count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataExportCountResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataExportCountResponse'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Location does not belong to the organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataExportRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/DataExportRequest'
+components:
+  schemas:
+    DataExportBackgroundRequest:
+      type: object
+      required:
+      - timeZone
+      properties:
+        aggregationInterval:
+          type: string
+        aggregationMetric:
+          type: string
+        checkIds:
+          type: array
+          items:
+            type: string
+        dataExportId:
+          type: string
+        decimalMark:
+          type: string
+        documentType:
+          type: string
+        email:
+          type: string
+        format:
+          type: string
+        fromDate:
+          type: string
+        location:
+          type: string
+        organization:
+          type: string
+        sensorType:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        timeZone:
+          type: integer
+          format: int32
+        toDate:
+          type: string
+      description: The created request to export data
+    DataExport:
+      type: object
+      properties:
+        aggregationInterval:
+          type: string
+          description: The aggregation interval for the data export.
+        aggregationMetric:
+          type: string
+          description: The aggregation metric for the data export.
+        dataExportId:
+          type: string
+          description: Data export id.
+        date:
+          type: string
+          description: The date of the data export.
+        documentType:
+          type: string
+          description: The document type for the data export.
+        duration:
+          type: string
+          description: The duration of the data export.
+        email:
+          type: string
+          description: The email of the data export.
+        filename:
+          type: string
+          description: The filename of the data export.
+        fromDate:
+          type: string
+          description: The start date for the data export.
+        location:
+          type: string
+          description: The location of the data export.
+        month:
+          type: string
+          description: The month parameter of the data export.
+        numberOfRows:
+          type: integer
+          format: int64
+          description: The resulting number of rows for the data export.
+        organizationId:
+          type: string
+          description: Organization id for the data export.
+        sensorType:
+          type: string
+          description: The sensor type parameter of the data export.
+        status:
+          type: string
+          description: The status of the data export.
+        timeZone:
+          type: integer
+          format: int32
+          description: The time zone for the requested data export.
+        toDate:
+          type: string
+          description: The end date for the data export.
+        year:
+          type: string
+          description: The year parameter of the data export.
+      description: DataExport
+    DataExportRequest:
+      type: object
+      required:
+      - timezoneOffset
+      properties:
+        aggregationInterval:
+          type: string
+        aggregationMetric:
+          type: string
+        checkIds:
+          type: array
+          items:
+            type: string
+        decimalMark:
+          type: string
+        documentType:
+          type: string
+        email:
+          type: string
+        format:
+          type: string
+        fromDate:
+          type: string
+        location:
+          type: string
+        month:
+          type: string
+        organization:
+          type: string
+        sensorType:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        timezoneOffset:
+          type: integer
+          format: int32
+        toDate:
+          type: string
+        year:
+          type: string
+      description: A request to export data
+    DataExportCountResponse:
+      type: object
+      required:
+      - rowsCount
+      properties:
+        rowsCount:
+          type: integer
+          format: int64
+    DataExportResponse:
+      type: object
+      properties:
+        dataExport:
+          $ref: '#/components/schemas/DataExport'
+        resourceUrl:
+          type: string
+      description: A wrapper for the data export along with the resulting document url
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

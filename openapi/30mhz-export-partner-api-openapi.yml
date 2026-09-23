@@ -1,0 +1,212 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Export Partner API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: export-partner
+paths:
+  /export-partner/organization/{organizationId}:
+    get:
+      tags:
+      - export-partner
+      summary: Retrieves export partners records for the organization
+      description: Authentication required for this operation.
+      operationId: getExportPartners
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportPartner'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportPartner'
+        '201':
+          description: The export partners for the specified organization
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+    post:
+      tags:
+      - export-partner
+      summary: Create new export partners record
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: createExportPartner
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New export partner record created
+        '400':
+          description: Export partner already exists for this organization
+        '403':
+          description: Not enough permissions to perform this operation
+        '404':
+          description: Organization with that id doesn't exist
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewExportPartner'
+  /export-partner/{exportPartnerId}/organization/{organizationId}:
+    get:
+      tags:
+      - export-partner
+      summary: Retrieves new export partners record
+      description: Authentication required for this operation.
+      operationId: getExportPartner
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: exportPartnerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The export partner with the given id for the specified organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportPartner'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ExportPartner'
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+    delete:
+      tags:
+      - export-partner
+      summary: Removes new export partners record
+      description: Authentication required for this operation.
+      operationId: removeExportPartner
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: exportPartnerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The export partner with the given id for the specified organization
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+components:
+  schemas:
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
+        name:
+          type: string
+    ExportPartner:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time a export partner was created.
+        data:
+          type: array
+          description: The json data of export partner.
+          items:
+            $ref: '#/components/schemas/ExportPartnerData'
+        description:
+          type: string
+          description: The description of export partner.
+        exportPartnerId:
+          type: string
+          description: Export partner id.
+        exportPartnerURL:
+          type: string
+          description: The url of export partner.
+        organizationId:
+          type: string
+          description: UUID of the check
+        updatedAt:
+          type: string
+          description: The date and time a export partner was last updated.
+      description: ExportPartner
+    ExportPartnerDataItem:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    NewExportPartner:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportPartnerData'
+        description:
+          type: string
+        exportPartnerId:
+          type: string
+        exportPartnerURL:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

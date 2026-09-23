@@ -1,0 +1,312 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Subscription API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Subscription
+paths:
+  /subscription:
+    get:
+      tags:
+      - Subscription
+      summary: Return all subscriptions
+      description: Authentication required for this operation.
+      operationId: getAllSubscriptions
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all subscriptions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving subscriptions.
+    post:
+      tags:
+      - Subscription
+      summary: Create a new subscription
+      description: Authentication required for this operation.
+      operationId: createSubscription
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New subscription created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '404':
+          description: Required resource not found.
+        '403':
+          description: Not enough permissions to perform the operation.
+        '409':
+          description: Subscription already exists.
+        '500':
+          description: Error while creating the subscription.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionNew'
+  /subscription/{subscriptionId}/license/{licenseId}:
+    get:
+      tags:
+      - Subscription
+      summary: Return the subscription with the given id
+      description: Authentication required for this operation.
+      operationId: getSubscriptionById
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '404':
+          description: Subscription not found.
+        '500':
+          description: Error while retrieving the subscription.
+    put:
+      tags:
+      - Subscription
+      summary: Update a subscription
+      description: Authentication required for this operation.
+      operationId: putSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Subscription updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Subscription not found.
+        '500':
+          description: Error while patching the subscription.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionEditable'
+    delete:
+      tags:
+      - Subscription
+      summary: Delete a subscription
+      description: Authentication required for this operation.
+      operationId: deleteSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Subscription has been deleted.
+        '400':
+          description: Could not perform operation due to wrong input.
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Subscription not found.
+        '500':
+          description: Error while deleting the subscription.
+    patch:
+      tags:
+      - Subscription
+      summary: Update the subscription with the given id
+      description: Authentication required for this operation.
+      operationId: patchSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Subscription patched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Subscription not found.
+        '500':
+          description: Error while patching the subscription.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionEditable'
+  /subscription/license/{licenseId}:
+    get:
+      tags:
+      - Subscription
+      summary: Returns the subscriptions associated with the given license id
+      description: Authentication required for this operation.
+      operationId: getSubscriptionsByLicenseId
+      parameters:
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all subscriptions associated with license.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: License not found.
+        '500':
+          description: Error while retrieving subscriptions.
+components:
+  schemas:
+    SubscriptionEditable:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
+      description: Object holding the editable properties of a subscription
+    SubscriptionNew:
+      type: object
+      required:
+      - licenseId
+      - name
+      - subscriptionId
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+      description: Object holding the editable properties of a subscription
+    Subscription:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+      description: Object holding the editable properties of a subscription
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

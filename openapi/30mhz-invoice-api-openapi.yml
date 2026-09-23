@@ -1,0 +1,361 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Invoice API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Invoice
+paths:
+  /invoice:
+    get:
+      tags:
+      - Invoice
+      summary: Returns all the invoices
+      description: The authenticated user must be an administrator.
+      operationId: getAllInvoices
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: All the invoices.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '403':
+          description: Not enough permissions to perform the operation
+    post:
+      tags:
+      - Invoice
+      summary: Add an invoice
+      description: The authenticated user must be an administrator.
+      operationId: addInvoice
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Invoice added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization does not exist
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewInvoice'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NewInvoice'
+  /invoice/{invoiceId}:
+    get:
+      tags:
+      - Invoice
+      summary: Returns the invoice with the specified id
+      description: The authenticated user must be an administrator.
+      operationId: getInvoiceById
+      parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The invoice with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRequest'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CustomerRequest'
+        '403':
+          description: Not enough permissions to perform the operation
+    delete:
+      tags:
+      - Invoice
+      summary: Deletes the invoice with the specified id
+      description: The authenticated user must be an administrator.
+      operationId: deleteInvoiceById
+      parameters:
+      - name: invoiceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Invoice removed.
+        '403':
+          description: Not enough permissions to perform the operation
+      x-admin-only: true
+  /invoice/customer-request/{customerRequestId}:
+    get:
+      tags:
+      - Invoice
+      summary: Returns the invoice with the specified customer request id
+      description: The authenticated user must be an administrator.
+      operationId: getInvoiceByCustomerRequestId
+      parameters:
+      - name: customerRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The invoice with the given customer request id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '403':
+          description: Not enough permissions to perform the operation
+components:
+  schemas:
+    CustomerRequest:
+      type: object
+      required:
+      - totalPrice
+      properties:
+        accountManager:
+          type: string
+          description: CustomerRequest's account manager.
+        contactPersonEmail:
+          type: string
+          description: CustomerRequest's contact person email.
+        contactPersonFirstName:
+          type: string
+          description: CustomerRequest's contact person first name.
+        contactPersonLastName:
+          type: string
+          description: CustomerRequest's contact person last name.
+        contactPersonPhone:
+          type: string
+          description: CustomerRequest's contact person phone number.
+        countryCode:
+          type: string
+          description: The country code of the quote.
+        createdAt:
+          type: string
+          description: The date and time a quote was created.
+        currency:
+          type: string
+          description: CustomerRequest's currency.
+        customVatPercentage:
+          type: integer
+          format: int32
+          description: CustomerRequest's custom vat percentage.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerRequestItem'
+        dealer:
+          type: string
+          description: CustomerRequest's dealer email.
+        deliverOnlyToCustomerAddress:
+          type: boolean
+          description: 'Can the order by delivered to neighbours '
+        deliveredPersonally:
+          type: boolean
+          description: Is the order delivered by us.
+        description:
+          type: string
+          description: CustomerRequest's description.
+        discountAmount:
+          type: number
+          format: float
+          description: CustomerRequest's discount amount.
+        discountPercentage:
+          type: integer
+          format: int32
+          description: CustomerRequest's discountPercentage.
+        language:
+          type: string
+          description: The language of the quote.
+        measureFrequency:
+          type: integer
+          format: int32
+          description: The desired measure frequency.
+        organizationId:
+          type: string
+          description: The organization of the quote.
+        organizationLocationName:
+          type: string
+          description: The organization location of the quote.
+        organizationName:
+          type: string
+          description: The organization name of the quote.
+        paymentConditions:
+          type: boolean
+          description: CustomerRequest's payment conditions.
+        poNumber:
+          type: string
+          description: The PO Number of the customer request.
+        remarks:
+          type: string
+          description: The remarks of the customer request.
+        shippingCost:
+          type: number
+          format: float
+          description: CustomerRequest's shipping cost.
+        signatureRequired:
+          type: boolean
+          description: Is a signature required when delivering
+        totalPrice:
+          type: number
+          format: float
+          description: CustomerRequest's total price.
+        totalPriceIncludingDiscount:
+          type: number
+          format: float
+          description: CustomerRequest's total including discount.
+        totalPriceIncludingVat:
+          type: number
+          format: float
+          description: CustomerRequest's total including vat amount.
+        updatedAt:
+          type: string
+          description: The date and time a quote was last updated.
+        vatAmount:
+          type: number
+          format: float
+          description: CustomerRequest's vat amount.
+        vertical:
+          type: string
+          description: The vertical of the quote.
+      description: Customer request
+    CustomerRequestItem:
+      type: object
+      required:
+      - lineTotal
+      - unitPrice
+      - units
+      properties:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a quote item was created.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItemId:
+          type: string
+          description: Customer request item id.
+        description:
+          type: string
+          description: The description for the quote item.
+        lineTotal:
+          type: number
+          format: float
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother id for the quote item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
+          type: integer
+          format: int32
+          description: CustomerRequest item's units.
+        updatedAt:
+          type: string
+          description: The date and time a quote item was last updated.
+      description: CustomerRequestItem
+    Invoice:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Invoice's created at date.
+        customerRequest:
+          $ref: '#/components/schemas/CustomerRequest'
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        date:
+          type: string
+          description: Invoice's date.
+        datePaid:
+          type: string
+          description: The date when the invoice's status became Paid.
+        dateSent:
+          type: string
+          description: The date when the invoice's status became Sent.
+        deliveredDate:
+          type: string
+          description: Invoice's delivered date.
+        dueDate:
+          type: string
+          description: Invoice's due date.
+        invoiceId:
+          type: string
+          description: Invoice id.
+        invoiceNumber:
+          type: string
+          description: Invoice number.
+        status:
+          type: string
+          description: Invoice's status.
+      description: Invoice
+    NewInvoice:
+      type: object
+      properties:
+        customerRequestId:
+          type: string
+        date:
+          type: string
+        deliveredDate:
+          type: string
+        dueDate:
+          type: string
+        invoiceNumber:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

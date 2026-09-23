@@ -1,0 +1,379 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dashboard Theme API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: dashboard-theme
+paths:
+  /dashboard-theme/{dashboardThemeId}/group/{groupId}:
+    post:
+      tags:
+      - dashboard-theme
+      summary: Assign a theme to an group
+      description: Authentication required for this operation
+      operationId: assignDashboardThemeToGroup
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem assigning the dashboard theme.
+    delete:
+      tags:
+      - dashboard-theme
+      summary: Remove a theme from an group
+      description: Authentication required for this operation
+      operationId: removeDashboardThemeFromGroup
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Dashboard theme removed from group
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem removing the dashboard theme.
+  /dashboard-theme/{dashboardThemeId}/organization/{organizationId}:
+    post:
+      tags:
+      - dashboard-theme
+      summary: Assign a theme to an organization
+      description: Authentication required for this operation
+      operationId: assignDashboardThemeToOrganization
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem assigning the dashboard theme.
+    delete:
+      tags:
+      - dashboard-theme
+      summary: Remove a theme from an organization
+      description: Authentication required for this operation
+      operationId: removeDashboardThemeFromOrganization
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Dashboard theme removed
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem removing the dashboard theme.
+  /dashboard-theme:
+    post:
+      tags:
+      - dashboard-theme
+      summary: Create a new dashboard theme
+      description: Authentication required for this operation
+      operationId: createDashboardTheme
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New dashboard theme created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem creating the dashboard theme.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewDashboardTheme'
+  /dashboard-theme/{dashboardThemeId}:
+    get:
+      tags:
+      - dashboard-theme
+      summary: Get dashboard theme with the given id
+      description: Authentication required for this operation
+      operationId: getDashboardTheme
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem getting the dashboard theme.
+    delete:
+      tags:
+      - dashboard-theme
+      summary: Remove dashboard theme
+      description: Authentication required for this operation, authenticated user must have admin role or be must owner of the theme.
+      operationId: deleteDashboardTheme
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Dashboard theme has been removed.
+        '403':
+          description: User is not authorized to perform this operation, they must be theme owner or an admin.
+        '404':
+          description: Dashboard theme not found.
+        '510':
+          description: Error - dashboard theme not deleted.
+  /dashboard-theme/user/{email}:
+    get:
+      tags:
+      - dashboard-theme
+      summary: Get all dashboard themes of a user
+      description: Authentication required for this operation
+      operationId: getDashboardThemesForUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard themes for user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem getting the dashboard themes.
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    NewDashboardTheme:
+      type: object
+      required:
+      - css
+      properties:
+        css:
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        logoDataUploadId:
+          type: string
+        name:
+          type: string
+    DashboardThemeCSS:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarShadow:
+          type: boolean
+        headerBarTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

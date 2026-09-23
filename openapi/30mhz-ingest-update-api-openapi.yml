@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Ingest Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: ingest-update
+paths:
+  /ingest-update/import-check/{importCheckId}/timestamp/{timestamp}:
+    post:
+      tags:
+      - ingest-update
+      summary: Update ingested external sensor data
+      description: ''
+      operationId: updateImportCheckEvent
+      parameters:
+      - name: importCheckId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timestamp
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Import check event processed.
+        '403':
+          description: Not enough permissions to perform the operation. User must be editor or owner in the organization.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportCheckEventUpdateRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ImportCheckEventUpdateRequest'
+components:
+  schemas:
+    ImportCheckEventUpdateRequest:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: Id of the import check (must be of the same sensor type as the current check)
+        collectionId:
+          type: string
+          description: Collection id of the event.
+        data:
+          type: object
+          description: Data as a map of sensor fields to their corresponding value.
+        error:
+          type: string
+          description: Error message when status is 'fail'.
+        status:
+          type: string
+          description: '''ok'' or ''fail'' values representing the event success status.'
+        unitsOverride:
+          type: object
+          description: A map that defines units used for each sensor field.
+          additionalProperties:
+            type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,106 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Calculation Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: calculation-update
+paths:
+  /calculation-update/{calculationId}:
+    post:
+      tags:
+      - calculation-update
+      summary: Update a calculation
+      description: Authentication required for this operation
+      operationId: updateAppConfiguration
+      parameters:
+      - name: calculationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Calculation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Calculation'
+        '403':
+          description: User must be admin.
+        '500':
+          description: Error while updating the calculation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculationEditable'
+components:
+  schemas:
+    CalculationEditable:
+      type: object
+      properties:
+        aggregationKey:
+          type: string
+          description: Key of the selected aggregation from the calculation response
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
+        name:
+          type: string
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+        template:
+          type: string
+          description: Template for the calculation
+        templateId:
+          type: string
+          description: Unique identifier for the calculation template
+      description: Object holding the editable properties of a calculation.
+    Calculation:
+      type: object
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
+        name:
+          type: string
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+      description: Calculations allow querying data through operations and aggregations.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

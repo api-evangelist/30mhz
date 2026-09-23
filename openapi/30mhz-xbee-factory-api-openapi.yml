@@ -1,0 +1,241 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Xbee Factory API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: xbee-factory
+paths:
+  /xbee-factory/{macAddress}:
+    get:
+      tags:
+      - xbee-factory
+      summary: Return XBee factory configuration
+      description: Authentication required for this operation.
+      operationId: getFactory
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns XBee factory configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+        '403':
+          description: User must be an admin.
+        '404':
+          description: XBee factory configuration does not exist.
+    post:
+      tags:
+      - xbee-factory
+      summary: Save an XBee factory configuration
+      description: Authentication required for this operation
+      operationId: saveFactory
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: XBee factory saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/XBeeFactory'
+        '400':
+          description: Configuration values must be either strings or json objects.
+        '403':
+          description: User must be an admin.
+        '500':
+          description: Error while installing the app.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XBeeFactoryEditable'
+    delete:
+      tags:
+      - xbee-factory
+      summary: Remove a XBee factory configuration
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: removeFactory
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Uninstall succeeded.
+        '403':
+          description: User is not authorized to perform operation, must be an admin.
+        '404':
+          description: XBee factory not found.
+        '510':
+          description: Error - factory not removed.
+  /xbee-factory/history/{macAddress}:
+    get:
+      tags:
+      - xbee-factory
+      summary: Return XBee factory configuration history
+      description: Authentication required for this operation.
+      operationId: getFactoryHistory
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns XBee factory configuration history
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/XBeeConfiguration'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/XBeeConfiguration'
+        '403':
+          description: User must be an admin.
+        '404':
+          description: XBee factory configuration does not exist.
+  /xbee-factory/history/test-result/{macAddress}:
+    get:
+      tags:
+      - xbee-factory
+      summary: Return XBee factory test result history
+      description: Authentication required for this operation.
+      operationId: getTestResultHistory
+      parameters:
+      - name: macAddress
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns XBee factory test result history
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/XBeeTestResult'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/XBeeTestResult'
+        '403':
+          description: User must be an admin.
+        '404':
+          description: XBee factory does not exist.
+components:
+  schemas:
+    XBeeFactory:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: Check Id this XBee factory belongs to.
+        remarks:
+          type: string
+          description: Remarks regarding this factory.
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+        testResults:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+        lastChanged:
+          type: string
+        macAddress:
+          type: string
+          description: MAC Address.
+    XBeeTestResult:
+      type: object
+      properties:
+        changedByEmail:
+          type: string
+          description: The email address of the user that changed this test result
+        testResultKey:
+          type: string
+          description: The key for this test result.
+        testResultValue:
+          type: string
+          description: 'The value for this test result: a json object or a string.'
+    XBeeFactoryEditable:
+      type: object
+      properties:
+        checkId:
+          type: string
+        remarks:
+          type: string
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+        testResults:
+          type: object
+          additionalProperties:
+            type: string
+    XBeeConfiguration:
+      type: object
+      properties:
+        changedByEmail:
+          type: string
+          description: The email address of the user that changed this configuration
+        configurationKey:
+          type: string
+          description: The key for this configuration.
+        configurationValue:
+          type: string
+          description: 'The value for this configuration: a json object or a string.'
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

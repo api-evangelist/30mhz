@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Follow API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-follow
+paths:
+  /notification-follow/{notificationId}/user/{email}:
+    post:
+      tags:
+      - notification-follow
+      summary: Adds a follow to a notification
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: createNotificationFollow
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New notification follow created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMethods'
+    delete:
+      tags:
+      - notification-follow
+      summary: Delete a notification follow with the given id
+      description: Only members of the organization or administrators of ZENSIE are authorised to call this operation.
+      operationId: deleteNotificationOfUser
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+        '403':
+          description: User not allowed to perform the operation
+  /notification-follow/organization/{organizationId}/user/{email}:
+    get:
+      tags:
+      - notification-follow
+      summary: Retrieves all notification follows for a user within an organization
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationFollow
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of notification follows for a user within an organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+        '403':
+          description: User not allowed to perform the operation
+  /notification-follow/organization/{organizationId}/count:
+    post:
+      tags:
+      - notification-follow
+      summary: Retrieves the followers counts of notifications
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationFollowCount
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of notification follows for a user within an organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationFollowCount'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationFollowCount'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+  /notification-follow/{notificationId}:
+    get:
+      tags:
+      - notification-follow
+      summary: Retrieves all followers of a notification
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationFollowers
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of users that follow a notification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+        '403':
+          description: User not allowed to perform the operation
+components:
+  schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
+    NotificationFollowCount:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        notificationId:
+          type: string
+    Notification_follow:
+      type: object
+      properties:
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        notificationId:
+          type: string
+        organizationId:
+          type: string
+      description: Notification follow represents a subscription of a user to a given notification with a given method, e.g. email, sms, etc.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

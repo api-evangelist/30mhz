@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Billing History API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: billing-history
+paths:
+  /billing-history/organization/{organizationId}/year/{year}/month/{month}:
+    get:
+      tags:
+      - billing-history
+      summary: Return billing history
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryByOrganizationIdAndMonth
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history record returned
+        '403':
+          description: Not enough permissions to perform the operation
+      x-admin-only: true
+    delete:
+      tags:
+      - billing-history
+      summary: Remove billing history for a specific organization and month, including the…
+      description: Operation reserved to administrators.
+      operationId: deleteBillingHistoryByOrganizationAndMonth
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history records removed
+        '403':
+          description: User not allowed to perform this operation. Should be admin.
+        '404':
+          description: No billing history for the organization in that month.
+      x-admin-only: true
+  /billing-history/organization/{organizationId}:
+    get:
+      tags:
+      - billing-history
+      summary: Return billing history
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryByOrganizationId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of billing history records returned
+        '403':
+          description: Not enough permissions to perform the operation
+      x-admin-only: true
+  /billing-history/organization/{organizationId}/forecast:
+    post:
+      tags:
+      - billing-history
+      summary: Return billing history forecast for current month
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryForecastForCurrentMonth
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history record returned
+        '403':
+          description: Not enough permissions to perform the operation
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryForecastRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryForecastRequest'
+  /billing-history/all-organizations/year/{year}/month/{month}:
+    get:
+      tags:
+      - billing-history
+      summary: Return billing history for a specific month for all organisations that are…
+      description: Operation reserved to administrators.
+      operationId: getBillingHistoryOrganisationsByMonth
+      parameters:
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history records returned
+        '403':
+          description: Not enough permissions to perform the operation
+  /billing-history/all-organizations:
+    get:
+      tags:
+      - billing-history
+      summary: Return billing history for all organisations that are billable
+      description: Operation reserved to administrators.
+      operationId: getBillingHistoryOrganisationsCurrentMonth
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history records returned
+        '403':
+          description: Not enough permissions to perform the operation
+    post:
+      tags:
+      - billing-history
+      summary: Generate billing history records for every billable organization for the past…
+      description: Authentication required for this operation.
+      operationId: createSqsBillingHistoryRequest
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing History requests created for all the billable organizations.
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+          application/xml:
+            schema:
+              type: object
+  /billing-history:
+    post:
+      tags:
+      - billing-history
+      summary: Create billing history entry for an organization
+      description: Authentication required for this operation.
+      operationId: createSqsBillingHistoryRequestForOrganization
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing History request created
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization does not exist
+        '400':
+          description: The organization is not billable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryRequest'
+components:
+  schemas:
+    BillingHistoryRequest:
+      type: object
+      properties:
+        month:
+          type: string
+        organization:
+          type: string
+        year:
+          type: string
+    BillingHistoryForecastRequest:
+      type: object
+      properties:
+        includePausedChecks:
+          type: boolean
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

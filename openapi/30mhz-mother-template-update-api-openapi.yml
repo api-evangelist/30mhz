@@ -1,0 +1,88 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Mother Template Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: mother-template-update
+paths:
+  /mother-template-update/{templateId}:
+    post:
+      tags:
+      - mother-template-update
+      summary: Updates a mother template
+      description: Authentication required for this operation.
+      operationId: updateMotherTemplate
+      parameters:
+      - name: templateId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother template updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A mother template with that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MotherTemplateUpdate'
+components:
+  schemas:
+    MotherTemplateUpdate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+          description: JSON configuration variable for the Gateway template.
+        description:
+          type: string
+          description: The description for the mother template.
+        name:
+          type: string
+          description: The name for the mother template.
+      description: MotherTemplateUpdate
+    MotherTemplate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+          description: JSON configuration variable for the mother template.
+        createdAt:
+          type: string
+          description: The date and time a mother template was created.
+        description:
+          type: string
+          description: The description for the mother template.
+        name:
+          type: string
+          description: The name for the mother template.
+        templateId:
+          type: string
+          description: Template id for the mother template.
+        updatedAt:
+          type: string
+          description: The date and time a mother template was last updated.
+      description: MotherTemplate
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

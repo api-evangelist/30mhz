@@ -1,0 +1,27 @@
+# Front Door AI Index — 30mhz — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: 30mhz
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: 30mhz.com
+  final_host: 30mhz.com
+  ownership: own
+  owner: 30mhz
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 2
+  host_score: 2
+  density: 2.28
+  words: 877
+  tiers:
+    agentic: 0
+    core: 2
+    model: 0
+  ambiguous: 4
+  top_terms:
+    intelligence: 3
+    AI: 2
+    smart: 1

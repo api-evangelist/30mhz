@@ -1,0 +1,1027 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Stats API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Stats
+paths:
+  /stats/aggregate:
+    post:
+      tags:
+      - Stats
+      summary: Returns aggregated data (averaged, max, min) over an interval of time for a set…
+      description: The sensors should all be of the same (sensor) type (or all web checks).
+      operationId: aggregate
+      parameters:
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: false
+        schema:
+          type: string
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Checks statistic
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '400':
+          description: Bad request, e.g. sensors of different types requested
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatisticsInfoRequest'
+  /stats/condition/{checkId}:
+    get:
+      tags:
+      - Stats
+      summary: Returns if the check's last recorded stat meets the condition
+      description: 'Authentication required.
+
+        The authenticated user has to be a user in the organization of the given check
+
+        or have role admin within the system.'
+      operationId: getCheckCondition
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Check condition validation returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+        '403':
+          description: Authenticated user is not allowed to access this check
+        '404':
+          description: Check with given id doesn't exist
+  /stats/events/check/{checkId}/interval/{interval}:
+    get:
+      tags:
+      - Stats
+      summary: Returns event count for the sensor or web check with given check id, for the…
+      description: Authentication required. User should be admin, account manager or member of the check's organization.
+      operationId: getCheckEventsCountForTimeInterval
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id of the sensor
+        required: true
+        schema:
+          type: string
+      - name: interval
+        in: path
+        description: 'Intervals allowed : c, today, (f)1h, (f)2h, ..., (f)xh, (f)1d, (f)2d, ..., (f)xd, (f)1w, (f)2w, ..., (f)xw, (f)1M, (f)2M, ..., (f)xM. '
+        required: true
+        schema:
+          type: string
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Events count for the check at the requested time period
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/EventsCount'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/EventsCount'
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+  /stats/events/check/{checkId}/from/{startDate}/until/{endDate}:
+    get:
+      tags:
+      - Stats
+      summary: Returns event count for the sensor or web check with given check id, for the…
+      description: Authentication required. User should be admin, account manager or member of the check's organization.
+      operationId: getCheckEventsForTimeRange
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id of the sensor
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: path
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Events count for the check at the requested time period
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/EventsCount'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/EventsCount'
+        '400':
+          description: 'The provided date must be a valid date: ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+  /stats/check/{checkId}:
+    get:
+      tags:
+      - Stats
+      summary: Returns the last value recorded of the check
+      description: 'When no valid recent record found (we check the last 5 * frequency seconds by default), the operation will return a 410 or 412 with the possible causes for this check state. For example: 1000: Check is currently paused
+
+        1001: Check is not scheduled to run at this time. Check [cron] property.
+
+        1003: There is no recent data for the sensor. Mother might be powered off or not connected to the Internet, or sensor might be out of reach or off.
+
+        1004: The check is configured with an invalid schedule/cron.
+
+        1005: The data we have for the sensor is old.
+
+        1006: Problem communicating with sensor. No data available.'
+      operationId: getCheckLastRecordedState
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: returnIfConditionMet
+        in: query
+        description: Set to true if you want to know if condition for the checks are met. False by default.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: maxAge
+        in: query
+        description: Maximum age of the record in minutes, by default 5 * frequency
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+          maximum: 1440
+          minimum: 0
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Last recorded value of sensor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+        '204':
+          description: No recently recorded value.<br>
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to the check
+        '404':
+          description: Check not found
+        '412':
+          description: 'Sensor state error: Recorded sensor information contains errors'
+  /stats/check/{checkId}/interval/{interval}:
+    get:
+      tags:
+      - Stats
+      summary: Returns historical data for the sensor or web check with given check id, for…
+      description: 'Authentication required. User should be part of the check''s organization.
+
+
+        For example:
+
+        /stats/check/9cca5615-b654-4e6e-96d2-f5db89805a83/1d
+
+        returns a date histogram with the data for the given sensor for the past day, for example:'
+      operationId: getCheckStatsByInterval
+      parameters:
+      - name: checkId
+        in: path
+        description: The check id of the sensor
+        required: true
+        schema:
+          type: string
+      - name: interval
+        in: path
+        description: 'Intervals allowed : c, today, (f)1h, (f)2h, ..., (f)xh, (f)1d, (f)2d, ..., (f)xd, (f)1w, (f)2w, ..., (f)xw, (f)1M, (f)2M, ..., (f)xM. '
+        required: true
+        schema:
+          type: string
+      - name: statisticType
+        in: query
+        description: 'Current statistics supported : averages, counts, maxs, mins, sums. '
+        required: true
+        schema:
+          type: string
+          default: averages
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: true
+        schema:
+          type: string
+      - name: cumulative
+        in: query
+        description: Optional - accumulate the values.
+        required: false
+        schema:
+          type: boolean
+      - name: derivative
+        in: query
+        description: Optional - derivative of the values.
+        required: false
+        schema:
+          type: boolean
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: false
+        schema:
+          type: string
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      - name: debug
+        in: query
+        description: Send debug info in the response, such as timestamp in a user friendly format.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: partOfDay
+        in: query
+        description: Optional - filter by daytime or nighttime.
+        required: false
+        schema:
+          type: string
+      - name: cultivationId
+        in: query
+        description: Optional - filter data by returning datapoints for when the data source is in the cultivation.
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Historical data of the check in the requested interval
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+  /stats/check/{checkId}/from/{startDate}/until/{endDate}:
+    get:
+      tags:
+      - Stats
+      summary: Returns historical data for the sensor or web check with given check id, for…
+      description: 'Authentication required. User should be part of the check''s organization.
+
+
+        For example:
+
+        /stats/check/9cca5615-b654-4e6e-96d2-f5db89805a83/from/2016-03-04T00:00:00Z/until/2016-03-14T00:00:00Z
+
+
+        returns a date histogram with the data for the given sensor from 4 March 2016 to 14 March 2016:
+
+
+        {
+
+        "1457049600000": {
+
+        "timestamp-as-string": "2016-03-04T00:00:00.000Z",
+
+        "angle.x": 0.5166666666666667,
+
+        "angle.z": 92,
+
+        "axis.x": 0,
+
+        "axis.y": 0,
+
+        "axis.z": 1
+
+        },
+
+        "1457053200000": {
+
+        "timestamp-as-string": "2016-03-04T01:00:00.000Z",
+
+        "angle.x": 0.9,
+
+        "angle.z": 91.96666666666667,
+
+        "axis.x": 0,
+
+        "axis.y": 0,
+
+        "axis.z": 1
+
+        },
+
+        ...
+
+
+        Note that angle.x, angle.z, axis.x/y/z are fields specific for the kind of sensor requested. Other type of sensors will return other data.'
+      operationId: getCheckStatsByTimeInterval
+      parameters:
+      - name: checkId
+        in: path
+        description: The id of the sensor
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: path
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: statisticType
+        in: query
+        description: 'Current statistics supported : averages, counts, maxs, mins, sums. '
+        required: true
+        schema:
+          type: string
+          default: averages
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: false
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      - name: cumulative
+        in: query
+        description: Optional - accumulate the values.
+        required: false
+        schema:
+          type: boolean
+      - name: derivative
+        in: query
+        description: Optional - derivative of the values.
+        required: false
+        schema:
+          type: boolean
+      - name: debug
+        in: query
+        description: Send debug info in the response, such as timestamp in a user friendly format.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: partOfDay
+        in: query
+        description: Optional - filter by daytime or nighttime.
+        required: false
+        schema:
+          type: string
+      - name: cultivationId
+        in: query
+        description: Optional - filter data by returning datapoints for when the data source is in the cultivation.
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Historical data of the check at the requested period
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '400':
+          description: 'The provided date must be a valid date: ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+  /stats:
+    post:
+      tags:
+      - Stats
+      summary: Returns the information about the more recent value for one or more sensors
+      description: 'For each sensor, it returns the last recent value, or if none an indication of the possible causes For example: 1000: Check is currently paused
+
+        1001: Check is not scheduled to run at this time. Check [cron] property.
+
+        1003: There is no recent data for the sensor. Mother might be powered off or not connected to the Internet, or sensor might be out of reach or off.
+
+        1004: The check is configured with an invalid schedule/cron.
+
+        1005: The data we have for the sensor is old.
+
+        1006: Problem communicating with sensor. No data available.'
+      operationId: getChecksLastRecordedStatInfo
+      parameters:
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      - name: tags
+        in: query
+        description: Optional - Set tags to automatically select checks based on their tags (if tags are provided, organization id and sensor type should also be set. Separated by comma (,)
+        required: false
+        schema:
+          type: string
+      - name: tagsoperator
+        in: query
+        description: Optional - Tags boolean operator (and/or)
+        required: false
+        schema:
+          type: string
+      - name: organizationid
+        in: query
+        description: Optional - The id of an organization (when tags are set)
+        required: false
+        schema:
+          type: string
+      - name: sensortype
+        in: query
+        description: Optional - The id of a sensor type (when tags are set)
+        required: false
+        schema:
+          type: string
+      - name: returnIfConditionMet
+        in: query
+        description: Set to true if you want to know if condition for the checks are met. False by default.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The most recent values of the sensors, or an indication of their state
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckLastRecordedStatInfo'
+                uniqueItems: true
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        description: An array of check ids
+  /stats/checks/interval/{interval}:
+    post:
+      tags:
+      - Stats
+      summary: Returns historical data for the checks and the interval indicated
+      description: Authentication required. User should be part of the check's organization.
+      operationId: getChecksStatsByInterval
+      parameters:
+      - name: interval
+        in: path
+        description: 'Intervals allowed : c, today, (f)1h, (f)2h, ..., (f)xh, (f)1d, (f)2d, ..., (f)xd, (f)1w, (f)2w, ..., (f)xw, (f)1M, (f)2M, ..., (f)xM. '
+        required: true
+        schema:
+          type: string
+      - name: statisticType
+        in: query
+        description: 'Current statistics supported : averages, counts, maxs, mins, sums. '
+        required: true
+        schema:
+          type: string
+          default: averages
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: true
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: false
+        schema:
+          type: string
+      - name: cumulative
+        in: query
+        description: Optional - accumulate the values.
+        required: false
+        schema:
+          type: boolean
+      - name: derivative
+        in: query
+        description: Optional - derivative of the values.
+        required: false
+        schema:
+          type: boolean
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      - name: debug
+        in: query
+        description: Send debug info in the response, such as timestamp in a user friendly format.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: partOfDay
+        in: query
+        description: Optional - filter by daytime or nighttime.
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Historical data of the check in the requested interval
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Check not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckStatsRequest'
+  /stats/from/{startDate}/until/{endDate}:
+    post:
+      tags:
+      - Stats
+      summary: Returns historical data for the sensors or web checks with given check ids, for…
+      description: Authentication required. User should be part of the check's organization.
+      operationId: getChecksStatsByTimeInterval
+      parameters:
+      - name: startDate
+        in: path
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: statisticType
+        in: query
+        description: 'Current statistics supported : averages, counts, maxs, mins, sums. '
+        required: true
+        schema:
+          type: string
+          default: averages
+      - name: intervalSize
+        in: query
+        description: Size of the time intervals in which to aggregate the data. This parameter is given as a number of minutes, hours, days or weeks, or monthly, e.g. '5m' is five minutes, '1h' is one hour, '5d' is five days, '2w' is two weeks and 'M' is monthly. The optional 'f' prefix is used to retrieve the full interval according to the provided unit, e.g. 'f1w' will retrieve the last full week (Mon to Sun), 'f2d' will retrieve the last two full days (Wed and Thu if it is Fri).
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Optionally filter only the data from one location. Leave empty or set to 'all' to get all locations
+        required: false
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Optional - list of json fields for which the values should be returned. Separated by comma (,).
+        required: false
+        schema:
+          type: string
+      - name: cumulative
+        in: query
+        description: Optional - accumulate the values.
+        required: false
+        schema:
+          type: boolean
+      - name: derivative
+        in: query
+        description: Optional - derivative of the values.
+        required: false
+        schema:
+          type: boolean
+      - name: debug
+        in: query
+        description: Send debug info in the response, such as timestamp in a user friendly format.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: partOfDay
+        in: query
+        description: Optional - filter by daytime or nighttime.
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Historical data of the checks at the requested period
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '400':
+          description: 'The provided date must be a valid date: ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        '403':
+          description: Unauthorized access to the check id
+        '404':
+          description: Checks not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckStatsRequest'
+  /stats/network/organization/{organizationId}:
+    get:
+      tags:
+      - Stats
+      summary: Gets the Network (web checks, sensor checks, routers, and mothers) status…
+      description: Operation reserved to administrators.
+      operationId: getNetworkStatusOverview
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Network (web checks, sensor checks, routers, and mothers) status overview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkOverviewResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NetworkOverviewResponse'
+        '403':
+          description: User is not authorized to perform this operation.
+        '404':
+          description: Organization with given id doesn't exist
+components:
+  schemas:
+    StatisticsInfoRequest:
+      type: object
+      properties:
+        checkIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        cumulative:
+          type: boolean
+        interval:
+          type: string
+        intervalFrom:
+          type: string
+        intervalSize:
+          type: string
+        intervalTo:
+          type: string
+        organizationId:
+          type: string
+        partOfDay:
+          type: string
+          enum:
+          - ALLTIME
+          - DAYTIME
+          - NIGHTTIME
+        sensorType:
+          type: string
+        statisticType:
+          type: string
+        tags:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
+    CheckStatsRequest:
+      type: object
+      properties:
+        checkIds:
+          type: array
+          description: Check ids for returning the historical data.
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        daysOfMonth:
+          type: array
+          description: Day (1-31) list parameter, e.g. [1] for the first of the month.
+          items:
+            type: integer
+            format: int32
+        daysOfWeek:
+          type: array
+          description: Day of the week (1-7) list parameter, e.g. [1] for Monday.
+          items:
+            type: integer
+            format: int32
+        hoursOfDay:
+          type: array
+          description: Hour (0-23) list parameter, e.g. [2, 3] for 2:00 am and 3:00 am.
+          items:
+            type: integer
+            format: int32
+        minutesOfHour:
+          type: array
+          description: Minute within the hour (0-59) list parameter, e.g. [20, 30] for 20th and 30th minute.
+          items:
+            type: integer
+            format: int32
+        organizationId:
+          type: string
+          description: The id of an organization (when tags are set).
+        sensorType:
+          type: string
+          description: The id of a sensor type (when tags are set).
+        tags:
+          type: array
+          description: Set tags to automatically select checks based on their tags.
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
+          description: Tags boolean operator (and/or).
+    EventsCount:
+      type: object
+      properties:
+        events:
+          type: integer
+          format: int64
+    NetworkOverviewResponse:
+      type: object
+      properties:
+        offlineGateways:
+          type: integer
+          format: int32
+        offlineRouters:
+          type: integer
+          format: int32
+        offlineSensors:
+          type: integer
+          format: int32
+        offlineWebChecks:
+          type: integer
+          format: int32
+        onlineGateways:
+          type: integer
+          format: int32
+        onlineRouters:
+          type: integer
+          format: int32
+        onlineSensors:
+          type: integer
+          format: int32
+        onlineWebChecks:
+          type: integer
+          format: int32
+        pausedRouters:
+          type: integer
+          format: int32
+        pausedSensors:
+          type: integer
+          format: int32
+        pausedWebChecks:
+          type: integer
+          format: int32
+        totalGateways:
+          type: integer
+          format: int32
+        totalRouters:
+          type: integer
+          format: int32
+        totalSensors:
+          type: integer
+          format: int32
+        totalWebChecks:
+          type: integer
+          format: int32
+    CheckLastRecordedStatInfo:
+      type: object
+      properties:
+        batteryStatus:
+          type: string
+          description: Sensor's battery status, if applies.
+        checkId:
+          type: string
+          description: Id of the check
+        code:
+          type: integer
+          format: int64
+          description: Error code.
+        json:
+          type: object
+          description: Event's data for webchecks.
+        lastRecordedStats:
+          type: object
+          description: Event's data
+        matchCondition:
+          type: boolean
+          description: Whether the condition is matched, if applies.
+        message:
+          type: string
+          description: Error message.
+        timestamp:
+          type: string
+          description: Event's UTC timestamp in ISO 8601 format e.g. 2017-01-17T19:23:02Z
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,321 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Shared Dashboard API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: shared-dashboard
+paths:
+  /shared-dashboard:
+    post:
+      tags:
+      - shared-dashboard
+      summary: Share one or more dashboards with one or more users
+      description: Only admins and organization owners/editors can share dashboards.
+      operationId: createSharedDashboard
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard(s) shared successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+        '400':
+          description: Invalid data in one or more of the dashboard properties.
+        '403':
+          description: Not enough permissions to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSharedDashboard'
+  /shared-dashboard/{sharedDashboardId}:
+    get:
+      tags:
+      - shared-dashboard
+      summary: Gets a specific shared dashboard
+      description: Admins and shared-with user can get a specific shared dashboard
+      operationId: getSharedDashboard
+      parameters:
+      - name: sharedDashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Shared dashboard returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/SharedDashboard'
+        '403':
+          description: Unauthorized to get this shared dashboard
+        '500':
+          description: Server error while getting shared dashboard
+    delete:
+      tags:
+      - shared-dashboard
+      summary: Deletes a specific shared dashboard
+      description: Admins, owners and editors can delete a specific shared dashboard
+      operationId: deleteSharedDashboard
+      parameters:
+      - name: sharedDashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Shared dashboard deleted
+        '403':
+          description: Unauthorized to delete this shared dashboard
+        '500':
+          description: Server error while deleting shared dashboard
+  /shared-dashboard/from/organization/{organizationId}:
+    get:
+      tags:
+      - shared-dashboard
+      summary: Returns all the dashboards for the given organization that have been shared
+      description: Only admin users and organization members have permission to get this list of dashboards.
+      operationId: getDashboardsFromOrganizationThatHaveBeenShared
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of dashboards in the organization that have been shared
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+        '403':
+          description: Not enough permissions to perform the operation
+  /shared-dashboard/by/{by}:
+    get:
+      tags:
+      - shared-dashboard
+      summary: Returns all the dashboards shared by the given user
+      description: An admin user will see all dashboards shared by the requested user; a non-admin user can only request to see dashboards shared by themselves.
+      operationId: getDashboardsSharedByUser
+      parameters:
+      - name: by
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of dashboards shared by the given user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+        '400':
+          description: Not a valid e-mail address.
+        '403':
+          description: Not enough permissions to perform the operation.
+  /shared-dashboard/with/{with}:
+    get:
+      tags:
+      - shared-dashboard
+      summary: Returns all the dashboards shared with the requested user by the current user
+      description: An admin user will see all dashboards shared with the requested user; a non-admin user can only request to see dashboards shared with themselves.
+      operationId: getDashboardsSharedWithUser
+      parameters:
+      - name: with
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of dashboards shared with the given user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+        '400':
+          description: Not a valid e-mail address.
+        '403':
+          description: Not enough permissions to perform the operation
+  /shared-dashboard/dashboard/{dashboardId}:
+    get:
+      tags:
+      - shared-dashboard
+      summary: Returns the details (shared by who, shared with who etc) of a dashboard that…
+      description: An admin user can see details of all dashboards; non-admin users see can details of dashboards from within their organisation.
+      operationId: listSharedDashboardDetails
+      parameters:
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of dashboards shared with the given user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedDashboard'
+        '400':
+          description: Not a valid e-mail address.
+        '403':
+          description: Not enough permissions to perform the operation
+    delete:
+      tags:
+      - shared-dashboard
+      summary: Turn sharing off for a dashboard
+      description: Admins,owners and editors can stop sharing a dashboard
+      operationId: turnSharingOffForDashboard
+      parameters:
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Sharing turned off for this dashboard
+        '403':
+          description: Unauthorized to turn sharing off for this dashboard
+        '500':
+          description: Server error while turning off sharing for this dashboard
+components:
+  schemas:
+    NewSharedDashboard:
+      type: object
+      properties:
+        dashboardIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        shareWith:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    DashboardSummary:
+      type: object
+      properties:
+        dashboardId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+      description: Summary of a dashboard
+    SharedDashboard:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time a dashboard was shared. It can be blank for older shared dashboards
+        dashboardId:
+          type: string
+          description: Id of the original dashboard that is being shared
+        dashboardSummary:
+          description: The underlying dashboard that is shared
+          $ref: '#/components/schemas/DashboardSummary'
+        name:
+          type: string
+          description: Name of the shared-dashboard itself
+        organizationId:
+          type: string
+          description: ID of the organization to which the shared dashboard belongs
+        organizationName:
+          type: string
+          description: Name of the organization to which the shared dashboard belongs
+        sharedByUser:
+          type: string
+          description: User who shared the dashboard
+        sharedByUserDetails:
+          $ref: '#/components/schemas/SharedByUserDetails'
+        sharedDashboardId:
+          type: string
+          description: Id of the shared-dashboard itself
+        sharedWithUser:
+          type: string
+          description: User who the dashboard has been shared with
+        sharedWithUserDetails:
+          $ref: '#/components/schemas/SharedWithUserDetails'
+    SharedByUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,464 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE App API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: App
+paths:
+  /app/{appId}:
+    get:
+      tags:
+      - App
+      summary: Return the app with the given id
+      description: Authentication required for this operation.
+      operationId: getAppById
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The app.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '404':
+          description: App not found.
+        '403':
+          description: Not enough permissions to perform the operation.
+    delete:
+      tags:
+      - App
+      summary: Delete an application
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: deleteApp
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: permanently
+        in: query
+        description: Optional bool to specify the permanent deletion of the app.
+        required: false
+        schema:
+          type: boolean
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Deletion succeeded.
+        '403':
+          description: User is not authorized to perform this operation.
+        '404':
+          description: Application not found
+  /app:
+    get:
+      tags:
+      - App
+      summary: Return all published extensions
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: getPublishedExtensions
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns published extensions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+        '403':
+          description: User must be an admin.
+      x-admin-only: true
+    post:
+      tags:
+      - App
+      summary: Create a new application
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: createApp
+      parameters:
+      - name: content-length
+        in: header
+        required: false
+        schema:
+          type: integer
+          format: int64
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New application created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '403':
+          description: User must be an admin.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                properties:
+                  type: ref
+              required:
+              - properties
+  /app/all:
+    get:
+      tags:
+      - App
+      summary: Return all extensions
+      description: Authentication required for this operation.
+      operationId: getAllApps
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all extensions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+        '403':
+          description: Not enough permissions to perform the operation.
+      x-admin-only: true
+  /app/installable:
+    get:
+      tags:
+      - App
+      summary: Return installable extensions
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: getInstallableExtensions
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns installable extensions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+        '403':
+          description: User must be an admin.
+      x-admin-only: true
+  /app/{appId}/publish:
+    post:
+      tags:
+      - App
+      summary: Publish an application
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: publishApp
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Application published
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '403':
+          description: User is not authorized to perform this operation.
+        '404':
+          description: Application not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /app/{appId}/submit:
+    post:
+      tags:
+      - App
+      summary: Submit an application
+      description: Authentication required for this operation.
+      operationId: submitApp
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Application submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/App'
+        '403':
+          description: User is not authorized to perform this operation.
+        '404':
+          description: Application not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /app/{appId}/logo:
+    post:
+      tags:
+      - App
+      summary: Upload a logo for an application
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: uploadLogoForApp
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: content-length
+        in: header
+        required: false
+        schema:
+          type: integer
+          format: int64
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Logo uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+        '403':
+          description: User must be an admin.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                logo:
+                  type: string
+                  format: binary
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    RequiredSensor:
+      type: object
+      required:
+      - sensorTypeId
+      properties:
+        configurationKeypathToCheckId:
+          type: string
+          description: Optional keypath in dynamic configurations where check id is stored
+        name:
+          type: string
+          description: Name of the sensor
+        sensorTypeId:
+          type: string
+          description: Id of the sensor type of the required sensor
+    DataUpload:
+      type: object
+      properties:
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: The creation timestamp.
+        dataUploadId:
+          type: string
+          description: Data upload id.
+        filename:
+          type: string
+          description: The name of the uploaded file
+        groupId:
+          type: string
+          description: Group id for the data upload.
+        imageDimensions:
+          description: The image dimensions
+          $ref: '#/components/schemas/ImageDimensions'
+        imageThumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        organizationId:
+          type: string
+          description: Organization id for the data upload.
+        orientation:
+          type: integer
+          format: int32
+          description: The orientation of the image
+        presignedUrl:
+          type: string
+      description: DataUpload
+    App:
+      type: object
+      required:
+      - appId
+      properties:
+        dashboards:
+          type: array
+          description: App's dashboards.
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        defaultDynamicConfigurations:
+          type: object
+          description: The default dynamic configuration of the installable
+          additionalProperties:
+            type: object
+        description:
+          type: string
+          description: Description of the installable.
+        logoDataId:
+          type: string
+          description: Id of the logo image data.
+        logoUrl:
+          type: string
+          description: Application's logo URL.
+        maxInstallationsPerOrg:
+          type: integer
+          format: int32
+          description: Maximum number of installations allowed for any given organization
+        name:
+          type: string
+          description: Name of the installable
+        ownerName:
+          type: string
+          description: Installable's owner name.
+        packageDataId:
+          type: string
+          description: Id of the code package data.
+        primaryColor:
+          type: string
+          description: App's primary color.
+        requiredManualInputForms:
+          type: array
+          description: List of manual input forms required by the extension.
+          items:
+            $ref: '#/components/schemas/RequiredSensor'
+        sections:
+          type: object
+          description: App's sections, with sections id as keys and definitions as values.
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+        settings:
+          type: object
+          description: Custom settings common to all extension's installations
+          additionalProperties:
+            type: object
+        supportUrl:
+          type: string
+          description: Extension's support web page URL.
+        url:
+          type: string
+          description: Application's URL.
+        widgets:
+          type: array
+          description: Widgets that belong to the installable.
+          items:
+            type: object
+        publishedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of publication, e.g., 2025-02-21T15:00:00Z.
+        publishedBy:
+          type: string
+          description: The email of the user that published this app.
+        submittedAt:
+          type: string
+          description: 'The ISO601 UTC date the app was submitted. e.g.: 2021-03-21T00:00:00Z'
+        submittedBy:
+          type: string
+          description: The email of the user that submitted this app.
+        appId:
+          type: string
+          description: Id of the application
+        organizationId:
+          type: string
+          description: Id of the organization that owns the installable.
+        state:
+          type: string
+          description: Status of the installable.
+        type:
+          type: string
+          description: Type of the application.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

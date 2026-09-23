@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Billing History Details API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: billing-history-details
+paths:
+  /billing-history-details/{billingHistoryDetailsId}:
+    get:
+      tags:
+      - billing-history-details
+      summary: Return billing history detail
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryDetailsById
+      parameters:
+      - name: billingHistoryDetailsId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history detail record returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetailsResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetailsResponse'
+        '403':
+          description: Not enough permissions to perform the operation
+  /billing-history-details/organization/{organizationId}/year/{year}/month/{month}:
+    get:
+      tags:
+      - billing-history-details
+      summary: Return billing history details
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryDetailsByOrganizationIdAndMonth
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history details record returned
+        '403':
+          description: Not enough permissions to perform the operation
+  /billing-history-details/organization/{organizationId}/year/{year}/month/{month}/json/{jsonCheck}:
+    get:
+      tags:
+      - billing-history-details
+      summary: Return billing history details json / regular checks summary
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryDetailsChecksJson
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: jsonCheck
+        in: path
+        required: true
+        schema:
+          type: boolean
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history details json / regular checks summary record returned
+        '403':
+          description: Not enough permissions to perform the operation
+  /billing-history-details/organization/{organizationId}/year/{year}/month/{month}/mother:
+    get:
+      tags:
+      - billing-history-details
+      summary: Return billing history details mother summary
+      description: Authentication required for this operation.
+      operationId: getBillingHistoryDetailsMothersByOrgIdAndMonth
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history details mother summary record returned
+        '403':
+          description: Not enough permissions to perform the operation
+components:
+  schemas:
+    BillingHistoryDetailsResponse:
+      type: object
+      properties:
+        active:
+          type: boolean
+        billingHistoryDetailsId:
+          type: string
+        checkEnabled:
+          type: boolean
+        checkId:
+          type: string
+        checkName:
+          type: string
+        checkType:
+          type: string
+        collectJson:
+          type: boolean
+        date:
+          type: string
+        expectedCount:
+          type: integer
+          format: int64
+        jsonCount:
+          type: string
+        locationDescription:
+          type: string
+        locationName:
+          type: string
+        motherName:
+          type: string
+        organizationName:
+          type: string
+        regularCount:
+          type: string
+        sensorName:
+          type: string
+        sensorType:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,128 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Metric Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: metric-update
+paths:
+  /metric-update/{metricId}:
+    post:
+      tags:
+      - metric-update
+      summary: Update a metric
+      description: Authentication required for this operation.
+      operationId: updateMetric
+      parameters:
+      - name: metricId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Metric updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A metric with that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetricUpdate'
+components:
+  schemas:
+    MetricUpdate:
+      type: object
+      properties:
+        conversionUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionUnit'
+        defaultStatisticTypes:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        statisticTypes:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        unit:
+          type: string
+        unitLabel:
+          type: string
+      description: Updating metric properties
+    ConversionFormula:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: number
+          format: double
+    ConversionUnit:
+      type: object
+      properties:
+        conversionFormulas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionFormula'
+        decimals:
+          type: integer
+          format: int32
+          minimum: 0
+        unit:
+          type: string
+        unitId:
+          type: string
+        unitLabel:
+          type: string
+    Metric:
+      type: object
+      properties:
+        conversionUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionUnit'
+        defaultStatisticTypes:
+          type: array
+          items:
+            type: string
+        metricId:
+          type: string
+        name:
+          type: string
+        statisticTypes:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        unit:
+          type: string
+        unitLabel:
+          type: string
+      description: Metrics of sensor types
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

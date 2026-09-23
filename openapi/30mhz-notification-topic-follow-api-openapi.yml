@@ -1,0 +1,232 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Topic Follow API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-topic-follow
+paths:
+  /notification-topic-follow/{notificationTopicId}/user/{email}/organization/{organizationId}:
+    post:
+      tags:
+      - notification-topic-follow
+      summary: Adds a follow to a notification topic
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: createNotificationTopicFollow
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New notification topic follow created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMethods'
+    delete:
+      tags:
+      - notification-topic-follow
+      summary: Delete a notification topic follow with the given id, email and organization id
+      description: Only members of the organization or administrators of ZENSIE are authorised to call this operation.
+      operationId: deleteNotificationTopicFollow
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+        '403':
+          description: User not allowed to perform the operation
+  /notification-topic-follow/organization/{organizationId}/user/{email}:
+    get:
+      tags:
+      - notification-topic-follow
+      summary: Retrieves all notification topic follows for a user within an organization
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationTopicFollow
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of notification topic follows for a user within an organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+        '403':
+          description: User not allowed to perform the operation
+  /notification-topic-follow/organization/{organizationId}/count:
+    post:
+      tags:
+      - notification-topic-follow
+      summary: Retrieves the followers counts of notification topics
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationTopicFollowCount
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of notification topic follow counts within an organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollowCount'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollowCount'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+  /notification-topic-follow/{notificationTopicId}/organization/{organizationId}:
+    get:
+      tags:
+      - notification-topic-follow
+      summary: Retrieves all followers of a notification topic within an organization
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: getNotificationTopicFollowers
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The list of users that follow a notification topic within an organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopicFollow'
+        '403':
+          description: User not allowed to perform the operation
+components:
+  schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
+    NotificationTopicFollow:
+      type: object
+      properties:
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        notificationTopicFollowId:
+          type: string
+        notificationTopicId:
+          type: string
+        organizationId:
+          type: string
+      description: Notification topic follow
+    NotificationTopicFollowCount:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        notificationTopicId:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

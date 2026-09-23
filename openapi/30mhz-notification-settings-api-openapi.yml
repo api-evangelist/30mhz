@@ -1,0 +1,281 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Settings API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Notification Settings
+paths:
+  /notification-settings/check/{checkId}/user/{email}:
+    post:
+      tags:
+      - Notification Settings
+      summary: Adds a notification setting to a check
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        The owner (organization) is the only allowed to edit the permissions for all the users which can access a check.
+
+        A person different than the owner (organization) with access to the check can edit just his/her own notification settings.'
+      operationId: addNotificationSetting
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: 'Existing Check: check updated with the new notification setting information'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSetting'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationSetting'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: 'Error accessing the check: not enough permissions to perform operation'
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMethods'
+    delete:
+      tags:
+      - Notification Settings
+      summary: Removes the given notification setting from the check
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        This operation requires a valid follow object.
+
+        The operation is only authorized to the owner of the check.'
+      operationId: deleteNotificationSetting
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification setting removed
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '400':
+          description: 'Bad request: the owner of the check always remains a follower'
+        '401':
+          description: Unauthorized access to the check, only the owner (organization) can remove a notification setting
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '404':
+          description: The notification setting requested to be removed, was not found
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error DELETING the check's notification setting persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+  /notification-settings/check/{checkId}:
+    get:
+      tags:
+      - Notification Settings
+      summary: Returns the notification settings associated with the check
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: obtainAllNotificationSettingsForACheck
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The list of notification settings that are related to the check
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Follow'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Follow'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error obtaining the notification settings persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+  /notification-settings/organization/{organizationId}/user/{email}:
+    get:
+      tags:
+      - Notification Settings
+      summary: Return all the checks of the given organization and the notifications…
+      description: Authentication required and user is at least a follower in the organization, or is an admin in the system.
+      operationId: obtainAllNotificationSettingsForOrganizationAndUser
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The list of notification settings that are related to the check
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error obtaining the notification settings persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+components:
+  schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
+    Follow:
+      type: object
+      required:
+      - enabled
+      properties:
+        checkId:
+          type: string
+        email:
+          type: string
+        enabled:
+          type: boolean
+        method:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        owner:
+          type: string
+        role:
+          type: string
+        topic:
+          type: string
+      description: A follow represents a subscription to check's UP/DOWN changes. UP or DOWN reflects succeeded or failed url response according to the check configurations. A follow can eventually be a of a predefined topic that uses a custom notification template for the different methods
+    NotificationSetting:
+      type: object
+      properties:
+        checkId:
+          type: string
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Notification Settings
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

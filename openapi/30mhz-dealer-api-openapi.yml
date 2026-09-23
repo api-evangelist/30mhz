@@ -1,0 +1,161 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dealer API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Dealer
+paths:
+  /dealer:
+    get:
+      tags:
+      - Dealer
+      summary: Returns all dealers
+      description: The authenticated user must be an administrator.
+      operationId: getDealers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dealers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+        '403':
+          description: Not enough permissions to perform the operation
+    post:
+      tags:
+      - Dealer
+      summary: Add a dealer
+      description: The authenticated user must be an administrator.
+      operationId: addDealer
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dealer added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+        '403':
+          description: Not enough permissions to perform the operation
+        '409':
+          description: A dealer with that email already exists
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dealer'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Dealer'
+  /dealer/{email}:
+    get:
+      tags:
+      - Dealer
+      summary: Returns a dealer by email
+      description: The authenticated user must be an administrator.
+      operationId: getDealer
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dealer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Dealer not found
+    delete:
+      tags:
+      - Dealer
+      summary: Delete a dealer
+      description: The authenticated user must be an administrator.
+      operationId: deleteDealer
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dealer deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Dealer with that email not found
+      x-admin-only: true
+components:
+  schemas:
+    Dealer:
+      type: object
+      properties:
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        hardwareDiscountPercentage:
+          type: integer
+          format: int32
+        hardwareDiscountPercentageValidUntil:
+          type: string
+        lastName:
+          type: string
+        notificationsEmails:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        phone:
+          type: string
+        subscriptionMarginPercentage:
+          type: integer
+          format: int32
+        subscriptionMarginPercentageValidUntil:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

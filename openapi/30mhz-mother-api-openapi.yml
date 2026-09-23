@@ -1,0 +1,357 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Mother API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: mother
+paths:
+  /mother:
+    get:
+      tags:
+      - mother
+      summary: Returns all the mothers
+      description: Authentication required for this operation.
+      operationId: getAllMothers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mothers returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+    post:
+      tags:
+      - mother
+      summary: Add a new mother
+      description: Authentication required for this operation.
+      operationId: addMother
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '400':
+          description: Invalid MAC Address
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Location does not exist
+        '409':
+          description: The location of the gateway does not belong to the organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMother'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NewMother'
+  /mother/{motherId}/organization/{organizationId}/admin:
+    get:
+      tags:
+      - mother
+      summary: Returns the mother with the specified id - containing extra details
+      description: Authentication required for this operation.
+      operationId: getMotherAdminById
+      parameters:
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mother with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '403':
+          description: Not enough permissions to perform the operation
+  /mother/{motherId}/organization/{organizationId}:
+    get:
+      tags:
+      - mother
+      summary: Returns the mother with the specified id
+      description: Authentication required for this operation.
+      operationId: getMotherById
+      parameters:
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mother with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitedScopeMother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/LimitedScopeMother'
+        '403':
+          description: Not enough permissions to perform the operation
+  /mother/{motherId}/json:
+    get:
+      tags:
+      - mother
+      summary: Returns the json variable for the mother
+      description: Authentication required for this operation.
+      operationId: getMotherJsonVariable
+      parameters:
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The json variable for the mother returned.
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+  /mother/{motherId}/organization/{organizationId}/status:
+    get:
+      tags:
+      - mother
+      summary: Returns the status for mother with the specified id
+      description: Authentication required for this operation.
+      operationId: getMotherStatusById
+      parameters:
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The returns the status for  mother with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotherStatusResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/MotherStatusResponse'
+        '403':
+          description: Not enough permissions to perform the operation
+  /mother/organization/{organizationId}:
+    get:
+      tags:
+      - mother
+      summary: Returns the mothers for the given organization
+      description: Authentication required for this operation.
+      operationId: getMothersByOrganizationId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mothers for the specified organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '403':
+          description: Not enough permissions to perform the operation
+  /mother/{motherId}:
+    delete:
+      tags:
+      - mother
+      summary: Remove mother
+      description: Operation reserved to administrators.
+      operationId: removeMother
+      parameters:
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother has been removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '400':
+          description: The mother is associated to a location and cannot be removed
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization not found.
+components:
+  schemas:
+    LimitedScopeMother:
+      type: object
+      properties:
+        isBillable:
+          type: boolean
+        locationName:
+          type: string
+        macAddress:
+          type: string
+        motherId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+        state:
+          type: string
+    NewMother:
+      type: object
+      properties:
+        isBillable:
+          type: boolean
+        locationName:
+          type: string
+        macAddress:
+          type: string
+        motherId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+        remarks:
+          type: string
+        state:
+          type: string
+        templateId:
+          type: string
+        xbeeAddress:
+          type: string
+    MotherStatusResponse:
+      type: object
+      properties:
+        isMotherOnline:
+          type: boolean
+    Mother:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the mother.
+          uniqueItems: true
+          items:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a mother was created.
+        deletedAt:
+          type: string
+          description: The date and time a mother was deleted.
+        deployedAt:
+          type: string
+          description: The date and time a mother was deployed.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the mother is billable or not.
+        jsonEnvironmentVariable:
+          type: string
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        locationName:
+          type: string
+          description: The mother's location.
+        macAddress:
+          type: string
+          description: The mac address of the mother.
+        motherId:
+          type: string
+          description: Mother id.
+        name:
+          type: string
+          description: Mother's name.
+        organizationId:
+          type: string
+          description: The organization of the mother.
+        remarks:
+          type: string
+          description: The remarks for the mother.
+        sqsAccessKey:
+          type: string
+          description: The mother probe sqs access key.
+        sqsSecretKey:
+          type: string
+          description: The mother probe sqs secret key.
+        state:
+          type: string
+          description: The state of the mother.
+        templateId:
+          type: string
+          description: Mother's template id.
+        updatedAt:
+          type: string
+          description: The date and time a mother was last updated.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+      description: Mother
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

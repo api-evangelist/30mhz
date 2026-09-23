@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Quote Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: quote-update
+paths:
+  /quote-update/{quoteId}:
+    post:
+      tags:
+      - quote-update
+      summary: Updates a quote
+      description: The authenticated user must be an administrator.
+      operationId: updateQuote
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Quote updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A quote with that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quote'
+components:
+  schemas:
+    Quote:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Quote's date.
+        expirationDate:
+          type: string
+          description: Quote's expiration date.
+        remarks:
+          type: string
+          description: Quote's remarks.
+        signedPdfId:
+          type: string
+          description: Quote's signed pdf id
+        status:
+          type: string
+          description: Quote's status.
+      description: updating of a quote
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

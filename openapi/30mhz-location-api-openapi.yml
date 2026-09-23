@@ -1,0 +1,311 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Location API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Location
+paths:
+  /location/{locationName}:
+    get:
+      tags:
+      - Location
+      summary: Return the location with the given location name
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getLocation
+      parameters:
+      - name: locationName
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Return the location with the given name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '403':
+          description: Unauthorized to perform operation, not enough permissions.
+        '404':
+          description: There is no location with the given name
+    delete:
+      tags:
+      - Location
+      summary: Removes the location, the queue associated to it, and IAM user
+      description: ''
+      operationId: deleteLocation
+      parameters:
+      - name: locationName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: removeChecks
+        in: query
+        description: True if you want to remove the checks that use this location (and no other locations)
+        required: false
+        schema:
+          type: boolean
+          default: true
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '204':
+          description: Location removed
+        '403':
+          description: Unauthorized to perform this operation.
+        '510':
+          description: Error - location partially deleted.
+  /location:
+    post:
+      tags:
+      - Location
+      summary: Create a new location
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        Currently only admin users or owners of the organization are authorised to call this operation.'
+      operationId: createLocation
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '201':
+          description: New location created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '400':
+          description: Bad request - missing location or bad syntax in location data
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+  /location/private:
+    get:
+      tags:
+      - Location
+      summary: Returns all the available private locations in the system
+      description: 'Default oauth authentication mechanism required for this operation, as a user with admin role.
+
+        NOTE That this call is for v2 of the API.'
+      operationId: getAllPrivateLocations
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Return the list of private locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+  /location/organization/{organizationId}:
+    get:
+      tags:
+      - Location
+      summary: Returns all the available private locations for that organization
+      description: 'Default oauth authentication mechanism required for this operation.
+
+        The authenticated user must be an administrator or member of the organization.'
+      operationId: getPrivateLocationsForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Return the list of private locations associated with an organization
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin or needs to have the role of owner or editor within the organization.
+        '404':
+          description: An organization with that id doesn't exist
+  /location/public:
+    get:
+      tags:
+      - Location
+      summary: Returns all the public locations
+      description: Default oauth authentication mechanism required for this operation for security reasons
+      operationId: getPublicLocations
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Returns all the public locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+                uniqueItems: true
+components:
+  schemas:
+    Location:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the location.
+          uniqueItems: true
+          items:
+            type: string
+        companyDetailsId:
+          type: string
+          description: The id of the company details.
+        description:
+          type: string
+          description: Location's description.
+        gatewayClusterId:
+          type: string
+          description: Location's gateway cluster id
+        icon:
+          type: string
+        latitude:
+          type: number
+          format: double
+          description: Location’s latitude
+        longitude:
+          type: number
+          format: double
+          description: Location’s longitude
+        motherIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        owner:
+          type: string
+        timezone:
+          type: string
+          description: Location’s timezone
+        name:
+          type: string
+          description: Location's name.
+        access:
+          type: string
+        companyDetails:
+          description: The company details.
+          $ref: '#/components/schemas/CompanyDetails'
+        organizationId:
+          type: string
+          description: The organization the location belongs to.
+        panId:
+          type: string
+        region:
+          type: string
+          description: Location's region.
+        sc:
+          type: string
+      description: Monitoring location properties
+    CompanyDetails:
+      type: object
+      required:
+      - active
+      properties:
+        accountManager:
+          type: string
+          description: CompanyDetails's account manager.
+        active:
+          type: boolean
+          description: The state of the company detail
+        address:
+          type: string
+          description: The address of the company details
+        city:
+          type: string
+          description: The city of the company details
+        companyDetailsId:
+          type: string
+          description: Company details id
+        companyName:
+          type: string
+          description: The company name of the company details
+        country:
+          type: string
+          description: The country of the company details
+        countryCode:
+          type: string
+          description: The code of the country of the company details
+        debtorId:
+          type: integer
+          format: int32
+          description: The debtor id of the company details
+        invoiceEmail:
+          type: string
+          description: CompanyDetails's invoice email.
+        organizationId:
+          type: string
+          description: The organization id of the company details
+        postalCode:
+          type: string
+          description: The postal code of the company details
+        telephoneNumber:
+          type: string
+          description: The address of the company details
+        vatNumber:
+          type: string
+          description: The vat number of the company details
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,75 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Topic Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-topic-update
+paths:
+  /notification-topic-update/{notificationTopicId}:
+    post:
+      tags:
+      - notification-topic-update
+      summary: Update a notification in the notification id
+      description: Only administrators of ZENSIE are authorised to call this operation.
+      operationId: updateNotificationTopic
+      parameters:
+      - name: notificationTopicId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Notification updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationTopic'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTopicUpdate'
+components:
+  schemas:
+    NotificationTopicUpdate:
+      type: object
+      properties:
+        conditionDescription:
+          type: string
+        description:
+          type: string
+    NotificationTopic:
+      type: object
+      properties:
+        conditionDescription:
+          type: string
+        description:
+          type: string
+        notificationTopicId:
+          type: string
+      description: Notification topic
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

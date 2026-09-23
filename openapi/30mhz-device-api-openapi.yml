@@ -1,0 +1,391 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Device API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Device
+paths:
+  /device/{deviceId}:
+    get:
+      tags:
+      - Device
+      summary: Return the device with the given id
+      description: Authentication required for this operation.
+      operationId: getDeviceById
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The device.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Device not found.
+        '500':
+          description: Error while retrieving the device.
+    put:
+      tags:
+      - Device
+      summary: Update a device
+      description: Authentication required for this operation.
+      operationId: putDevice
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Device updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the device.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceEditable'
+    delete:
+      tags:
+      - Device
+      summary: Delete a device
+      description: Authentication required for this operation.
+      operationId: deleteDevice
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Device has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Device not found.
+    patch:
+      tags:
+      - Device
+      summary: Patch a device
+      description: Authentication required for this operation.
+      operationId: patchDevice
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Device patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while patching the device.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceEditable'
+  /device:
+    get:
+      tags:
+      - Device
+      summary: Return all devices
+      description: Authentication required for this operation.
+      operationId: getAllDevices
+      parameters:
+      - name: organizationId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: siteId
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all devices.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '400':
+          description: Invalid query parameters.
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving devices.
+    post:
+      tags:
+      - Device
+      summary: Create a new device
+      description: Authentication required for this operation.
+      operationId: createDevice
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New device created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Device'
+        '403':
+          description: User not authorized.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceNew'
+  /device/organization/{organizationId}:
+    get:
+      tags:
+      - Device
+      summary: Returns the devices associated with the given organization id
+      description: Authentication required for this operation.
+      operationId: getDevicesByOrganizationId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return all devices associated with organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving devices.
+  /device/organization/{organizationId}/site/{siteId}:
+    get:
+      tags:
+      - Device
+      summary: Returns devices associated with the given site
+      description: Authentication required for this operation.
+      operationId: getDevicesBySiteId
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return all devices associated with site.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving devices.
+  /device/site/{siteUuid}:
+    get:
+      tags:
+      - Device
+      summary: Returns devices associated with the given site
+      description: Authentication required for this operation.
+      operationId: getDevicesBySiteUuid
+      parameters:
+      - name: siteUuid
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return all devices associated with site.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving devices.
+components:
+  schemas:
+    DeviceEditable:
+      type: object
+      properties:
+        deviceModel:
+          type: string
+          description: Model of device.
+        deviceType:
+          type: string
+          description: Type of device.
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Identifier of the organization it belongs to.
+        serialNumber:
+          type: string
+          description: Serial number of the device.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+      description: Object holding the editable properties of a device.
+    Device:
+      type: object
+      properties:
+        deviceModel:
+          type: string
+          description: Model of device.
+        deviceType:
+          type: string
+          description: Type of device.
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Identifier of the organization it belongs to.
+        serialNumber:
+          type: string
+          description: Serial number of the device.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        deviceId:
+          type: string
+          description: Unique identifier for the device.
+        siteUuid:
+          type: string
+          description: Universally unique identifier.
+      description: A piece of mechanical or electronic equipment.
+    DeviceNew:
+      type: object
+      required:
+      - deviceType
+      - name
+      - organizationId
+      - siteId
+      properties:
+        deviceModel:
+          type: string
+          description: Model of device.
+        deviceType:
+          type: string
+          description: Type of device.
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        serialNumber:
+          type: string
+          description: Serial number of the device.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+      description: Object holding the properties of a new device.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

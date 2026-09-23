@@ -1,0 +1,35 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE App Irrigation API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: app-irrigation
+paths:
+  /app/irrigation/trigger-sensor-aggregation:
+    post:
+      tags:
+      - app-irrigation
+      summary: Trigger an aggregation of irrigation management sensors
+      description: The authenticated user must be an admin
+      operationId: triggerSensorAggregation
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Successfully aggregated irrigation management sensors.
+        '403':
+          description: Unauthorized to perform the operation. User must be an admin.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+components:
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

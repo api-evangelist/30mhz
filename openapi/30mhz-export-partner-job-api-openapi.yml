@@ -1,0 +1,218 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Export Partner Job API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: export-partner-job
+paths:
+  /export-partner-job:
+    post:
+      tags:
+      - export-partner-job
+      summary: Create new export partner job record
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: createExportPartnerJob
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New export partner job record created
+        '400':
+          description: The export partner does not exist for this organization
+        '403':
+          description: Not enough permissions to perform this operation
+        '404':
+          description: Organization with that id doesn't exist
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewExportPartnerJob'
+  /export-partner-job/{jobId}/organization/{organizationId}:
+    get:
+      tags:
+      - export-partner-job
+      summary: Retrieves new export partner job record
+      description: Authentication required for this operation.
+      operationId: getExportPartnerJob
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The export partner job with the given id.
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+    delete:
+      tags:
+      - export-partner-job
+      summary: Removes new export partner job record
+      description: Authentication required for this operation.
+      operationId: removeExportPartnerJob
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The export partner job with the given id
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+  /export-partner-job/organization/{organizationId}:
+    get:
+      tags:
+      - export-partner-job
+      summary: Retrieves export partner jobs for the organization
+      description: Authentication required for this operation.
+      operationId: getExportPartnerJobsForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The export partner jobs for the specified organization
+        '403':
+          description: Not enough permissions to perform this operation
+      x-admin-only: true
+    post:
+      tags:
+      - export-partner-job
+      summary: Retrieves jobs for the given organization, export partner, frequency, and active
+      description: Authentication required for this operation.
+      operationId: getJobsForOrganizationIdExportPartnerIdFrequencyAndActive
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: The jobs for the specified organization, export partner, frequency, and active
+        '403':
+          description: Not enough permissions to perform this operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportPartnerGetJobRequest'
+components:
+  schemas:
+    ExportPartnerGetJobRequest:
+      type: object
+      required:
+      - active
+      - frequency
+      properties:
+        active:
+          type: boolean
+        exportPartnerId:
+          type: string
+        frequency:
+          type: integer
+          format: int32
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
+        name:
+          type: string
+    NewExportPartnerJob:
+      type: object
+      required:
+      - active
+      - frequency
+      properties:
+        active:
+          type: boolean
+        description:
+          type: string
+        exportPartnerId:
+          type: string
+        exportPartnerURL:
+          type: string
+        frequency:
+          type: integer
+          format: int32
+        organizationId:
+          type: string
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportPartnerJobMap'
+    ExportPartnerJobMap:
+      type: object
+      required:
+      - exportPartnerData
+      properties:
+        checkId:
+          type: string
+        checkJsonKey:
+          type: string
+        exportPartnerData:
+          $ref: '#/components/schemas/ExportPartnerData'
+    ExportPartnerDataItem:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

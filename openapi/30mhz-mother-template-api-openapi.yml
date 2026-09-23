@@ -1,0 +1,224 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Mother Template API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: mother-template
+paths:
+  /mother-template:
+    get:
+      tags:
+      - mother-template
+      summary: Returns all the mother templates
+      description: Authentication required for this operation.
+      operationId: getAllMotherTemplates
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother templates returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MotherTemplate'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MotherTemplate'
+        '403':
+          description: Not enough permissions to perform the operation. User must be admin.
+    post:
+      tags:
+      - mother-template
+      summary: Add a new mother template
+      description: Authentication required for this operation.
+      operationId: addMotherTemplate
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother template added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: User does not exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMotherTemplate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NewMotherTemplate'
+  /mother-template/{templateId}:
+    get:
+      tags:
+      - mother-template
+      summary: Returns the mother template with the specified id
+      description: Authentication required for this operation.
+      operationId: getMotherTemplateById
+      parameters:
+      - name: templateId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The mother template with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/MotherTemplate'
+        '403':
+          description: Not enough permissions to perform the operation
+    delete:
+      tags:
+      - mother-template
+      summary: Remove mother template
+      description: Operation reserved to administrators.
+      operationId: removeMotherTemplate
+      parameters:
+      - name: templateId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Mother template has been removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Mother'
+        '400':
+          description: The mother template is associated to one or multiple mothers and cannot be removed
+        '403':
+          description: Not enough permissions to perform the operation
+components:
+  schemas:
+    NewMotherTemplate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+    Mother:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the mother.
+          uniqueItems: true
+          items:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a mother was created.
+        deletedAt:
+          type: string
+          description: The date and time a mother was deleted.
+        deployedAt:
+          type: string
+          description: The date and time a mother was deployed.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the mother is billable or not.
+        jsonEnvironmentVariable:
+          type: string
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        locationName:
+          type: string
+          description: The mother's location.
+        macAddress:
+          type: string
+          description: The mac address of the mother.
+        motherId:
+          type: string
+          description: Mother id.
+        name:
+          type: string
+          description: Mother's name.
+        organizationId:
+          type: string
+          description: The organization of the mother.
+        remarks:
+          type: string
+          description: The remarks for the mother.
+        sqsAccessKey:
+          type: string
+          description: The mother probe sqs access key.
+        sqsSecretKey:
+          type: string
+          description: The mother probe sqs secret key.
+        state:
+          type: string
+          description: The state of the mother.
+        templateId:
+          type: string
+          description: Mother's template id.
+        updatedAt:
+          type: string
+          description: The date and time a mother was last updated.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+      description: Mother
+    MotherTemplate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+          description: JSON configuration variable for the mother template.
+        createdAt:
+          type: string
+          description: The date and time a mother template was created.
+        description:
+          type: string
+          description: The description for the mother template.
+        name:
+          type: string
+          description: The name for the mother template.
+        templateId:
+          type: string
+          description: Template id for the mother template.
+        updatedAt:
+          type: string
+          description: The date and time a mother template was last updated.
+      description: MotherTemplate
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

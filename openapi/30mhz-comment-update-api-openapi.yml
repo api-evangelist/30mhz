@@ -1,0 +1,283 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Comment Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: comment-update
+paths:
+  /comment-update/{commentId}:
+    post:
+      tags:
+      - comment-update
+      summary: Update an existing comment
+      description: Authentication required for this operation.
+      operationId: updateComment
+      parameters:
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comment updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: User must be an admin or an organization or group editor/owner.
+        '500':
+          description: Sorry, there was a problem updating the comment.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentUpdate'
+  /comment-update/reply/{commentId}:
+    post:
+      tags:
+      - comment-update
+      summary: Update an existing reply
+      description: Authentication required for this operation.
+      operationId: commentReplyUpdate
+      parameters:
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Reply updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: User must be an admin or an organization or group editor/owner.
+        '500':
+          description: Sorry, there was a problem updating the comment.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCommentReply'
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+    CommentUpdate:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        checkIds:
+          type: array
+          description: Check ids to which comment belongs to
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of comment
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        documentIds:
+          type: array
+          description: Data upload ids of the documents attached to this comment
+          uniqueItems: true
+          items:
+            type: string
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        imageIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        selectedCheckId:
+          type: string
+          description: Selected check id for this comment
+        selectedField:
+          type: string
+          description: Selected field
+        text:
+          type: string
+          description: Comment text
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    CommentTags:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        checkIds:
+          type: array
+          description: Check ids to which comment belongs to
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of the check
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        emails:
+          type: array
+          description: Users mentioned in the comments
+          uniqueItems: true
+          items:
+            type: string
+        selectedCheckId:
+          type: string
+          description: Selected check for this comment
+        selectedField:
+          type: string
+          description: Selected field id for this comment
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
+    Comment:
+      type: object
+      properties:
+        activityType:
+          type: string
+        appInstallationId:
+          type: string
+        email:
+          type: string
+        groupId:
+          type: string
+        lastUpdatedTimestamp:
+          type: string
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
+          type: array
+          description: Replies of a comment
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
+        text:
+          type: string
+          description: Comment text
+    NewCommentReply:
+      type: object
+      properties:
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        text:
+          type: string
+          description: Comment text
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

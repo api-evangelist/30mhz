@@ -1,0 +1,301 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dashboard API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Dashboard
+paths:
+  /dashboard/organization/{organizationId}:
+    get:
+      tags:
+      - Dashboard
+      summary: Return the dashboards of the organization given
+      description: Only members of the organization or administrators of ZENSIE are authorised to call this operation.
+      operationId: getDashboards
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the list of dashboards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+    post:
+      tags:
+      - Dashboard
+      summary: Create a new dashboard in the organization given
+      description: Only organization owners, editors and administrators of ZENSIE are authorised to call this operation.
+      operationId: createDashboard
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New dashboard created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardNew'
+  /dashboard/clone/{dashboardId}/group/{groupId}:
+    post:
+      tags:
+      - Dashboard
+      summary: Copy an organization dashboard to a group.
+      description: Only organization owners and administrators of ZENSIE are authorized to call this operation.
+      operationId: cloneDashboardToGroup
+      parameters:
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard successfully cloned to group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /dashboard/organization/{organizationId}/diagnostics:
+    post:
+      tags:
+      - Dashboard
+      summary: Creates a dashboard for diagnostics purposes, showing the different existing…
+      description: The authenticated user must be an administrator.
+      operationId: createDiagnosticsDashboard
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: Unauthorized to perform the operation. User has to be admin.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /dashboard/group/{groupId}:
+    get:
+      tags:
+      - Dashboard
+      summary: Get dashboards in the group given
+      description: Only group members with write access and administrators of ZENSIE are authorised to call this operation.
+      operationId: getDashboardsInGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New dashboard created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+    post:
+      tags:
+      - Dashboard
+      summary: Create a new dashboard in the group given
+      description: Only organization owners and administrators of ZENSIE are authorised to call this operation.
+      operationId: createGroupDashboard
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New dashboard created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardNew'
+  /dashboard/{dashboardId}:
+    get:
+      tags:
+      - Dashboard
+      summary: Return a single dashboard with the given id
+      description: Only members of the organization or administrators of ZENSIE are authorised to call this operation.
+      operationId: getDashboardById
+      parameters:
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns a dashboard
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+    delete:
+      tags:
+      - Dashboard
+      summary: Delete the dashboard with given id
+      description: Only owners and editors of the organization containing the dashboard or ZENSIE administrators are authorized to call this operation.
+      operationId: removeDashboard
+      parameters:
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard removed
+        '403':
+          description: User not allowed to perform the operation
+components:
+  schemas:
+    DashboardNew:
+      type: object
+      required:
+      - name
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+      description: Object holding the required properties to create a new dashboard
+    Dashboard:
+      type: object
+      required:
+      - createdBy
+      - creationTimestamp
+      - dashboardId
+      - name
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+        createdBy:
+          type: string
+          description: User that created the dashboard.
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the dashboard was created.
+        dashboardId:
+          type: string
+          description: Unique identifier of the dashboard.
+        groupId:
+          type: string
+          description: Identifier of the dashboard group.
+        organizationId:
+          type: string
+          description: Identifier of the organization that owns the dashboard.
+      description: Core object in the platform used for grouping widget objects
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,218 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dashboard Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: dashboard-update
+paths:
+  /dashboard-update/organization/{organizationId}/dashboard/{dashboardId}:
+    post:
+      tags:
+      - dashboard-update
+      summary: Apply an update to the given dashboard
+      description: Only organization owners, editors and administrators of ZENSIE are authorised to call this operation.
+      operationId: updateDashboard
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardEditable'
+  /dashboard-update/organization/{organizationId}/dashboard/{dashboardId}/reorder:
+    post:
+      tags:
+      - dashboard-update
+      summary: Re-order the widgets in the dashboard
+      description: Only organization owners, editors and administrators of ZENSIE are authorised to call this operation.
+      operationId: reorderWidgetsInDashboard
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        description: The list of ids of the widgets in the new order requested.
+  /dashboard-update/group/{groupId}/dashboard/{dashboardId}/reorder:
+    post:
+      tags:
+      - dashboard-update
+      summary: Re-order the widgets in the dashboard
+      description: Only groupId owners and administrators of ZENSIE are authorised to call this operation.
+      operationId: reorderWidgetsInGroupDashboard
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        description: The list of ids of the widgets in the new order requested.
+  /dashboard-update/group/{groupId}/dashboard/{dashboardId}:
+    post:
+      tags:
+      - dashboard-update
+      summary: Apply an update to the given dashboard
+      description: Only group owners, editors and administrators of ZENSIE are authorised to call this operation.
+      operationId: updateGroupDashboard
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dashboardId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dashboard updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardEditable'
+components:
+  schemas:
+    Dashboard:
+      type: object
+      required:
+      - createdBy
+      - creationTimestamp
+      - dashboardId
+      - name
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+        createdBy:
+          type: string
+          description: User that created the dashboard.
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the dashboard was created.
+        dashboardId:
+          type: string
+          description: Unique identifier of the dashboard.
+        groupId:
+          type: string
+          description: Identifier of the dashboard group.
+        organizationId:
+          type: string
+          description: Identifier of the organization that owns the dashboard.
+      description: Core object in the platform used for grouping widget objects
+    DashboardEditable:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+      description: Object holding the editable properties of a dashboard
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,463 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notes API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Notes
+paths:
+  /notes:
+    post:
+      tags:
+      - Notes
+      summary: Create a note
+      description: Authentication required for this operation.
+      operationId: createNote
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New note created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+          description: Invalid data in the note to be created.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while creating the note.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteNew'
+  /notes/{noteId}:
+    get:
+      tags:
+      - Notes
+      summary: Return the note with the given id
+      description: Authentication required for this operation.
+      operationId: getNoteById
+      parameters:
+      - name: noteId
+        in: path
+        description: Unique identifier of the note
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Note returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving the note.
+    put:
+      tags:
+      - Notes
+      summary: Patch a note (PUT not supported)
+      description: Authentication required for this operation.
+      operationId: putNote
+      parameters:
+      - name: noteId
+        in: path
+        description: Unique identifier of the note
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Note patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Note not found.
+        '500':
+          description: Error while patching the note.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteEditable'
+    delete:
+      tags:
+      - Notes
+      summary: Delete a note
+      description: Authentication required for this operation.
+      operationId: deleteNote
+      parameters:
+      - name: noteId
+        in: path
+        description: Unique identifier of the note
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Note has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Note not found.
+        '500':
+          description: Error while deleting the note.
+    patch:
+      tags:
+      - Notes
+      summary: Patch a note
+      description: Authentication required for this operation.
+      operationId: patchNote
+      parameters:
+      - name: noteId
+        in: path
+        description: Unique identifier of the note
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Note patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '404':
+          description: Note not found.
+        '500':
+          description: Error while patching the note.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteEditable'
+  /notes/cultivation/{cultivationId}:
+    get:
+      tags:
+      - Notes
+      summary: Return the notes of the cultivation
+      description: Authentication required for this operation.
+      operationId: getNotesByCultivationId
+      parameters:
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notes returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving notes.
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    Note:
+      type: object
+      required:
+      - category
+      - createdAt
+      - createdBy
+      - cultivationId
+      - noteId
+      - organizationId
+      properties:
+        category:
+          type: string
+          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        description:
+          type: string
+          description: The description added as text to the note
+        files:
+          type: array
+          description: List of files attached to the note, each containing a unique file identifier and MIME type.
+          items:
+            $ref: '#/components/schemas/NoteFile'
+        noteMeasurements:
+          description: Numeric measurements attached to the note
+          $ref: '#/components/schemas/NoteMeasurements'
+        plantGroupId:
+          type: string
+          description: Unique identifier of the plant group.
+        plantId:
+          type: string
+          description: Unique identifier of the plant.
+        subcategory:
+          type: string
+          description: Sub category of the note, e.g. observation, measurement, action etc.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        timestamp:
+          type: string
+          description: Timestamp of the note
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        noteId:
+          type: string
+          description: Unique identifier of the note
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+      description: Represents a note with its metadata and content.
+    NoteFile:
+      type: object
+      required:
+      - fileId
+      - mimeType
+      properties:
+        document:
+          description: Document details for non-image files, including presigned download URL and filename. Null for image files.
+          $ref: '#/components/schemas/NoteFileDocument'
+        fileId:
+          type: string
+          description: Unique identifier of the file.
+        imageWithThumbnails:
+          description: Presigned image URL with thumbnails for the file, if available.
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        mimeType:
+          type: string
+          description: MIME type of the file, e.g. image/png.
+      description: Represents a file attached to a note, identified by its unique identifier and MIME type.
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    NoteNew:
+      type: object
+      required:
+      - category
+      - cultivationId
+      - description
+      - organizationId
+      - timestamp
+      properties:
+        category:
+          type: string
+          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        description:
+          type: string
+          description: The description added as text to the note
+        files:
+          type: array
+          description: List of files attached to the note, each containing a unique file identifier and MIME type.
+          items:
+            $ref: '#/components/schemas/NoteFile'
+        noteMeasurements:
+          description: Numeric measurements attached to the note
+          $ref: '#/components/schemas/NoteMeasurements'
+        plantGroupId:
+          type: string
+          description: Unique identifier of the plant group.
+        plantId:
+          type: string
+          description: Unique identifier of the plant.
+        subcategory:
+          type: string
+          description: Sub category of the note, e.g. observation, measurement, action etc.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        timestamp:
+          type: string
+          description: Timestamp of the note
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+      description: Object holding the required properties to create a new Note.
+    NoteEditable:
+      type: object
+      required:
+      - category
+      properties:
+        category:
+          type: string
+          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        description:
+          type: string
+          description: The description added as text to the note
+        files:
+          type: array
+          description: List of files attached to the note, each containing a unique file identifier and MIME type.
+          items:
+            $ref: '#/components/schemas/NoteFile'
+        noteMeasurements:
+          description: Numeric measurements attached to the note
+          $ref: '#/components/schemas/NoteMeasurements'
+        plantGroupId:
+          type: string
+          description: Unique identifier of the plant group.
+        plantId:
+          type: string
+          description: Unique identifier of the plant.
+        subcategory:
+          type: string
+          description: Sub category of the note, e.g. observation, measurement, action etc.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        timestamp:
+          type: string
+          description: Timestamp of the note
+      description: Object containing the editable properties of Note.
+    NoteFileDocument:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Original filename of the uploaded document.
+        url:
+          type: string
+          description: Presigned download URL for the document.
+      description: Represents a non-image document attached to a note file.
+    NoteMeasurements:
+      type: object
+      required:
+      - data
+      - jsonLabels
+      - metrics
+      - units
+      properties:
+        data:
+          type: array
+          description: Ordered numeric values of the note measurements, e.g. [20, 48]
+          items:
+            type: number
+            format: double
+        jsonLabels:
+          type: array
+          description: Ordered labels of the note measurements, e.g. ['Inside Temperature', 'Outside Temperature']
+          items:
+            type: string
+        metrics:
+          type: array
+          description: Ordered metrics of the note measurements, e.g. ['temperature', 'temperature']
+          items:
+            type: string
+        units:
+          type: array
+          description: Ordered unitIds of the note measurements, e.g. ['°C', 'F']
+          items:
+            type: string
+      description: represents measurements added to a note
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

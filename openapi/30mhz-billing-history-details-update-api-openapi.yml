@@ -1,0 +1,168 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Billing History Details Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: billing-history-details-update
+paths:
+  /billing-history-details-update/organization/{organizationId}/year/{year}/month/{month}/mother/{motherId}:
+    post:
+      tags:
+      - billing-history-details-update
+      summary: Update a billing history details record for a given organization, mother, and a…
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: updateBillingHistoryByMother
+      parameters:
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: motherId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history details record updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetails'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A billing history details record for that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryDetailsUpdate'
+  /billing-history-details-update/{billingHistoryDetailsId}:
+    post:
+      tags:
+      - billing-history-details-update
+      summary: Update a billing history details record for a given organization and a specific…
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: updateBillingHistoryDetails
+      parameters:
+      - name: billingHistoryDetailsId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history details record updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetails'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/BillingHistoryDetails'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A billing history details record for that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryDetailsUpdate'
+components:
+  schemas:
+    BillingHistoryDetailsUpdate:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: States if the billing history record is active or not.
+      description: BillingHistoryDetailsUpdate
+    BillingHistoryDetails:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: States if the billing history record is active or not.
+        billingHistoryDetailsId:
+          type: string
+          description: Organization id for the billing details record.
+        checkId:
+          type: string
+          description: The check id of the billing details record.
+        collectJson:
+          type: boolean
+          description: The collect json property of the billing details record.
+        date:
+          type: string
+          description: The date of the billing details record.
+        gateway_UUID:
+          type: string
+          description: The UUID for the gateway of the billing details record.
+        ingestedForIndex:
+          type: array
+          description: The ElasticSearch index from which the (external) hits of the billing details record come from.
+          uniqueItems: true
+          items:
+            type: string
+        isExternal:
+          type: boolean
+          description: States if the billing history record is coming from an import check or not.
+        jsonCount:
+          type: string
+          description: The number of json events of the billing details record.
+        location:
+          type: string
+          description: The location of the billing details record.
+        motherMacAddress:
+          type: string
+          description: The mac address for the mother of the billing details record.
+        organizationId:
+          type: string
+          description: The organization of the billing details record.
+        regularCount:
+          type: string
+          description: The number of regular events of the billing details record.
+        sensorType:
+          type: string
+          description: The sensor type of the billing details record.
+      description: BillingHistoryDetails
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

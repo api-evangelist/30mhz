@@ -1,0 +1,82 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Settings Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-settings-update
+paths:
+  /notification-settings-update/check/{checkId}/user/{email}:
+    post:
+      tags:
+      - notification-settings-update
+      summary: Update a notification setting
+      description: Authentication required for this operation.
+      operationId: updateNotificationSetting
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Notification setting updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSetting'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/NotificationSetting'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A notification setting with that id doesn't exist
+        '406':
+          description: The notification setting method cannot be empty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationSettingUpdate'
+components:
+  schemas:
+    NotificationSettingUpdate:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Updating notification settings properties
+    NotificationSetting:
+      type: object
+      properties:
+        checkId:
+          type: string
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Notification Settings
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

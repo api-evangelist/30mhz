@@ -1,0 +1,169 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Customer Registration API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Customer Registration
+paths:
+  /registration/{registrationId}/activate:
+    get:
+      tags:
+      - Customer Registration
+      summary: Activate a new pending registration
+      description: ''
+      operationId: activateRegistration
+      parameters:
+      - name: registrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: New registration activated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRegistration'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CustomerRegistration'
+  /registration/{registrationId}:
+    delete:
+      tags:
+      - Customer Registration
+      summary: Remove a customer registration
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: removeRegistration
+      parameters:
+      - name: registrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Customer registration has been removed.
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Customer registration not found.
+  /registration:
+    post:
+      tags:
+      - Customer Registration
+      summary: Create a new pending registration
+      description: ''
+      operationId: createRegistration
+      responses:
+        '201':
+          description: New registration created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRegistration'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CustomerRegistration'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomerRegistration'
+components:
+  schemas:
+    NewCustomerRegistration:
+      type: object
+      properties:
+        offerId:
+          type: string
+          description: Offer Id.
+        organisationId:
+          type: string
+          description: Organisation Id.
+        city:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        customerEmail:
+          type: string
+          description: Customer email.
+        customerFirstName:
+          type: string
+          description: Customer first name.
+        customerId:
+          type: string
+          description: Customer Id.
+        customerLastName:
+          type: string
+          description: Customer last name.
+        number:
+          type: string
+        organisationName:
+          type: string
+          description: Organisation name.
+        partnerId:
+          type: string
+          description: Partner Id.
+        postalCode:
+          type: string
+        siteName:
+          type: string
+          description: Site name.
+        street:
+          type: string
+    CustomerRegistration:
+      type: object
+      properties:
+        offerId:
+          type: string
+          description: Offer Id.
+        organisationId:
+          type: string
+          description: Organisation Id.
+        registrationId:
+          type: string
+          description: Registration Id.
+        city:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        customerEmail:
+          type: string
+          description: Customer email.
+        customerFirstName:
+          type: string
+          description: Customer first name.
+        customerId:
+          type: string
+          description: Customer Id.
+        customerLastName:
+          type: string
+          description: Customer last name.
+        number:
+          type: string
+        organisationName:
+          type: string
+          description: Organisation name.
+        partnerId:
+          type: string
+          description: Partner Id.
+        postalCode:
+          type: string
+        siteName:
+          type: string
+          description: Site name.
+        street:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,207 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Product Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: product-update
+paths:
+  /product-update/{productId}:
+    post:
+      tags:
+      - product-update
+      summary: Update a product with a given product id
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: updateProduct
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A product with the specified id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdate'
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+      - stock
+      properties:
+        articleNumber:
+          type: string
+          description: Product's article number.
+        availabilityDate:
+          type: string
+          description: Product availability date.
+        batchSize:
+          type: integer
+          format: int32
+          description: Product batch size.
+        configuration:
+          type: object
+          description: Product configuration
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+          description: Product cost price.
+        createdAt:
+          type: string
+          description: The date and time the product was created.
+        description:
+          type: string
+          description: Product description.
+        landOfOrigin:
+          type: string
+          description: Land of origin.
+        lockPrice:
+          type: boolean
+          description: Lock price
+        phase:
+          type: string
+          description: Product phase.
+        prices:
+          type: object
+          example: '{''EUR'' : { ''price'' : 750.5 }, ''GBP'' : { ''priceEstimation'' : 100}}'
+          description: Product prices for multiple currency.
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        productId:
+          type: string
+          description: Product id.
+        productType:
+          type: string
+          description: Product type.
+        remark:
+          type: string
+          description: Product remark.
+        sensorType:
+          type: string
+          description: Product sensor type.
+        specificationSheet:
+          type: string
+        specificationSheetId:
+          type: string
+          description: Product specification sheet.
+        status:
+          type: string
+          description: Product status.
+        stock:
+          type: integer
+          format: int32
+          description: Product stock.
+        updatedAt:
+          type: string
+          description: The date and time the product was last updated.
+        weight:
+          type: integer
+          format: int32
+          description: Product weight in grams.
+      description: Product
+    ProductUpdate:
+      type: object
+      properties:
+        articleNumber:
+          type: string
+          description: Product article number
+        availabilityDate:
+          type: string
+          description: Product availability date.
+        batchSize:
+          type: integer
+          format: int32
+          description: Product batch size.
+        configuration:
+          type: object
+          description: Product configuration
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+          description: Product cost price.
+        description:
+          type: string
+          description: Product description.
+        landOfOrigin:
+          type: string
+          description: Land of origin.
+        lockPrice:
+          type: boolean
+          description: Lock price
+        phase:
+          type: string
+          description: Product phase.
+        prices:
+          type: object
+          description: prices in different currencies for the product
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        productType:
+          type: string
+          description: Product type.
+        remark:
+          type: string
+          description: Product remark.
+        sensorType:
+          type: string
+          description: Product sensor type.
+        specificationSheetId:
+          type: string
+          description: Product specification sheet.
+        status:
+          type: string
+          description: Product status.
+        stock:
+          type: integer
+          format: int32
+          description: Product stock.
+        weight:
+          type: integer
+          format: int32
+          description: Product weight in grams.
+      description: Updating product properties.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

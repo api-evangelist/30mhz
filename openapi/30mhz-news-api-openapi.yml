@@ -1,0 +1,70 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE News API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: News
+paths:
+  /news:
+    get:
+      tags:
+      - News
+      summary: Return last news articles
+      description: Authentication required for this operation.
+      operationId: getLastNewsArticles
+      parameters:
+      - name: language
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: News articles returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsArticle'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsArticle'
+components:
+  schemas:
+    NewsArticle:
+      type: object
+      required:
+      - publishedAt
+      - summary
+      - title
+      - url
+      properties:
+        imagePath:
+          type: string
+          description: Path to an image file.
+        publishedAt:
+          type: string
+          description: Timestamp of when it was created.
+        summary:
+          type: string
+          description: Summary of the article contents.
+        title:
+          type: string
+          description: Displayable title.
+        url:
+          type: string
+          description: URL to the article.
+      description: All properties of a news article.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

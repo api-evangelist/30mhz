@@ -1,0 +1,114 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Currency API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Currency
+paths:
+  /currency:
+    get:
+      tags:
+      - Currency
+      summary: Get list of supported currencies
+      description: Authentication required for this operation, authenticated user have admin role
+      operationId: getCurrencies
+      parameters:
+      - name: currencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of supported currencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+    post:
+      tags:
+      - Currency
+      summary: Create a new currency
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: createCurrency
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New currency created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Currency'
+        '403':
+          description: User must be an admin or an organization owner in order to create a currency.
+        '500':
+          description: Sorry, there was a problem creating the currency.
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCurrency'
+  /currency/{currencyId}:
+    delete:
+      tags:
+      - Currency
+      summary: Remove currency
+      description: Authentication required for this operation, authenticated user have admin role
+      operationId: deleteCurrency
+      parameters:
+      - name: currencyId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Currency has been removed.
+        '403':
+          description: User is not authorized to perform this operation, they must be an admin.
+        '404':
+          description: Currency not found.
+      x-admin-only: true
+components:
+  schemas:
+    Currency:
+      type: object
+      properties:
+        currencyId:
+          type: string
+          description: Unique identifier for the currency, should be the same as the ISO 4217 code
+        name:
+          type: string
+          description: Name of the currency
+        symbol:
+          type: string
+          description: Symbol of the currency
+    NewCurrency:
+      type: object
+      properties:
+        currencyId:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

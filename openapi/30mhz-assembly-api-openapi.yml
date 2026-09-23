@@ -1,0 +1,280 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Assembly API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Assembly
+paths:
+  /assembly:
+    post:
+      tags:
+      - Assembly
+      summary: Create a new assembly
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: createAssembly
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New assembly created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+        '400':
+          description: Invalid data in the properties.
+        '403':
+          description: User must be an admin.
+        '500':
+          description: There was a problem creating the assembly.
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAssembly'
+  /assembly/{serialNumber}:
+    get:
+      tags:
+      - Assembly
+      summary: Get an assembly by its serial number
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: getAssembly
+      parameters:
+      - name: serialNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Assembly returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+        '400':
+          description: There was a problem getting the assembly.
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem getting the assembly.
+      x-admin-only: true
+    delete:
+      tags:
+      - Assembly
+      summary: Delete an assembly
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: deleteAssembly
+      parameters:
+      - name: serialNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Assembly deleted successfully
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem deleting the assembly.
+      x-admin-only: true
+  /assembly/xbee/{xbee}:
+    get:
+      tags:
+      - Assembly
+      summary: Get an assembly by its xbee
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: getAssemblyByXbee
+      parameters:
+      - name: xbee
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Assembly returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assembly'
+        '400':
+          description: There was a problem getting the assembly.
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem getting the assembly.
+      x-admin-only: true
+  /assembly/{serialNumber}/history:
+    get:
+      tags:
+      - Assembly
+      summary: Get the update history of an assembly as a map, where keys denote the date of…
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: getAssemblyHistory
+      parameters:
+      - name: serialNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Assembly history returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Assembly'
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem getting the assembly.
+      x-admin-only: true
+  /assembly/xbee/{xbee}/history:
+    get:
+      tags:
+      - Assembly
+      summary: Get the update history of an assembly as a map, by its xbee, where keys denote…
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: getAssemblyHistoryByXbee
+      parameters:
+      - name: xbee
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Assembly history returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Assembly'
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Assembly'
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Assembly not found.
+        '500':
+          description: There was a problem getting the assembly.
+      x-admin-only: true
+components:
+  schemas:
+    Assembly:
+      type: object
+      properties:
+        battery1:
+          type: string
+        battery2:
+          type: string
+        pcb1:
+          type: string
+        pcb2:
+          type: string
+        productNumber:
+          type: string
+        remarks:
+          type: string
+        xbee1:
+          type: string
+        xbee2:
+          type: string
+        serialNumber:
+          type: string
+          description: Serial number.
+        changedBy:
+          type: string
+        createdAt:
+          type: string
+        endDate:
+          type: string
+        startDate:
+          type: string
+    NewAssembly:
+      type: object
+      properties:
+        battery1:
+          type: string
+        battery2:
+          type: string
+        pcb1:
+          type: string
+        pcb2:
+          type: string
+        productNumber:
+          type: string
+        remarks:
+          type: string
+        xbee1:
+          type: string
+        xbee2:
+          type: string
+        serialNumber:
+          type: string
+          description: Serial number.
+        changedBy:
+          type: string
+        createdAt:
+          type: string
+        endDate:
+          type: string
+        startDate:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

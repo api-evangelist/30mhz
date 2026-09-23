@@ -1,0 +1,164 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Billing History Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: billing-history-update
+paths:
+  /billing-history-update/organization/{organizationId}/year/{year}/month/{month}:
+    post:
+      tags:
+      - billing-history-update
+      summary: Update a billing history record for a given organization and a specific date
+      description: 'Authentication required for this operation.
+
+        Preconditions:
+
+        Authenticated user has to be an admin in the platform.'
+      operationId: updateBillingHistory
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Billing history record updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingHistory'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/BillingHistory'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A billing history record for that organization doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingHistoryUpdate'
+components:
+  schemas:
+    BillingHistory:
+      type: object
+      properties:
+        checksCount:
+          type: string
+          description: The number of checks of the billing record.
+        checksPrice:
+          type: string
+          description: The price of checks of the billing record.
+        currency:
+          type: string
+          description: The currency of the billing record.
+        date:
+          type: string
+          description: The date of the billing record.
+        discountAmount:
+          type: string
+          description: The discount amount value for the billing record. (this gets subtracted from the total)
+        discountPercentage:
+          type: string
+          description: The discount percentage value for the billing record.
+        isLocked:
+          type: boolean
+          description: States if the billing history record is locked for change or not.
+        jsonCount:
+          type: string
+          description: The number of json events of the billing record.
+        jsonPrice:
+          type: string
+          description: The price of json events of the billing record.
+        mothersCount:
+          type: string
+          description: The number of mothers of the billing record.
+        mothersPrice:
+          type: string
+          description: The price of mothers of the billing record.
+        organizationId:
+          type: string
+          description: Organization id for the billing record.
+        preferredCurrency:
+          type: string
+        previousTotal:
+          type: string
+        pricing:
+          type: string
+          description: Json string of the pricing object used to calculate the prices
+        regularCount:
+          type: string
+          description: The number of regular events of the billing record.
+        regularPrice:
+          type: string
+          description: The price of regular events of the billing record.
+        remarks:
+          type: string
+          description: Remarks made by account manager
+        smsCount:
+          type: string
+          description: The number of SMSs of the billing record.
+        smsPrice:
+          type: string
+          description: The price of SMSs of the billing record.
+        total:
+          type: string
+          description: The total price of the billing record.
+        totalIncludingVat:
+          type: string
+          description: The total amount including the VAT for the billing record.
+        totalsPerMonthPerCurrency:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/BillingHistory'
+        vatAmount:
+          type: string
+          description: The VAT amount value for the billing record.
+      description: BillingHistory
+    BillingHistoryUpdate:
+      type: object
+      properties:
+        checksCount:
+          type: string
+          description: The number of checks of the billing record.
+        isLocked:
+          type: boolean
+          description: States if the billing history record is locked for change or not.
+        jsonCount:
+          type: string
+          description: The number of json events of the billing record.
+        mothersCount:
+          type: string
+          description: The number of mothers of the billing record.
+        regularCount:
+          type: string
+          description: The number of regular events of the billing record.
+        remarks:
+          type: string
+          description: Remarks made by account manager
+      description: BillingHistoryUpdate
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

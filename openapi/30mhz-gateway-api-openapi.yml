@@ -1,0 +1,267 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Gateway API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Gateway
+paths:
+  /gateway:
+    post:
+      tags:
+      - Gateway
+      summary: Create a new gateway
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: createGateway
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New gateway created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '403':
+          description: User must be an admin.
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewGateway'
+  /gateway/{gatewayId}:
+    get:
+      tags:
+      - Gateway
+      summary: Return gateway
+      description: Authentication required for this operation.
+      operationId: getGatewayById
+      parameters:
+      - name: gatewayId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns gateway.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Gateway'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Gateway does not exist.
+      x-admin-only: true
+    delete:
+      tags:
+      - Gateway
+      summary: Remove gateway
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: removeGateway
+      parameters:
+      - name: gatewayId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Gateway has been removed.
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Gateway not found.
+      x-admin-only: true
+  /gateway/status/{gatewayIds}:
+    get:
+      tags:
+      - Gateway
+      summary: Return status of gateways
+      description: Authentication required for this operation.
+      operationId: getStatusForGateways
+      parameters:
+      - name: gatewayIds
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns status of gateways.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Gateway does not exist.
+components:
+  schemas:
+    NewGateway:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+        gatewayId:
+          type: string
+          description: Gateway Id.
+        macAddress:
+          type: string
+          description: The mac address of the gateway.
+        monitoringCheckId:
+          type: string
+          description: Id of the gateway monitoring check.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+        createdAt:
+          type: string
+          description: The date and time a gateway was created.
+        deletedAt:
+          type: string
+          description: The date and time a gateway was deleted.
+        deletedBy:
+          type: string
+          description: User that deleted the gateway.
+        deployedAt:
+          type: string
+          description: The date and time a gateway was deployed.
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        updatedAt:
+          type: string
+          description: The date and time a gateway was last updated.
+    Gateway:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+        gatewayId:
+          type: string
+          description: Gateway Id.
+        macAddress:
+          type: string
+          description: The mac address of the gateway.
+        monitoringCheckId:
+          type: string
+          description: Id of the gateway monitoring check.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+        createdAt:
+          type: string
+          description: The date and time a gateway was created.
+        deletedAt:
+          type: string
+          description: The date and time a gateway was deleted.
+        deletedBy:
+          type: string
+          description: User that deleted the gateway.
+        deployedAt:
+          type: string
+          description: The date and time a gateway was deployed.
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        updatedAt:
+          type: string
+          description: The date and time a gateway was last updated.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,182 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dashboard Theme Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: dashboard-theme-update
+paths:
+  /dashboard-theme-update/{dashboardThemeId}:
+    post:
+      tags:
+      - dashboard-theme-update
+      summary: Updates a dashboard theme
+      description: Authentication required for this operation
+      operationId: updateDashboardTheme
+      parameters:
+      - name: dashboardThemeId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Dashboard theme updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DashboardTheme'
+        '403':
+          description: User must be a authenticated.
+        '500':
+          description: Sorry, there was a problem creating the dashboard theme.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardThemeUpdate'
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    DashboardThemeCSS:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarShadow:
+          type: boolean
+        headerBarTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    DashboardThemeUpdate:
+      type: object
+      properties:
+        css:
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        logoDataUploadId:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,200 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Offer API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Offer
+paths:
+  /offer/{offerId}:
+    put:
+      tags:
+      - Offer
+      summary: Update an offer
+      description: Authentication required for this operation.
+      operationId: putOffer
+      parameters:
+      - name: offerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Offer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the offer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferEditable'
+    delete:
+      tags:
+      - Offer
+      summary: Delete an offer
+      description: Authentication required for this operation.
+      operationId: deleteOffer
+      parameters:
+      - name: offerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Offer has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Offer not found.
+    patch:
+      tags:
+      - Offer
+      summary: Patch an offer
+      description: Authentication required for this operation.
+      operationId: patchOffer
+      parameters:
+      - name: offerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Offer patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while patching the offer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferEditable'
+  /offer:
+    post:
+      tags:
+      - Offer
+      summary: Create a new offer
+      description: Authentication required for this operation.
+      operationId: postOffer
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New offer created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '403':
+          description: User not authorized.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOffer'
+components:
+  schemas:
+    NewOffer:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: Duration of the offer.
+        requiredExtensionIds:
+          type: array
+          description: Extension ids to install.
+          items:
+            type: string
+        subscriptionTier:
+          type: string
+          description: Subscription tier.
+        offerId:
+          type: string
+          description: Offer id.
+        createdAt:
+          type: string
+          description: The date and time a offer was created.
+        createdBy:
+          type: string
+          description: User that created the offer.
+        partnerId:
+          type: string
+          description: Partner id.
+    OfferEditable:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: Duration of the offer.
+        requiredExtensionIds:
+          type: array
+          description: Extension ids to install.
+          items:
+            type: string
+        subscriptionTier:
+          type: string
+    Offer:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: Duration of the offer.
+        requiredExtensionIds:
+          type: array
+          description: Extension ids to install.
+          items:
+            type: string
+        subscriptionTier:
+          type: string
+          description: Subscription tier.
+        offerId:
+          type: string
+          description: Offer id.
+        createdAt:
+          type: string
+          description: The date and time a offer was created.
+        createdBy:
+          type: string
+          description: User that created the offer.
+        partnerId:
+          type: string
+          description: Partner id.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

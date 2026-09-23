@@ -1,0 +1,210 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Data Upload API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Data Upload
+paths:
+  /data-upload/{dataUploadId}:
+    get:
+      tags:
+      - Data Upload
+      summary: Return the data upload with the given id
+      description: Authentication required for this operation.
+      operationId: getDataUploadById
+      parameters:
+      - name: dataUploadId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the data upload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '404':
+          description: Data upload does not exist
+    delete:
+      tags:
+      - Data Upload
+      summary: Delete data upload
+      description: Authentication required for this operation.
+      operationId: deleteData
+      parameters:
+      - name: dataUploadId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Data upload deleted
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Data upload  does not exist
+  /data-upload/organization/{organizationId}:
+    post:
+      tags:
+      - Data Upload
+      summary: Data upload
+      description: Organization owners and editors are allowed to upload.
+      operationId: uploadData
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: content-length
+        in: header
+        required: false
+        schema:
+          type: integer
+          format: int64
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data upload request created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization does not exist
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+  /data-upload/group/{groupId}:
+    post:
+      tags:
+      - Data Upload
+      summary: Data upload
+      description: Authentication required for this operation.
+      operationId: uploadDataToGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: content-length
+        in: header
+        required: false
+        schema:
+          type: integer
+          format: int64
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data upload request created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataUpload'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: Organization does not exist
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    DataUpload:
+      type: object
+      properties:
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: The creation timestamp.
+        dataUploadId:
+          type: string
+          description: Data upload id.
+        filename:
+          type: string
+          description: The name of the uploaded file
+        groupId:
+          type: string
+          description: Group id for the data upload.
+        imageDimensions:
+          description: The image dimensions
+          $ref: '#/components/schemas/ImageDimensions'
+        imageThumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        organizationId:
+          type: string
+          description: Organization id for the data upload.
+        orientation:
+          type: integer
+          format: int32
+          description: The orientation of the image
+        presignedUrl:
+          type: string
+      description: DataUpload
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

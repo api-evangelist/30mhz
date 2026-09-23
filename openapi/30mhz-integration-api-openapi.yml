@@ -1,0 +1,67 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Integration API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Integration
+paths:
+  /integration/activate/{integrationId}:
+    post:
+      tags:
+      - Integration
+      operationId: activateIntegration
+      parameters:
+      - name: integrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        default:
+          description: successful operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Activate integration
+      x-summary-source: derived
+  /integration/deactivate/{integrationId}/installation/{installationId}:
+    post:
+      tags:
+      - Integration
+      operationId: deactivateIntegration
+      parameters:
+      - name: integrationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: installationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        default:
+          description: successful operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Deactivate integration
+      x-summary-source: derived
+components:
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

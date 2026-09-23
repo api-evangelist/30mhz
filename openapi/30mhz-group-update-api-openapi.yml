@@ -1,0 +1,256 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Group Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: group-update
+paths:
+  /group-update/{groupId}:
+    post:
+      tags:
+      - group-update
+      summary: Edit a group
+      description: ''
+      operationId: updateGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Group updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '403':
+          description: User must be an admin or an organization owner in order to edit a group.
+        '404':
+          description: Group not found
+        '500':
+          description: Sorry, there was a problem creating the group.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewGroup'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/NewGroup'
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    Group:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time the group was created.
+        dashboardTheme:
+          description: The dashboard theme
+          $ref: '#/components/schemas/DashboardTheme'
+        dashboardThemeId:
+          type: string
+          description: The dashboard theme id.
+        description:
+          type: string
+          description: The description of the purpose, goals etc; of the group
+        groupId:
+          type: string
+          description: Unique id of the group itself
+        members:
+          type: array
+          description: The members of the group
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        restrictInviteMembersTo:
+          type: array
+          description: The roles that can invite users to the group. If empty, any role can.
+          uniqueItems: true
+          items:
+            type: object
+        title:
+          type: string
+          description: The title or name of the group
+    NewGroup:
+      type: object
+      properties:
+        dashboardThemeId:
+          type: string
+        description:
+          type: string
+        restrictInviteMembersTo:
+          type: array
+          items:
+            type: string
+            enum:
+            - OWNER
+            - EDITOR
+            - FOLLOWER
+        title:
+          type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    DashboardThemeCSS:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarShadow:
+          type: boolean
+        headerBarTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    GroupMember:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the member.
+        firstName:
+          type: string
+          description: The first name of the member
+        groupId:
+          type: string
+          description: Unique id of the group itself
+        invitedBy:
+          type: string
+          description: The email of the user who invited this member
+        lastName:
+          type: string
+          description: The last name of the member
+        memberSince:
+          type: string
+          description: The date and time since the user is a member
+        role:
+          type: string
+          description: The role of the member within the group e.g owner
+          enum:
+          - OWNER
+          - EDITOR
+          - FOLLOWER
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

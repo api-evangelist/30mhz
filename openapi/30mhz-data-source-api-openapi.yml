@@ -1,0 +1,118 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Data Source API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Data Source
+paths:
+  /data-source/bulk-edit:
+    patch:
+      tags:
+      - Data Source
+      summary: Bulk edit multiple data sources
+      description: Authentication required for this operation.
+      operationId: bulkEditDataSources
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Data sources have been updated
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '404':
+          description: Data source not found.
+        '500':
+          description: Error while updating the data sources.
+        '501':
+          description: Not yet implemented feature of the bulk edit.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DataSourceBulkEdit'
+components:
+  schemas:
+    DataSourceBulkEdit:
+      type: object
+      required:
+      - dataSourceId
+      properties:
+        dataSourceCoordinatesEditable:
+          description: A set of numbers that represent the current position of a data source
+          $ref: '#/components/schemas/DataSourceCoordinatesEditable'
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        decimalsPerField:
+          type: object
+          description: The number of decimals used for each field of the data source.
+          additionalProperties:
+            type: integer
+            format: int32
+        description:
+          type: string
+          description: Brief description that elaborates on the name
+        enabled:
+          type: boolean
+          description: Whether the data source is enabled.
+        name:
+          type: string
+          description: Displayable name.
+        rangePerJsonKey:
+          type: object
+          description: Min/max ranges for each json key of the data source.
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+          description: The sensor type.
+        status:
+          type: string
+          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PAUSED
+        tags:
+          type: array
+          description: The tags associated with the data source.
+          uniqueItems: true
+          items:
+            type: string
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        zoneId:
+          type: string
+          description: Identifier of the zone within a site where the data source belongs.
+      description: Object containing the editable properties of a Data Source used for bulk edit.
+    DataSourceCoordinatesEditable:
+      type: object
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+      description: Object containing the editable properties of DataSourceCoordinates.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

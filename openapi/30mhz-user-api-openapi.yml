@@ -1,0 +1,840 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE User API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: User
+paths:
+  /user:
+    get:
+      tags:
+      - User
+      summary: Returns the stored information associated to the current user
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getUser
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthenticated request
+        '404':
+          description: User not found
+        '500':
+          description: Error obtaining current user data
+  /user/sign-up:
+    post:
+      tags:
+      - User
+      summary: Sign up
+      description: Signs up the requesting user.
+      operationId: signUp
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Signed up user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Language is not supported.
+        '403':
+          description: Invalid or expired authorization code.
+        '404':
+          description: User not found.
+        '500':
+          description: Internal server error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        description: The sign up request.
+        required: true
+  /user/change-password/{email}/{authorizationCode}:
+    post:
+      tags:
+      - User
+      summary: Confirms the user's password change
+      description: 'You can request an {authorizationCode} for your account at: GET ''/user/change-password/{email}'' .
+
+        This operation uses the {authorizationCode} sent via email by the previous operation: the authorization code for change the password emailed to the owner of the account requesting the change."
+
+        The {authorizationCode} will expired on 6 hours.The {authorizationCode} will be validated.'
+      operationId: changePassword
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: authorizationCode
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Password changed.
+        '400':
+          description: Password cannot be empty
+        '401':
+          description: This {authorizationCode} is not valid for this user.
+        '500':
+          description: Error occurred when trying to save/obtain the user in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credential'
+        description: Valid User information
+        required: true
+  /user/all:
+    get:
+      tags:
+      - User
+      summary: Returns all the system users. Operation reserved to system admins
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getAllUsers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error obtaining the users
+  /user/register/user/{email}:
+    post:
+      tags:
+      - User
+      summary: Registers a new guest user that does not belong to any organization.
+      description: The authorization code should be for the given user and signed by ZENSIE.
+      operationId: registerUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: authorizationCode
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The user has been registered
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentialsAsGuest'
+  /user/activate/user/{email}:
+    post:
+      tags:
+      - User
+      summary: Activates a new user that was added as member of an organization.Authorization…
+      description: The authorization code should be for the given user and signed by ZENSIE.
+      operationId: activateUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: authorizationCode
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: The user has been activated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credential'
+        description: User being activated
+        required: true
+  /user/account-managers:
+    get:
+      tags:
+      - User
+      summary: Returns all the account managers
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getAllAccountManagers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The account managers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error obtaining the account managers
+  /user/organization-member/organization/{organizationId}:
+    get:
+      tags:
+      - User
+      summary: Returns the organization memberships that belong to an organization
+      description: Authentication required for this operation, authenticated user needs to be member of the organization.
+      operationId: getOrganizationMemberships
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The memberships associated with the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationMembership'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationMembership'
+        '401':
+          description: User is not authorized to perform this operation. She should be owner within the organization or an admin.
+        '404':
+          description: Organization not found
+  /user/organization/{organizationId}:
+    get:
+      tags:
+      - User
+      summary: Returns the users that belong to an organization
+      description: Authentication required for this operation, authenticated user needs to be member of the organization.
+      operationId: getOrganizationUsers
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The users associated with the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                uniqueItems: true
+        '401':
+          description: User is not authorized to perform this operation. She should be owner within the organization or an admin.
+        '500':
+          description: Internal server error
+  /user/{email}:
+    get:
+      tags:
+      - User
+      summary: Returns the requested User
+      description: 'This operation is only for Administrators.
+
+        Default oauth authentication mechanism required for this operation.'
+      operationId: getUserByEmail
+      parameters:
+      - name: email
+        in: path
+        description: Valid user's email
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Unauthorized access to an admin only user operation
+        '404':
+          description: User not found
+    delete:
+      tags:
+      - User
+      summary: Removes the user, along with all her notification settings of checks (follows).
+      description: Authentication required for this operation, admin level required.
+      operationId: removeUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The user and related data have been removed
+        '401':
+          description: Not authenticated or user is not admin
+        '404':
+          description: User not found
+  /user/has-api-key:
+    get:
+      tags:
+      - User
+      summary: Checks if user has an api key
+      description: User needs to be authenticated.
+      operationId: hasAPIKey
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Return the API key
+        '401':
+          description: User not authenticated
+  /user/invite/organization/{organizationId}/role/{role}:
+    post:
+      tags:
+      - User
+      summary: Invites valid users to join Zensie
+      description: 'This operation is Admins and account managers only, and this operation depends on the client captcha configuration.
+
+        the {organizationId} will be validated ,
+
+        The account should be activated; an email with the account confirmation email will be sent, this is required in order to activate the account.
+
+        Default oauth authentication mechanism required for this operation, and a valid captcha client.'
+      operationId: invite
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '201':
+          description: The user has been invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthenticated request
+        '404':
+          description: User not found
+        '409':
+          description: User already exists.
+        '500':
+          description: Error storing current user data and/or sending the activation email.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNew'
+        description: User information
+        required: true
+  /user/invite:
+    post:
+      tags:
+      - User
+      summary: Invites a user to an organization
+      description: ''
+      operationId: inviteUser
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '201':
+          description: The user has been invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Malformed request or referenced organization does not exist
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Caller lacks permission to invite to this organization
+        '409':
+          description: Email is already an active user
+        '500':
+          description: Error storing the new user or sending the activation email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInviteRequest'
+        description: Invite details
+        required: true
+  /user/api-key/request:
+    post:
+      tags:
+      - User
+      summary: Requests an API key for the authenticated user.
+      description: ''
+      operationId: requestAPIKey
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+  /user/api-key/request-with-password:
+    post:
+      tags:
+      - User
+      summary: Requests an API key for a user with valid username and password.
+      description: ''
+      operationId: requestAPIKeyWithUsernameAndPassword
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: API key created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/UserToken'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credential'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Credential'
+        description: Username and password of user requesting api key
+        required: true
+  /user/change-password/{email}:
+    get:
+      tags:
+      - User
+      summary: Request to make a password change for the user with given email
+      description: This operation sends an email to the user with a link to perform the password change.
+      operationId: requestChangePassword
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Successful password change request, please check your email and follow the instructions.
+        '400':
+          description: A user with that email doesn't exist.
+        '500':
+          description: 'Error sending the password change to the email account '
+  /user/api-key:
+    delete:
+      tags:
+      - User
+      summary: Revokes the current API key for the authenticated user
+      description: User needs to be authenticated.
+      operationId: revokeAPIKey
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: API key was revoked
+        '401':
+          description: Unauthenticated request
+  /user/{email}/api-key:
+    delete:
+      tags:
+      - User
+      summary: Revokes the current API key for the user with the given email address
+      description: User needs to be authenticated and an administrator.
+      operationId: revokeAPIKeyForUser
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: API key was revoked
+        '401':
+          description: Unauthenticated or unauthorized to perform the operation
+components:
+  schemas:
+    UserCredentialsAsGuest:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        language:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+      description: Object holding the required properties to register a guest
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
+    Credential:
+      type: object
+      properties:
+        email:
+          type: string
+        language:
+          type: string
+        password:
+          type: string
+      description: Object holding user's credentials
+    UserInviteRequest:
+      type: object
+      required:
+      - email
+      - firstName
+      - lastName
+      - organizationId
+      - role
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        rateLimitTier:
+          type: string
+          enum:
+          - tier1
+          - tier2
+          - tier3
+          - tier4
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        email:
+          type: string
+          description: Email address.
+        licenseId:
+          type: string
+          description: Optional license identifier driving the email template and sender
+        organizationId:
+          type: string
+          description: Identifier of the organization the user is being invited to
+        role:
+          type: string
+          description: Role to assign the invited user within the organization
+      description: User Invite to an organization
+    UserNew:
+      type: object
+      required:
+      - email
+      - firstName
+      - lastName
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        rateLimitTier:
+          type: string
+          enum:
+          - tier1
+          - tier2
+          - tier3
+          - tier4
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        email:
+          type: string
+          description: Email address.
+      description: Object holding the required properties to create a new user
+    OrganizationMembership:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          description: User's email.
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+        organizationId:
+          type: string
+          description: Identifier for the organization.
+        purpose:
+          type: string
+          description: Optional purpose of invitation
+        role:
+          type: string
+          description: Role of the user within the organization. It determines the user's permissions.
+      description: A user being a member of an organization with a given role.
+    SignUpRequest:
+      type: object
+      required:
+      - invitationToken
+      - language
+      properties:
+        invitationToken:
+          type: string
+          description: The invitation JWT (issued at invite time).
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        password:
+          type: string
+          description: The user's introduced password.
+      description: Payload submitted by an invited user to sign up.
+    User:
+      type: object
+      required:
+      - email
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        activatedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of activation, e.g. e.g 2023-12-12T15:00:00Z.
+        email:
+          type: string
+          description: Email address.
+        invitedBy:
+          type: string
+          description: Email address of user that sent the invite.
+        systemRole:
+          type: string
+          description: 'System-wide role like: ''admin'''
+        userId:
+          type: string
+          description: Universally unique identifier of a user.
+      description: A person who uses the platform
+    UserToken:
+      type: object
+      properties:
+        apiToken:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

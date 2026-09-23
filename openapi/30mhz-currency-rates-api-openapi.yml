@@ -1,0 +1,85 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Currency Rates API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Currency Rates
+paths:
+  /currency-rates:
+    post:
+      tags:
+      - Currency Rates
+      summary: Add currency rates
+      description: Authentication required for this operation.
+      operationId: addCurrencyRates
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Currency rates added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyRates'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CurrencyRates'
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: User does not exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrencyRatesMapper'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CurrencyRatesMapper'
+components:
+  schemas:
+    CurrencyRates:
+      type: object
+      properties:
+        base:
+          type: string
+          description: Currency rates base.
+        date:
+          type: string
+          description: Currency rates date.
+        rates:
+          type: object
+          description: Currency rates.
+          additionalProperties:
+            type: number
+            format: double
+      description: CurrencyRates
+    CurrencyRatesMapper:
+      type: object
+      properties:
+        base:
+          type: string
+        currencyRatesPath:
+          type: string
+        currencyRatesQueryParamKey:
+          type: string
+        currencyRatesQueryParamValue:
+          type: string
+        currencyRatesWebTarget:
+          type: string
+        date:
+          type: string
+        rateSymbol:
+          type: string
+        rateValue:
+          type: string
+        rates:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

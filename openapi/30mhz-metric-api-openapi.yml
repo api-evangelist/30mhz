@@ -1,0 +1,255 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Metric API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Metric
+paths:
+  /metric/{metricId}:
+    get:
+      tags:
+      - Metric
+      summary: Returns the metric with the specified type id
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getMetric
+      parameters:
+      - name: metricId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The metric with the specified id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '404':
+          description: A metric with that id does not exist
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error obtaining the metric persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+    delete:
+      tags:
+      - Metric
+      summary: Remove metric
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: deleteMetric
+      parameters:
+      - name: metricId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Metric has been deleted.
+        '400':
+          description: The metric is currently used by existing sensor types and cannot be removed.
+        '403':
+          description: User is not authorized to perform this operation. Should be admin.
+        '404':
+          description: Metric not found.
+  /metric:
+    get:
+      tags:
+      - Metric
+      summary: Returns all the metrics
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getAllMetrics
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The list of all metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error obtaining the metric persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+    post:
+      tags:
+      - Metric
+      summary: Creates new metric
+      description: Authentication required for this operation, authenticated user have admin role.
+      operationId: createMetric
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New metric created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '400':
+          description: Metric data missing or incomplete.
+        '403':
+          description: User is not authorized to perform this operation. Should be admin.
+        '409':
+          description: A metric with the given id already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metric'
+  /metric/conversions:
+    get:
+      tags:
+      - Metric
+      summary: Returns the metrics that have possible conversions
+      description: Default oauth authentication mechanism required for this operation.
+      operationId: getConversions
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: The metrics with possible conversions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '401':
+          description: Unauthenticated request, cannot perform operation
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '404':
+          description: A metric with that id does not exist
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Error obtaining the metric persisted data
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+components:
+  schemas:
+    ConversionFormula:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: number
+          format: double
+    ConversionUnit:
+      type: object
+      properties:
+        conversionFormulas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionFormula'
+        decimals:
+          type: integer
+          format: int32
+          minimum: 0
+        unit:
+          type: string
+        unitId:
+          type: string
+        unitLabel:
+          type: string
+    Metric:
+      type: object
+      properties:
+        conversionUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionUnit'
+        defaultStatisticTypes:
+          type: array
+          items:
+            type: string
+        metricId:
+          type: string
+        name:
+          type: string
+        statisticTypes:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        unit:
+          type: string
+        unitLabel:
+          type: string
+      description: Metrics of sensor types
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

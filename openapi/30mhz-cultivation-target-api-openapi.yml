@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Cultivation Target API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: cultivation-target
+paths:
+  /cultivation-target/organization/{organizationId}/cultivation/{cultivationId}:
+    get:
+      tags:
+      - cultivation-target
+      summary: Return the targets for a cultivation
+      description: Authentication required for this operation.
+      operationId: getTargetsForCultivation
+      parameters:
+      - name: organizationId
+        in: path
+        description: The unique identifier of the organization it belongs to.
+        required: true
+        schema:
+          type: string
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Cultivation targets returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving the  cultivation targets.
+  /cultivation-target/organization/{organizationId}/cultivation/{cultivationId}/target/{cultivationTargetId}:
+    get:
+      tags:
+      - cultivation-target
+      summary: Return the cultivation target with the given id
+      description: Authentication required for this operation.
+      operationId: getCultivationTargetById
+      parameters:
+      - name: organizationId
+        in: path
+        description: The unique identifier of the organization it belongs to.
+        required: true
+        schema:
+          type: string
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      - name: cultivationTargetId
+        in: path
+        description: Universally unique identifier of a cultivation target.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Cultivation target returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving the  cultivation targets.
+    put:
+      tags:
+      - cultivation-target
+      summary: Patch a cultivation target (PUT not supported)
+      description: Authentication required for this operation.
+      operationId: putCultivationTarget
+      parameters:
+      - name: organizationId
+        in: path
+        description: The unique identifier of the organization it belongs to.
+        required: true
+        schema:
+          type: string
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      - name: cultivationTargetId
+        in: path
+        description: Universally unique identifier of a cultivation target.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Cultivation target patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Cultivation target not found.
+        '500':
+          description: Error while patching the cultivation target.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CultivationTargetEditable'
+    delete:
+      tags:
+      - cultivation-target
+      summary: Delete a cultivation target
+      description: Authentication required for this operation.
+      operationId: deleteCultivationTarget
+      parameters:
+      - name: organizationId
+        in: path
+        description: The unique identifier of the organization it belongs to.
+        required: true
+        schema:
+          type: string
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      - name: cultivationTargetId
+        in: path
+        description: Universally unique identifier of a cultivation target.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Cultivation target has been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Cultivation target not found.
+        '500':
+          description: Error while deleting the cultivation target.
+    patch:
+      tags:
+      - cultivation-target
+      summary: Patch a cultivation target
+      description: Authentication required for this operation.
+      operationId: patchCultivationTarget
+      parameters:
+      - name: organizationId
+        in: path
+        description: The unique identifier of the organization it belongs to.
+        required: true
+        schema:
+          type: string
+      - name: cultivationId
+        in: path
+        description: Universally unique identifier of a cultivation.
+        required: true
+        schema:
+          type: string
+      - name: cultivationTargetId
+        in: path
+        description: Universally unique identifier of a cultivation target.
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Cultivation target patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '404':
+          description: Cultivation target not found.
+        '500':
+          description: Error while patching the cultivation target.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CultivationTargetEditable'
+  /cultivation-target:
+    get:
+      tags:
+      - cultivation-target
+      summary: Return all cultivation targets
+      description: Authentication required for this operation.
+      operationId: getAllCultivationTargets
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: All cultivation targets returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CultivationTarget'
+        '403':
+          description: Not enough permissions to perform the operation.
+        '500':
+          description: Error while retrieving the  cultivation targets.
+    post:
+      tags:
+      - cultivation-target
+      summary: Create a cultivation target
+      description: Authentication required for this operation.
+      operationId: createCultivationTarget
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New cultivation target created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CultivationTarget'
+        '403':
+          description: User not authorized.
+        '409':
+          description: A cultivation target with the given ID already exists
+        '500':
+          description: Error while creating the cultivation target.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CultivationTargetNew'
+components:
+  schemas:
+    CultivationTargetNew:
+      type: object
+      required:
+      - cultivationId
+      - metricId
+      - name
+      - organizationId
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+      description: Object holding the required properties to create a new CultivationTarget.
+    CultivationTargetSetpoint:
+      type: object
+      required:
+      - timestamp
+      properties:
+        maxValue:
+          type: number
+          format: double
+          description: Upper limit for the target bandwidth.
+        minValue:
+          type: number
+          format: double
+          description: Lower limit for the target bandwidth.
+        targetValue:
+          type: number
+          format: double
+          description: Target value.
+        timestamp:
+          type: integer
+          format: int64
+          description: Relative seconds since cultivation start date.
+    CultivationTarget:
+      type: object
+      required:
+      - createdAt
+      - cultivationId
+      - cultivationTargetId
+      - organizationId
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+        createdAt:
+          type: string
+          description: Timestamp of when it was created. Identifies the target within the  cultivation.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        cultivationTargetId:
+          type: string
+          description: Universally unique identifier of a cultivation target.
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+      description: Represent a metric target for a cultivation.
+    CultivationTargetEditable:
+      type: object
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+      description: Object containing the editable properties of CultivationTarget.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

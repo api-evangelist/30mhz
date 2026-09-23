@@ -1,0 +1,767 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Comment API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Comment
+paths:
+  /comment/{commentId}:
+    get:
+      tags:
+      - Comment
+      summary: Get a comment
+      description: ''
+      operationId: getComment
+      parameters:
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+    delete:
+      tags:
+      - Comment
+      summary: Delete a comment
+      description: Authentication required for this operation, authenticated user have admin role or be owner of the comment.
+      operationId: deleteComment
+      parameters:
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '403':
+          description: User is not authorized to perform this operation, they must be comment owner or an admin.
+        '404':
+          description: Comment not found.
+  /comment:
+    post:
+      tags:
+      - Comment
+      summary: Create a new comment
+      description: Authentication required for this operation.
+      operationId: createComment
+      parameters:
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: New comment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: User must be an admin or an organization or group editor/owner.
+        '500':
+          description: Sorry, there was a problem creating the comment.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComment'
+  /comment/reply/{commentId}:
+    post:
+      tags:
+      - Comment
+      summary: Create a new reply
+      description: Authentication required for this operation.
+      operationId: createReply
+      parameters:
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: New reply created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: User must be an admin or an organization or group editor/owner.
+        '500':
+          description: Sorry, there was a problem creating the reply.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCommentReply'
+  /comment/interval:
+    get:
+      tags:
+      - Comment
+      summary: Get comments by interval
+      description: Authentication required. User should be part of the organization or group.
+      operationId: getCommentsByInterval
+      parameters:
+      - name: interval
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: checkIds
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: groupId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: organizationId
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /comment/timeinterval:
+    get:
+      tags:
+      - Comment
+      summary: Get comments within an interval
+      description: Authentication required. User should be part of the organization or group.
+      operationId: getCommentsByTimeInterval
+      parameters:
+      - name: startDate
+        in: query
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: checkIds
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: groupId
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: organizationId
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /comment/feed/group/{groupId}:
+    get:
+      tags:
+      - Comment
+      summary: Deprecated. Please use /paginated-feed/group/{groupId}
+      description: ''
+      operationId: getCommentsFeedForGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Comment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /comment/feed/organization/{organizationId}:
+    get:
+      tags:
+      - Comment
+      summary: Deprecated. Please use /paginated-feed/organization/{organizationId}
+      description: ''
+      operationId: getCommentsFeedForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      deprecated: true
+      responses:
+        '200':
+          description: Comment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /comment/interval/{interval}:
+    post:
+      tags:
+      - Comment
+      summary: Get comments for interval
+      description: Authentication required. User should be part of the organization or group.
+      operationId: getCommentsForInterval
+      parameters:
+      - name: interval
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timezoneOffset
+        in: query
+        description: 'The timezone offset, in hours, for which to return the data. For example, 2 for Europe/Amsterdam. -3 for America/Argentina/Buenos_Aires. If empty, then UTC/GMT time is assumed, but it''s probably not what you want. See list of timezones: <a>https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>'
+        required: false
+        schema:
+          type: integer
+          format: int32
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+  /comment/from/{startDate}/until/{endDate}:
+    post:
+      tags:
+      - Comment
+      summary: Get comments within an interval
+      description: Authentication required. User should be part of the organization or group.
+      operationId: getCommentsForTimeInterval
+      parameters:
+      - name: startDate
+        in: path
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+  /comment/paginated-feed/group/{groupId}:
+    get:
+      tags:
+      - Comment
+      summary: Get the paginated comments feed for a group
+      description: ''
+      operationId: getPaginatedCommentsFeedForGroup
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Size of the page.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - name: page
+        in: query
+        description: Page to retrieve.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedComments'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/PaginatedComments'
+  /comment/paginated-feed/organization/{organizationId}:
+    get:
+      tags:
+      - Comment
+      summary: Get the paginated comments feed for an organization
+      description: ''
+      operationId: getPaginatedCommentsFeedForOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: Size of the page.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      - name: page
+        in: query
+        description: Page to retrieve.
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedComments'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/PaginatedComments'
+  /comment/search:
+    post:
+      tags:
+      - Comment
+      summary: Search for comments
+      description: Authentication required. User should be part of the organization or group.
+      operationId: searchForComments
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+components:
+  schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    PaginatedComments:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+    NewComment:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        appInstallationId:
+          type: string
+        checkIds:
+          type: array
+          description: Check ids that serve as content for the comment
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of comment
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        documentIds:
+          type: array
+          description: Data upload ids of the documents attached to this comment
+          uniqueItems: true
+          items:
+            type: string
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        groupId:
+          type: string
+          description: Group id of the comment
+        imageIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        organizationId:
+          type: string
+          description: Organization id of the comment
+        selectedCheckId:
+          type: string
+          description: Check id that comment belongs to
+        selectedField:
+          type: string
+          description: Field that was selected for the comment
+        text:
+          type: string
+          description: Comment text
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    CommentTags:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        checkIds:
+          type: array
+          description: Check ids to which comment belongs to
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of the check
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        emails:
+          type: array
+          description: Users mentioned in the comments
+          uniqueItems: true
+          items:
+            type: string
+        selectedCheckId:
+          type: string
+          description: Selected check for this comment
+        selectedField:
+          type: string
+          description: Selected field id for this comment
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
+    Pagination:
+      type: object
+      properties:
+        lastPage:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+    Comment:
+      type: object
+      properties:
+        activityType:
+          type: string
+        appInstallationId:
+          type: string
+        email:
+          type: string
+        groupId:
+          type: string
+        lastUpdatedTimestamp:
+          type: string
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
+          type: array
+          description: Replies of a comment
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
+        text:
+          type: string
+          description: Comment text
+    NewCommentReply:
+      type: object
+      properties:
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        text:
+          type: string
+          description: Comment text
+    CommentRequest:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        appInstallationId:
+          type: string
+          description: App installation id comments belong to
+        checkIds:
+          type: array
+          description: Check ids comments belong to
+          uniqueItems: true
+          items:
+            type: string
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        emails:
+          type: array
+          description: Emails comments belong to (comment creators)
+          uniqueItems: true
+          items:
+            type: string
+        groupId:
+          type: string
+          description: Group id comments belong to
+        mentions:
+          type: array
+          description: Users that are mentioned in the comment
+          uniqueItems: true
+          items:
+            type: string
+        organizationId:
+          type: string
+          description: Organization id comments belong to
+        text:
+          type: string
+          description: Text that should be in the comment
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

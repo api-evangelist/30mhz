@@ -1,0 +1,160 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Agent API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Agent
+paths:
+  /agent/conversation/{conversationId}/message:
+    get:
+      tags:
+      - Agent
+      summary: Return all messages of the provided conversation
+      description: Authentication required for this operation.
+      operationId: getConversationMessages
+      parameters:
+      - name: conversationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: All messages returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentMessage'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentMessage'
+        '403':
+          description: Not enough permissions to perform the operation.
+  /agent/message-stream:
+    post:
+      tags:
+      - Agent
+      summary: Send a message to the provided conversation and start a run
+      description: Authentication required for this operation.
+      operationId: sendMessageStream
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Stream with updates to the run.
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ChunkedOutput'
+        '403':
+          description: Not enough permissions to perform the operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentMessageNew'
+components:
+  schemas:
+    Type:
+      type: object
+      properties:
+        typeName:
+          type: string
+    ChunkedOutput:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        closed:
+          type: boolean
+    AgentToolCall:
+      type: object
+      properties:
+        agentToolId:
+          type: string
+          description: The unique identifier of the tool. This is also the name of the tool.
+        arguments:
+          type: object
+          description: A key-value map of the tool arguments.
+          additionalProperties:
+            type: object
+        toolCallId:
+          type: string
+          description: The unique identifier of the AI agents call to a tool.
+      description: An AI agent request to call a tool.
+    AgentMessageNew:
+      type: object
+      properties:
+        agentId:
+          type: string
+          description: The unique identifier of the AI agent.
+        content:
+          type: string
+          description: Content of the message
+        isSystemGenerated:
+          type: boolean
+          description: Indicates whether it was automatically created by the system or sent by the user.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        requiredToolCall:
+          description: A tool call that the agent must perform for the task.
+          $ref: '#/components/schemas/AgentToolCall'
+        role:
+          type: string
+          description: Role of the message sender (e.g. assistant or user)
+        conversationId:
+          type: string
+          description: The unique identifier of the AI agent conversation.
+      description: Object holding the required properties to create a new AgentMessage.
+    AgentMessage:
+      type: object
+      required:
+      - conversationId
+      properties:
+        agentId:
+          type: string
+          description: The unique identifier of the AI agent.
+        content:
+          type: string
+          description: Content of the message
+        isSystemGenerated:
+          type: boolean
+          description: Indicates whether it was automatically created by the system or sent by the user.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        requiredToolCall:
+          description: A tool call that the agent must perform for the task.
+          $ref: '#/components/schemas/AgentToolCall'
+        role:
+          type: string
+          description: Role of the message sender (e.g. assistant or user)
+        conversationId:
+          type: string
+          description: The unique identifier of the AI agent conversation.
+        createdAt:
+          type: integer
+          format: int64
+          description: Timestamp of when it was created.
+        messageId:
+          type: string
+          description: Unique identifier for the message.
+        runId:
+          type: string
+          description: The unique identifier of the AI agent run.
+      description: A message in the AI Agent conversation.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

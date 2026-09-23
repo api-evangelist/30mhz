@@ -1,0 +1,259 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Data Source Coordinates API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: data-source-coordinates
+paths:
+  /data-source-coordinates:
+    post:
+      tags:
+      - data-source-coordinates
+      summary: Create new data source coordinates
+      description: Authentication required for this operation.
+      operationId: createDataSourceCoordinates
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New data source coordinates created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+        '403':
+          description: User not authorized.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSourceCoordinates'
+  /data-source-coordinates/{dataSourceId}/timestamp/{timestamp}:
+    get:
+      tags:
+      - data-source-coordinates
+      summary: Return the data source coordinates for a data source id and a UTC ISO 8601…
+      description: Authentication required for this operation.
+      operationId: getCoordinatesForDataSourceIdAtDate
+      parameters:
+      - name: dataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timestamp
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns data source coordinates.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+        '403':
+          description: Not enough permissions to perform the operation.
+    put:
+      tags:
+      - data-source-coordinates
+      summary: Put data source coordinates for a data source id and a UTC ISO 8601 timestamp.
+      description: Authentication required for this operation.
+      operationId: putDataSourceCoordinates
+      parameters:
+      - name: dataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timestamp
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data source coordinates updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User not authorized.
+        '500':
+          description: Error while updating the ${RESOURCE_NAME.toLowerCase()}.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSourceCoordinatesEditable'
+    delete:
+      tags:
+      - data-source-coordinates
+      summary: Delete data source coordinates at a given timestamp
+      description: Authentication required for this operation.
+      operationId: deleteDataSourceCoordinates
+      parameters:
+      - name: dataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timestamp
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Data source coordinates have been deleted.
+        '403':
+          description: User not authorized.
+        '404':
+          description: Data source coordinates not found.
+    patch:
+      tags:
+      - data-source-coordinates
+      summary: Patch data source coordinates for a data source id and a UTC ISO 8601 timestamp
+      description: Authentication required for this operation.
+      operationId: patchDataSourceCoordinates
+      parameters:
+      - name: dataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timestamp
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Data source coordinates patched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/DataSourceCoordinates'
+        '400':
+          description: Invalid data in the properties to be patched.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while patching the data source coordinates.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSourceCoordinatesEditable'
+  /data-source-coordinates/{dataSourceId}:
+    get:
+      tags:
+      - data-source-coordinates
+      summary: Return all data source coordinates for a data source id
+      description: Authentication required for this operation.
+      operationId: getCoordinatesByDataSourceId
+      parameters:
+      - name: dataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns all data source coordinates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSourceCoordinates'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSourceCoordinates'
+        '403':
+          description: Not enough permissions to perform the operation.
+components:
+  schemas:
+    DataSourceCoordinatesEditable:
+      type: object
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+      description: Object containing the editable properties of DataSourceCoordinates.
+    DataSourceCoordinates:
+      type: object
+      required:
+      - dataSourceId
+      - sinceDate
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,282 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Order Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: order-update
+paths:
+  /order-update/{orderId}:
+    post:
+      tags:
+      - order-update
+      summary: Updates a order
+      description: The authenticated user must be an administrator.
+      operationId: updateOrder
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Order updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid data in the properties to be updated
+        '403':
+          description: Not enough permissions to perform the operation
+        '404':
+          description: A order with that id doesn't exist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+components:
+  schemas:
+    OrderUpdate:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Order's date.
+        deliveredDate:
+          type: string
+          description: Order's delivered date.
+        dueDate:
+          type: string
+          description: Order's due date.
+        priority:
+          type: string
+          description: Order's priority.
+        status:
+          type: string
+          description: Order's status.
+      description: Updating of an order
+    CustomerRequestItem:
+      type: object
+      required:
+      - lineTotal
+      - unitPrice
+      - units
+      properties:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a quote item was created.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItemId:
+          type: string
+          description: Customer request item id.
+        description:
+          type: string
+          description: The description for the quote item.
+        lineTotal:
+          type: number
+          format: float
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother id for the quote item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
+          type: integer
+          format: int32
+          description: CustomerRequest item's units.
+        updatedAt:
+          type: string
+          description: The date and time a quote item was last updated.
+      description: CustomerRequestItem
+    Order:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: The state of the order
+        createdAt:
+          type: string
+          description: Order's created at date.
+        customerRequest:
+          $ref: '#/components/schemas/CustomerRequest'
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        date:
+          type: string
+          description: Order's date.
+        dateDone:
+          type: string
+          description: The date when the order's status became Done.
+        dateInProgress:
+          type: string
+          description: The date when the order's status became In Progress.
+        deliveredDate:
+          type: string
+          description: Order's delivered date.
+        dueDate:
+          type: string
+          description: Order's due date.
+        orderId:
+          type: string
+          description: Order id.
+        orderNumber:
+          type: integer
+          format: int32
+          description: Order number.
+        priority:
+          type: string
+          description: Order's priority
+        status:
+          type: string
+          description: Order's status.
+      description: Order
+    CustomerRequest:
+      type: object
+      required:
+      - totalPrice
+      properties:
+        accountManager:
+          type: string
+          description: CustomerRequest's account manager.
+        contactPersonEmail:
+          type: string
+          description: CustomerRequest's contact person email.
+        contactPersonFirstName:
+          type: string
+          description: CustomerRequest's contact person first name.
+        contactPersonLastName:
+          type: string
+          description: CustomerRequest's contact person last name.
+        contactPersonPhone:
+          type: string
+          description: CustomerRequest's contact person phone number.
+        countryCode:
+          type: string
+          description: The country code of the quote.
+        createdAt:
+          type: string
+          description: The date and time a quote was created.
+        currency:
+          type: string
+          description: CustomerRequest's currency.
+        customVatPercentage:
+          type: integer
+          format: int32
+          description: CustomerRequest's custom vat percentage.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerRequestItem'
+        dealer:
+          type: string
+          description: CustomerRequest's dealer email.
+        deliverOnlyToCustomerAddress:
+          type: boolean
+          description: 'Can the order by delivered to neighbours '
+        deliveredPersonally:
+          type: boolean
+          description: Is the order delivered by us.
+        description:
+          type: string
+          description: CustomerRequest's description.
+        discountAmount:
+          type: number
+          format: float
+          description: CustomerRequest's discount amount.
+        discountPercentage:
+          type: integer
+          format: int32
+          description: CustomerRequest's discountPercentage.
+        language:
+          type: string
+          description: The language of the quote.
+        measureFrequency:
+          type: integer
+          format: int32
+          description: The desired measure frequency.
+        organizationId:
+          type: string
+          description: The organization of the quote.
+        organizationLocationName:
+          type: string
+          description: The organization location of the quote.
+        organizationName:
+          type: string
+          description: The organization name of the quote.
+        paymentConditions:
+          type: boolean
+          description: CustomerRequest's payment conditions.
+        poNumber:
+          type: string
+          description: The PO Number of the customer request.
+        remarks:
+          type: string
+          description: The remarks of the customer request.
+        shippingCost:
+          type: number
+          format: float
+          description: CustomerRequest's shipping cost.
+        signatureRequired:
+          type: boolean
+          description: Is a signature required when delivering
+        totalPrice:
+          type: number
+          format: float
+          description: CustomerRequest's total price.
+        totalPriceIncludingDiscount:
+          type: number
+          format: float
+          description: CustomerRequest's total including discount.
+        totalPriceIncludingVat:
+          type: number
+          format: float
+          description: CustomerRequest's total including vat amount.
+        updatedAt:
+          type: string
+          description: The date and time a quote was last updated.
+        vatAmount:
+          type: number
+          format: float
+          description: CustomerRequest's vat amount.
+        vertical:
+          type: string
+          description: The vertical of the quote.
+      description: Customer request
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,83 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Notification Follow Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: notification-follow-update
+paths:
+  /notification-follow-update/{notificationId}/user/{email}:
+    post:
+      tags:
+      - notification-follow-update
+      summary: Update an existing notification
+      description: Only organization members and administrators of ZENSIE are authorised to call this operation.
+      operationId: updateNotificationFollow
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: Notification follow update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Notification_follow'
+        '403':
+          description: User not allowed to perform the operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMethods'
+components:
+  schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
+    Notification_follow:
+      type: object
+      properties:
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        notificationId:
+          type: string
+        organizationId:
+          type: string
+      description: Notification follow represents a subscription of a user to a given notification with a given method, e.g. email, sms, etc.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

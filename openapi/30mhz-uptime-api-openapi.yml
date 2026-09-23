@@ -1,0 +1,209 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Uptime API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Uptime
+paths:
+  /uptime/checks/from/{startDate}/until/{endDate}:
+    post:
+      tags:
+      - Uptime
+      summary: Return the uptime of sensors within the given datetime range
+      description: Only organization members are authorised to call this operation.
+      operationId: getCheckUptimeBetweenDates
+      parameters:
+      - name: startDate
+        in: path
+        description: 'Initial date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      - name: endDate
+        in: path
+        description: 'Final date string. ISO 8601 date. E.g.: ''2016-03-03T00:00:00Z'''
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Uptime of a sensor
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckUptimeResponse'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckUptimeResponse'
+                uniqueItems: true
+        '403':
+          description: User not allowed to make this call
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckStatsRequest'
+        description: Check stats request
+  /uptime/check/{checkId}/interval/{interval}:
+    get:
+      tags:
+      - Uptime
+      summary: Return the uptime of a sensor within the given interval
+      description: Only organization members or administrators of ZENSIE are authorised to call this operation.
+      operationId: getCheckUptimeByInterval
+      parameters:
+      - name: checkId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: interval
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Uptime of a sensor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckUptimeResponse'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/CheckUptimeResponse'
+        '403':
+          description: User not allowed to make this call
+  /uptime/checks/interval/{interval}:
+    post:
+      tags:
+      - Uptime
+      summary: Return the uptime of sensors within the given interval
+      description: Only organization members or administrators of ZENSIE are authorised to call this operation.
+      operationId: getChecksUptimeByInterval
+      parameters:
+      - name: interval
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Uptime of a sensor
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckUptimeResponse'
+                uniqueItems: true
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckUptimeResponse'
+                uniqueItems: true
+        '403':
+          description: User not allowed to make this call
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckStatsRequest'
+        description: Check stats request
+components:
+  schemas:
+    CheckUptimeResponse:
+      type: object
+      properties:
+        checkId:
+          type: string
+        expectedHits:
+          type: integer
+          format: int64
+        hits:
+          type: integer
+          format: int64
+        uptime:
+          type: number
+          format: double
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+    CheckStatsRequest:
+      type: object
+      properties:
+        checkIds:
+          type: array
+          description: Check ids for returning the historical data.
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        daysOfMonth:
+          type: array
+          description: Day (1-31) list parameter, e.g. [1] for the first of the month.
+          items:
+            type: integer
+            format: int32
+        daysOfWeek:
+          type: array
+          description: Day of the week (1-7) list parameter, e.g. [1] for Monday.
+          items:
+            type: integer
+            format: int32
+        hoursOfDay:
+          type: array
+          description: Hour (0-23) list parameter, e.g. [2, 3] for 2:00 am and 3:00 am.
+          items:
+            type: integer
+            format: int32
+        minutesOfHour:
+          type: array
+          description: Minute within the hour (0-59) list parameter, e.g. [20, 30] for 20th and 30th minute.
+          items:
+            type: integer
+            format: int32
+        organizationId:
+          type: string
+          description: The id of an organization (when tags are set).
+        sensorType:
+          type: string
+          description: The id of a sensor type (when tags are set).
+        tags:
+          type: array
+          description: Set tags to automatically select checks based on their tags.
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
+          description: Tags boolean operator (and/or).
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

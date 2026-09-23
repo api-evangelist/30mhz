@@ -1,0 +1,121 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Dealer Update API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: dealer-update
+paths:
+  /dealer-update/{email}:
+    post:
+      tags:
+      - dealer-update
+      summary: Update a dealer
+      description: The authenticated user must be an administrator.
+      operationId: updateDealer
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Dealer update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+        '403':
+          description: Not enough permissions to perform the operation
+        '409':
+          description: A dealer with that email already exists
+      x-admin-only: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DealerUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/DealerUpdate'
+components:
+  schemas:
+    Dealer:
+      type: object
+      properties:
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        hardwareDiscountPercentage:
+          type: integer
+          format: int32
+        hardwareDiscountPercentageValidUntil:
+          type: string
+        lastName:
+          type: string
+        notificationsEmails:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        phone:
+          type: string
+        subscriptionMarginPercentage:
+          type: integer
+          format: int32
+        subscriptionMarginPercentageValidUntil:
+          type: string
+    DealerUpdate:
+      type: object
+      properties:
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        firstName:
+          type: string
+        hardwareDiscountPercentage:
+          type: integer
+          format: int32
+        hardwareDiscountPercentageValidUntil:
+          type: string
+        lastName:
+          type: string
+        notificationsEmails:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        phone:
+          type: string
+        subscriptionMarginPercentage:
+          type: integer
+          format: int32
+        subscriptionMarginPercentageValidUntil:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

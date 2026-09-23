@@ -1,0 +1,136 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Partner API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Partner
+paths:
+  /partner:
+    post:
+      tags:
+      - Partner
+      summary: Create a new partner
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: createPartner
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: New partner created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Partner'
+        '403':
+          description: User must be an admin.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPartner'
+  /partner/{partnerId}:
+    put:
+      tags:
+      - Partner
+      summary: Update a partner
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: updatePartner
+      parameters:
+      - name: partnerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Partner updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Partner'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Partner'
+        '400':
+          description: Invalid data in the properties to be updated.
+        '403':
+          description: User must be authenticated.
+        '500':
+          description: Error while updating the partner.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartnerEditable'
+    delete:
+      tags:
+      - Partner
+      summary: Remove a partner
+      description: Authentication required for this operation, authenticated user must have admin role.
+      operationId: removePartner
+      parameters:
+      - name: partnerId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Partner has been removed.
+        '403':
+          description: User must be an admin.
+        '404':
+          description: Partner not found.
+components:
+  schemas:
+    PartnerEditable:
+      type: object
+      properties:
+        partnerName:
+          type: string
+          description: Partner name.
+    NewPartner:
+      type: object
+      properties:
+        partnerName:
+          type: string
+          description: Partner name.
+        partnerId:
+          type: string
+          description: Partner Id.
+        createdAt:
+          type: string
+          description: The date and time a partner was created.
+        createdBy:
+          type: string
+          description: User that created the partner.
+    Partner:
+      type: object
+      properties:
+        partnerName:
+          type: string
+          description: Partner name.
+        partnerId:
+          type: string
+          description: Partner Id.
+        createdAt:
+          type: string
+          description: The date and time a partner was created.
+        createdBy:
+          type: string
+          description: User that created the partner.
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

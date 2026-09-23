@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Util API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Util
+paths:
+  /util/contact:
+    post:
+      tags:
+      - Util
+      summary: Sends a message to the ZENSIE staff
+      description: ''
+      operationId: sendContactMessage
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Message sent
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+        '500':
+          description: Message was not sent, please try again later
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactMessage'
+        description: Valid user's message information
+        required: true
+  /util/countries:
+    get:
+      tags:
+      - Util
+      summary: Obtains the countries codes supported by ZENSIE
+      description: ''
+      operationId: obtainCountries
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+  /util/whitelist-ips:
+    get:
+      tags:
+      - Util
+      summary: Obtains the whitelisted ranges of IPs needed by ZENSIE
+      description: ''
+      operationId: obtainWhiteListAWSIPs
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/zensie-v2+json:
+              schema:
+                type: string
+components:
+  schemas:
+    ContactMessage:
+      type: object
+      properties:
+        email:
+          type: string
+        message:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header

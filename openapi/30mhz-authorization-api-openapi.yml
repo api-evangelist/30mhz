@@ -1,0 +1,792 @@
+openapi: 3.2.0
+info:
+  version: '2.0'
+  title: ZENSIE Authorization API
+servers:
+- url: https://api.30mhz.com/api
+tags:
+- name: Authorization
+paths:
+  /authorization/device/jwks:
+    get:
+      tags:
+      - Authorization
+      summary: Get public key for a device access token validation
+      description: ''
+      operationId: getDevicePublicKey
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Device access token public key
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/zensie-v2+json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+            application/jwk-set+json; charset=UTF-8:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when retrieving device access token public key
+  /authorization/license/oauth/token:
+    post:
+      tags:
+      - Authorization
+      summary: Provides an access token for a license service
+      description: ''
+      operationId: getAccessToken
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Returns the access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to assign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LicenseAccessTokenRequest'
+  /authorization/role-assignment/assignee/{assignee}/role/{role}/license/{licenseId}:
+    post:
+      tags:
+      - Authorization
+      summary: Assign a role on a license to a user, if the role already exists it will be a…
+      description: ''
+      operationId: assignRoleOnLicense
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Created role assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to assign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      tags:
+      - Authorization
+      summary: Unassign a role on an license from a user
+      description: ''
+      operationId: unassignRoleOnLicense
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Deleted role assignment
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to unassign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /authorization/role-assignment/assignee/{assignee}/role/{role}/organization/{organizationId}:
+    post:
+      tags:
+      - Authorization
+      summary: Assign a role on an organization to a user, if the role already exists it will…
+      description: ''
+      operationId: assignRoleOnOrganization
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Created role assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to assign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      tags:
+      - Authorization
+      summary: Unassign a role on an organization from a user
+      description: ''
+      operationId: unassignRoleOnOrganization
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Deleted role assignment
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to unassign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /authorization/role-assignment/assignee/{assignee}/role/{role}/device/{deviceId}:
+    post:
+      tags:
+      - Authorization
+      summary: Assign a role on a device to a user, if the role already exists it will be a…
+      description: ''
+      operationId: assignRoleOnDevice
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Created role assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to assign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      tags:
+      - Authorization
+      summary: Unassign a role on a device from a user
+      description: ''
+      operationId: unassignRoleOnDevice
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Deleted role assignment
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to unassign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /authorization/role-assignment/assignee/{assignee}/role/{role}/organization/{organizationId}/site/{siteId}:
+    post:
+      tags:
+      - Authorization
+      summary: Assign a role on a site to a user, if the role already exists it will be a no-op
+      description: ''
+      operationId: assignRoleOnSite
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Created role assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to assign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      tags:
+      - Authorization
+      summary: Unassign a role on a site from a user
+      description: ''
+      operationId: unassignRoleOnSite
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '204':
+          description: Deleted role assignment
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Failed to unassign the role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /authorization/check/device/{deviceId}:
+    get:
+      tags:
+      - Authorization
+      summary: Check whether the user is authorized to perform a certain action on a device
+      description: ''
+      operationId: checkUserAuthorizationOnDevice
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: True if the user is authorized, otherwise false
+          content:
+            application/json:
+              schema:
+                type: boolean
+            application/zensie-v2+json:
+              schema:
+                type: boolean
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when verifying the users permissions
+  /authorization/check/organization/{organizationId}:
+    get:
+      tags:
+      - Authorization
+      summary: Check whether the user is authorized to perform a certain action on an…
+      description: ''
+      operationId: checkUserAuthorizationOnOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: True if the user is authorized, otherwise false
+          content:
+            application/json:
+              schema:
+                type: boolean
+            application/zensie-v2+json:
+              schema:
+                type: boolean
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when verifying the users permissions
+  /authorization/check/organization/{organizationId}/site/{siteId}:
+    get:
+      tags:
+      - Authorization
+      summary: Check whether the user is authorized to perform a certain action on a site
+      description: ''
+      operationId: checkUserAuthorizationOnSite
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: siteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: True if the user is authorized, otherwise false
+          content:
+            application/json:
+              schema:
+                type: boolean
+            application/zensie-v2+json:
+              schema:
+                type: boolean
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when verifying the users permissions
+  /authorization/device/{deviceId}/access-token:
+    get:
+      tags:
+      - Authorization
+      summary: Get access token for a specific device
+      description: ''
+      operationId: getDeviceAccessToken
+      parameters:
+      - name: deviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expirationDuration
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 604800
+          maximum: 2678400
+          minimum: 0
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: Device access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+            application/jwt:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when retrieving device access token
+  /authorization/role-assignment:
+    get:
+      tags:
+      - Authorization
+      summary: Get all the role assignments of the current user
+      description: ''
+      operationId: getRoleAssignments
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of role assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when reading the role assignments
+  /authorization/role-assignment/assignee/{assignee}/organization/{organizationId}:
+    get:
+      tags:
+      - Authorization
+      summary: Get role assignments of a user on an organization
+      description: ''
+      operationId: getRoleAssignmentsOfUserOnOrganization
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of role assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Forbidden to read role assignments on this organization
+        '500':
+          description: Error when reading the role assignments
+  /authorization/role-assignment/assignee/{assignee}/license/{licenseId}:
+    get:
+      tags:
+      - Authorization
+      summary: Get role assignments of a user under a license
+      description: ''
+      operationId: getRoleAssignmentsOfUserUnderLicense
+      parameters:
+      - name: assignee
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: licenseId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of role assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Forbidden to read role assignments under this license
+        '500':
+          description: Error when reading the role assignments
+  /authorization/role-assignment/organization/{organizationId}:
+    get:
+      tags:
+      - Authorization
+      summary: Get role assignments on an organization
+      description: ''
+      operationId: getRoleAssignmentsOnOrganization
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of role assignments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+            application/zensie-v2+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assignment_of_a_role_on_a_resource_for_a_user'
+        '401':
+          description: Unauthenticated request
+        '403':
+          description: Forbidden to read role assignments on this organization
+        '500':
+          description: Error when reading the role assignments
+  /authorization/scopes:
+    get:
+      tags:
+      - Authorization
+      summary: Get scopes for a specific user
+      description: ''
+      operationId: getScopesAndClaims
+      parameters:
+      - name: userEmail
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: requiredScopes
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: List of scopes for the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScopesAndClaims'
+            application/zensie-v2+json:
+              schema:
+                $ref: '#/components/schemas/ScopesAndClaims'
+        '401':
+          description: Unauthenticated request
+        '500':
+          description: Error when retrieving user scopes
+components:
+  schemas:
+    ScopesAndClaims:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            type: string
+        scopes:
+          type: array
+          items:
+            type: string
+    Assignment_of_a_role_on_a_resource_for_a_user:
+      type: object
+      properties:
+        assignee:
+          type: string
+          description: Email of the assignee
+        resourceId:
+          type: string
+          description: Id of the resource on which the role is assigned
+        resourceType:
+          type: string
+          description: Type of the resource on which the role is assigned
+        role:
+          type: string
+          description: Assigned role
+    AccessToken:
+      type: object
+      required:
+      - accessToken
+      - expiresIn
+      - type
+      properties:
+        accessToken:
+          type: string
+          description: An access token used to make authorized requests on certain resources
+        expiresIn:
+          type: integer
+          format: int64
+          description: Number of seconds in which it expires
+        type:
+          type: string
+          description: Type of the access token
+      description: An access token used to grant authorization on certain API operations
+    LicenseAccessTokenRequest:
+      type: object
+      required:
+      - audience
+      - clientSecret
+      - licenseId
+      properties:
+        audience:
+          type: string
+          description: The intended consumer of the token, usually this is https://api.cropspace.com/api
+        clientSecret:
+          type: string
+          description: The client secret of the machine-to-machine service
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+      description: Request used by licenses to get an access token for authorization on certain API operations
+  securitySchemes:
+    Bearer:
+      description: ''
+      type: apiKey
+      name: Authorization
+      in: header
