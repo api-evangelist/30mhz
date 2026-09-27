@@ -147,6 +147,15 @@ paths:
                   format: binary
 components:
   schemas:
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     ImageThumbnail:
       type: object
       properties:
@@ -157,15 +166,6 @@ components:
           type: string
         url:
           type: string
-        width:
-          type: integer
-          format: int32
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
         width:
           type: integer
           format: int32

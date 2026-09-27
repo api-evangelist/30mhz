@@ -209,6 +209,11 @@ paths:
               $ref: '#/components/schemas/BillingHistoryRequest'
 components:
   schemas:
+    BillingHistoryForecastRequest:
+      type: object
+      properties:
+        includePausedChecks:
+          type: boolean
     BillingHistoryRequest:
       type: object
       properties:
@@ -218,11 +223,6 @@ components:
           type: string
         year:
           type: string
-    BillingHistoryForecastRequest:
-      type: object
-      properties:
-        includePausedChecks:
-          type: boolean
   securitySchemes:
     Bearer:
       description: ''

@@ -174,8 +174,10 @@ paths:
               $ref: '#/components/schemas/ZoneNew'
 components:
   schemas:
-    ZoneEditable:
+    ZoneNew:
       type: object
+      required:
+      - name
       properties:
         color:
           type: string
@@ -203,7 +205,36 @@ components:
         soilId:
           type: string
           description: Zone's soil type id.
-      description: Object holding the editable properties of a Zone.
+      description: Object holding the required properties to create a new Zone.
+    Crop:
+      type: object
+      required:
+      - category
+      - cropId
+      - maxAllowableDepletion
+      properties:
+        category:
+          type: string
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the crop.
+        createdAt:
+          type: integer
+          format: int64
+          description: The date and time the crop was created.
+        cropId:
+          type: string
+          description: Id of the crop.
+        organizationId:
+          type: string
+          description: The organization the crop belongs to.
     Soil:
       type: object
       required:
@@ -245,10 +276,8 @@ components:
           format: double
           description: Total available water of the soil.
           readOnly: true
-    ZoneNew:
+    ZoneEditable:
       type: object
-      required:
-      - name
       properties:
         color:
           type: string
@@ -276,7 +305,7 @@ components:
         soilId:
           type: string
           description: Zone's soil type id.
-      description: Object holding the required properties to create a new Zone.
+      description: Object holding the editable properties of a Zone.
     Zone:
       type: object
       required:
@@ -325,35 +354,6 @@ components:
           type: string
           description: Universally unique identifier.
       description: A Zone is a physical subsection in a site.
-    Crop:
-      type: object
-      required:
-      - category
-      - cropId
-      - maxAllowableDepletion
-      properties:
-        category:
-          type: string
-          description: Category of the crop.
-        maxAllowableDepletion:
-          type: number
-          format: double
-          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
-          minimum: 0
-          maximum: 100
-        name:
-          type: string
-          description: Name of the crop.
-        createdAt:
-          type: integer
-          format: int64
-          description: The date and time the crop was created.
-        cropId:
-          type: string
-          description: Id of the crop.
-        organizationId:
-          type: string
-          description: The organization the crop belongs to.
   securitySchemes:
     Bearer:
       description: ''

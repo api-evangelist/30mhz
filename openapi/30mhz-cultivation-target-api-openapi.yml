@@ -279,6 +279,45 @@ paths:
               $ref: '#/components/schemas/CultivationTargetNew'
 components:
   schemas:
+    CultivationTargetSetpoint:
+      type: object
+      required:
+      - timestamp
+      properties:
+        maxValue:
+          type: number
+          format: double
+          description: Upper limit for the target bandwidth.
+        minValue:
+          type: number
+          format: double
+          description: Lower limit for the target bandwidth.
+        targetValue:
+          type: number
+          format: double
+          description: Target value.
+        timestamp:
+          type: integer
+          format: int64
+          description: Relative seconds since cultivation start date.
+    CultivationTargetEditable:
+      type: object
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+      description: Object containing the editable properties of CultivationTarget.
     CultivationTargetNew:
       type: object
       required:
@@ -308,27 +347,6 @@ components:
           type: string
           description: The unique identifier of the organization it belongs to.
       description: Object holding the required properties to create a new CultivationTarget.
-    CultivationTargetSetpoint:
-      type: object
-      required:
-      - timestamp
-      properties:
-        maxValue:
-          type: number
-          format: double
-          description: Upper limit for the target bandwidth.
-        minValue:
-          type: number
-          format: double
-          description: Lower limit for the target bandwidth.
-        targetValue:
-          type: number
-          format: double
-          description: Target value.
-        timestamp:
-          type: integer
-          format: int64
-          description: Relative seconds since cultivation start date.
     CultivationTarget:
       type: object
       required:
@@ -367,24 +385,6 @@ components:
           type: string
           description: The unique identifier of the organization it belongs to.
       description: Represent a metric target for a cultivation.
-    CultivationTargetEditable:
-      type: object
-      properties:
-        hasNightTarget:
-          type: boolean
-          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
-        metricId:
-          type: string
-          description: Identifier of the metric
-        name:
-          type: string
-          description: Displayable name.
-        setpoints:
-          type: array
-          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
-          items:
-            $ref: '#/components/schemas/CultivationTargetSetpoint'
-      description: Object containing the editable properties of CultivationTarget.
   securitySchemes:
     Bearer:
       description: ''

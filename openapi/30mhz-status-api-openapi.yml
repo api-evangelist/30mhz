@@ -392,40 +392,6 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
-    TwoValuesComparisonTableScan:
-      type: object
-      properties:
-        actualPingsPerSecond:
-          type: number
-          format: double
-          readOnly: true
-        expectedPingsPerSecond:
-          type: number
-          format: double
-          readOnly: true
-        acceptable:
-          type: boolean
-          readOnly: true
-        absoluteDifference:
-          type: number
-          format: double
-          readOnly: true
-        percentageDifference:
-          type: number
-          format: double
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
     CalculationSettings:
       type: object
       required:
@@ -440,33 +406,6 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
-    IngestStatusResponse:
-      type: object
-      properties:
-        checkSummary:
-          $ref: '#/components/schemas/CheckSummary'
-        hits:
-          type: integer
-          format: int64
-        lastValueTimestamp:
-          type: string
-    DeviceStatusResponse:
-      type: object
-      properties:
-        isOnline:
-          type: boolean
-          description: true when SOME devices are online
-        offlineLocations:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        onlineLocations:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-      description: Online/offline status of mother devices. isOnline is true when any of the devices is online.
     TwoValuesComparison:
       type: object
       properties:
@@ -492,6 +431,19 @@ components:
         percentageDifference:
           type: number
           format: float
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -544,6 +496,54 @@ components:
           items:
             type: string
       description: Summary of a check
+    IngestStatusResponse:
+      type: object
+      properties:
+        checkSummary:
+          $ref: '#/components/schemas/CheckSummary'
+        hits:
+          type: integer
+          format: int64
+        lastValueTimestamp:
+          type: string
+    DeviceStatusResponse:
+      type: object
+      properties:
+        isOnline:
+          type: boolean
+          description: true when SOME devices are online
+        offlineLocations:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        onlineLocations:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Online/offline status of mother devices. isOnline is true when any of the devices is online.
+    TwoValuesComparisonTableScan:
+      type: object
+      properties:
+        actualPingsPerSecond:
+          type: number
+          format: double
+          readOnly: true
+        expectedPingsPerSecond:
+          type: number
+          format: double
+          readOnly: true
+        acceptable:
+          type: boolean
+          readOnly: true
+        absoluteDifference:
+          type: number
+          format: double
+          readOnly: true
+        percentageDifference:
+          type: number
+          format: double
   securitySchemes:
     Bearer:
       description: ''

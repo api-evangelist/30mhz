@@ -48,26 +48,6 @@ paths:
               $ref: '#/components/schemas/ExportPartnerJobUpdate'
 components:
   schemas:
-    ExportPartnerAccess:
-      type: object
-      required:
-      - expiresAt
-      - expiresIn
-      properties:
-        expires:
-          type: string
-        expiresAt:
-          type: integer
-          format: int32
-        expiresIn:
-          type: integer
-          format: int32
-        issued:
-          type: string
-        token:
-          type: string
-        tokenType:
-          type: string
     ExportPartnerJob:
       type: object
       required:
@@ -111,23 +91,6 @@ components:
           type: string
           description: The date and time a export partner job was last updated.
       description: ExportPartnerJob
-    ExportPartnerData:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        items:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ExportPartnerDataItem'
-        name:
-          type: string
     ExportPartnerJobUpdate:
       type: object
       properties:
@@ -161,6 +124,43 @@ components:
           type: string
         exportPartnerData:
           $ref: '#/components/schemas/ExportPartnerData'
+    ExportPartnerAccess:
+      type: object
+      required:
+      - expiresAt
+      - expiresIn
+      properties:
+        expires:
+          type: string
+        expiresAt:
+          type: integer
+          format: int32
+        expiresIn:
+          type: integer
+          format: int32
+        issued:
+          type: string
+        token:
+          type: string
+        tokenType:
+          type: string
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
+        name:
+          type: string
     ExportPartnerDataItem:
       type: object
       required:

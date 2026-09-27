@@ -255,13 +255,6 @@ components:
           uniqueItems: true
           items:
             type: string
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     DashboardSummary:
       type: object
       properties:
@@ -272,6 +265,20 @@ components:
         organizationId:
           type: string
       description: Summary of a dashboard
+    SharedByUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
     SharedDashboard:
       type: object
       properties:
@@ -306,13 +313,6 @@ components:
           description: User who the dashboard has been shared with
         sharedWithUserDetails:
           $ref: '#/components/schemas/SharedWithUserDetails'
-    SharedByUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

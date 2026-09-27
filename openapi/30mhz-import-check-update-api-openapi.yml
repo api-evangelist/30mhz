@@ -165,6 +165,289 @@ paths:
               $ref: '#/components/schemas/ExternalSensorEditable'
 components:
   schemas:
+    CalculationSettings:
+      type: object
+      required:
+      - inputParams
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: object
+      description: Settings used to perform a calculation.
+    ExternalSensorEditable:
+      type: object
+      properties:
+        calculationSettings:
+          description: The calculation settings if this is a calculation data source.
+          $ref: '#/components/schemas/CalculationSettings'
+        dataSourceCoordinatesEditable:
+          description: A set of numbers that represent the current position of a data source
+          $ref: '#/components/schemas/DataSourceCoordinatesEditable'
+        decimalsPerField:
+          type: object
+          description: The number of decimals used for each field of the data source.
+          additionalProperties:
+            type: integer
+            format: int32
+        description:
+          type: string
+          description: Brief description that elaborates on the name
+        enabled:
+          type: boolean
+          description: Whether the data source is enabled.
+        ingestedForIndices:
+          type: object
+          description: The data source's indexes for ingested values
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        integrationType:
+          type: string
+          description: Integration type.
+        locationId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        name:
+          type: string
+          description: Displayable name.
+        notificationRelevance:
+          type: integer
+          format: int32
+          description: The notification relevance for import check hits.
+          minimum: 300
+        rangePerJsonKey:
+          type: object
+          description: Min/max ranges for each json key of the data source.
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+          description: The sensor type.
+        sourceId:
+          type: string
+          description: Optional source id.
+        status:
+          type: string
+          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PAUSED
+        tags:
+          type: array
+          description: The tags associated with the data source.
+          uniqueItems: true
+          items:
+            type: string
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        unitPerField:
+          type: object
+          description: Identifier of the preferred unit conversion for each field.
+          additionalProperties:
+            type: string
+        useCollectionsAsRows:
+          type: boolean
+          description: Whether collections should be displayed as rows.
+        zoneId:
+          type: string
+          description: Identifier of the zone within a site where the data source belongs.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+    EventHook:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
+    CheckDateEntry:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: Id of the check it belongs to
+        date:
+          type: string
+          description: Date of the entry
+        dateEntryId:
+          type: string
+          description: Id of the date entry
+        name:
+          type: string
+          description: The name of the date entry
+        deletedAt:
+          type: string
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
+    CheckSummary:
+      type: object
+      properties:
+        calculationSettings:
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+        collections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckCollection'
+        cultivationHierarchyId:
+          type: string
+        decimalsPerField:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        enabled:
+          type: boolean
+        locations:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        maxDecimals:
+          type: integer
+          format: int32
+        name:
+          type: string
+        organizationId:
+          type: string
+        rangePerJsonKey:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+        timezone:
+          type: string
+        timezoneOffset:
+          type: integer
+          format: int64
+        units:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Summary of a check
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
+    CheckDateEntryUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the date entry
+    DataSourceCoordinates:
+      type: object
+      required:
+      - dataSourceId
+      - sinceDate
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
     Notification:
       type: object
       required:
@@ -251,35 +534,6 @@ components:
         name:
           type: string
           description: Name of the collection
-    StructuredConditional:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation.
-        checkFields:
-          type: array
-          description: List of fields represented by the check id and field name
-          items:
-            $ref: '#/components/schemas/SensorField'
-        interval:
-          type: string
-          description: The time interval to aggregate over.
-        key:
-          type: string
-          description: Key of the structured conditional
-        operator:
-          type: string
-          description: Operator of the conditional
-        operatorType:
-          type: string
-          description: Operator type of the conditional
-          enum:
-          - COMPARISON
-          - LOGICAL
-        value:
-          type: string
-          description: Value of the key given the operator
     ImportCheck:
       type: object
       required:
@@ -414,103 +668,6 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Import check properties
-    CalculationSettings:
-      type: object
-      required:
-      - inputParams
-      properties:
-        calculationId:
-          type: string
-          description: Unique identifier for the calculation
-        inputParams:
-          type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
-          additionalProperties:
-            type: object
-      description: Settings used to perform a calculation.
-    CheckSummary:
-      type: object
-      properties:
-        calculationSettings:
-          $ref: '#/components/schemas/CalculationSettings'
-        checkId:
-          type: string
-        collections:
-          type: array
-          items:
-            $ref: '#/components/schemas/CheckCollection'
-        cultivationHierarchyId:
-          type: string
-        decimalsPerField:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-        enabled:
-          type: boolean
-        locations:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        maxDecimals:
-          type: integer
-          format: int32
-        name:
-          type: string
-        organizationId:
-          type: string
-        rangePerJsonKey:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: number
-              format: double
-        sensorType:
-          type: string
-        timezone:
-          type: string
-        timezoneOffset:
-          type: integer
-          format: int64
-        units:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-      description: Summary of a check
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
-    CheckDateEntryUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the date entry
-    SensorField:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
     DataSourceCoordinatesEditable:
       type: object
       properties:
@@ -526,163 +683,6 @@ components:
           type: string
           description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
       description: Object containing the editable properties of DataSourceCoordinates.
-    EventHook:
-      type: object
-      required:
-      - method
-      - url
-      properties:
-        headers:
-          type: object
-          description: Headers of the HTTP request
-          additionalProperties:
-            type: object
-        method:
-          type: string
-          description: Method of the HTTP request
-        payload:
-          type: object
-          description: Payload of the HTTP request
-          additionalProperties:
-            type: object
-        url:
-          type: string
-          description: Url of the HTTP request
-    DataSourceCoordinates:
-      type: object
-      required:
-      - dataSourceId
-      - sinceDate
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-        dataSourceId:
-          type: string
-          description: Identifier of the data source
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
-        zoneName:
-          type: string
-          description: Name of the zone
-        zoneUuid:
-          type: string
-          description: Unique identifier of the zone
-      description: Coordinates of a data source since a given timestamp.
-    CheckDateEntry:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: Id of the check it belongs to
-        date:
-          type: string
-          description: Date of the entry
-        dateEntryId:
-          type: string
-          description: Id of the date entry
-        name:
-          type: string
-          description: The name of the date entry
-        deletedAt:
-          type: string
-    ExternalSensorEditable:
-      type: object
-      properties:
-        calculationSettings:
-          description: The calculation settings if this is a calculation data source.
-          $ref: '#/components/schemas/CalculationSettings'
-        dataSourceCoordinatesEditable:
-          description: A set of numbers that represent the current position of a data source
-          $ref: '#/components/schemas/DataSourceCoordinatesEditable'
-        decimalsPerField:
-          type: object
-          description: The number of decimals used for each field of the data source.
-          additionalProperties:
-            type: integer
-            format: int32
-        description:
-          type: string
-          description: Brief description that elaborates on the name
-        enabled:
-          type: boolean
-          description: Whether the data source is enabled.
-        ingestedForIndices:
-          type: object
-          description: The data source's indexes for ingested values
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        integrationType:
-          type: string
-          description: Integration type.
-        locationId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        name:
-          type: string
-          description: Displayable name.
-        notificationRelevance:
-          type: integer
-          format: int32
-          description: The notification relevance for import check hits.
-          minimum: 300
-        rangePerJsonKey:
-          type: object
-          description: Min/max ranges for each json key of the data source.
-          additionalProperties:
-            type: array
-            items:
-              type: number
-              format: double
-        sensorType:
-          type: string
-          description: The sensor type.
-        sourceId:
-          type: string
-          description: Optional source id.
-        status:
-          type: string
-          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
-          enum:
-          - ACTIVE
-          - DEACTIVATED
-          - PAUSED
-        tags:
-          type: array
-          description: The tags associated with the data source.
-          uniqueItems: true
-          items:
-            type: string
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-        unitPerField:
-          type: object
-          description: Identifier of the preferred unit conversion for each field.
-          additionalProperties:
-            type: string
-        useCollectionsAsRows:
-          type: boolean
-          description: Whether collections should be displayed as rows.
-        zoneId:
-          type: string
-          description: Identifier of the zone within a site where the data source belongs.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
   securitySchemes:
     Bearer:
       description: ''

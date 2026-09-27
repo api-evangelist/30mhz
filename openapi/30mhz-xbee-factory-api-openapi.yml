@@ -170,6 +170,18 @@ paths:
           description: XBee factory does not exist.
 components:
   schemas:
+    XBeeTestResult:
+      type: object
+      properties:
+        changedByEmail:
+          type: string
+          description: The email address of the user that changed this test result
+        testResultKey:
+          type: string
+          description: The key for this test result.
+        testResultValue:
+          type: string
+          description: 'The value for this test result: a json object or a string.'
     XBeeFactory:
       type: object
       properties:
@@ -194,18 +206,6 @@ components:
         macAddress:
           type: string
           description: MAC Address.
-    XBeeTestResult:
-      type: object
-      properties:
-        changedByEmail:
-          type: string
-          description: The email address of the user that changed this test result
-        testResultKey:
-          type: string
-          description: The key for this test result.
-        testResultValue:
-          type: string
-          description: 'The value for this test result: a json object or a string.'
     XBeeFactoryEditable:
       type: object
       properties:

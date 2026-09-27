@@ -322,6 +322,33 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Object holding the editable properties of a device.
+    DeviceNew:
+      type: object
+      required:
+      - deviceType
+      - name
+      - organizationId
+      - siteId
+      properties:
+        deviceModel:
+          type: string
+          description: Model of device.
+        deviceType:
+          type: string
+          description: Type of device.
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        serialNumber:
+          type: string
+          description: Serial number of the device.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+      description: Object holding the properties of a new device.
     Device:
       type: object
       properties:
@@ -356,33 +383,6 @@ components:
           type: string
           description: Universally unique identifier.
       description: A piece of mechanical or electronic equipment.
-    DeviceNew:
-      type: object
-      required:
-      - deviceType
-      - name
-      - organizationId
-      - siteId
-      properties:
-        deviceModel:
-          type: string
-          description: Model of device.
-        deviceType:
-          type: string
-          description: Type of device.
-        name:
-          type: string
-          description: Displayable name.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        serialNumber:
-          type: string
-          description: Serial number of the device.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-      description: Object holding the properties of a new device.
   securitySchemes:
     Bearer:
       description: ''

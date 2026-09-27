@@ -77,90 +77,56 @@ paths:
               $ref: '#/components/schemas/NewCommentReply'
 components:
   schemas:
-    ImageThumbnail:
+    Comment:
       type: object
       properties:
-        height:
-          type: integer
-          format: int32
-        path:
+        activityType:
           type: string
-        url:
+        appInstallationId:
           type: string
-        width:
-          type: integer
-          format: int32
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    AttachedDocument:
-      type: object
-      properties:
-        dataUploadId:
+        email:
           type: string
-        filename:
+        groupId:
           type: string
-        url:
+        lastUpdatedTimestamp:
           type: string
-    CommentUpdate:
-      type: object
-      properties:
-        fields:
-          type: object
-          description: Check fields
-          additionalProperties:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-        checkIds:
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
           type: array
-          description: Check ids to which comment belongs to
-          uniqueItems: true
+          description: Replies of a comment
           items:
-            type: string
-        checkTimestamp:
-          type: integer
-          format: int64
-          description: Timestamp of comment
-        collectionId:
-          type: string
-          description: Collection id within a check
-        dateEntryId:
-          type: string
-          description: Date entry id of a check
-        documentIds:
-          type: array
-          description: Data upload ids of the documents attached to this comment
-          uniqueItems: true
-          items:
-            type: string
-        emails:
-          type: array
-          description: Emails of mentioned users
-          uniqueItems: true
-          items:
-            type: string
-        imageIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        selectedCheckId:
-          type: string
-          description: Selected check id for this comment
-        selectedField:
-          type: string
-          description: Selected field
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
         text:
           type: string
           description: Comment text
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
     ImageWithThumbnails:
       type: object
       properties:
@@ -213,56 +179,6 @@ components:
         selectedField:
           type: string
           description: Selected field id for this comment
-    CommentAttachments:
-      type: object
-      properties:
-        documents:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/AttachedDocument'
-        images:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ImageWithThumbnails'
-    Comment:
-      type: object
-      properties:
-        activityType:
-          type: string
-        appInstallationId:
-          type: string
-        email:
-          type: string
-        groupId:
-          type: string
-        lastUpdatedTimestamp:
-          type: string
-        organizationId:
-          type: string
-        timestamp:
-          type: string
-        attachments:
-          description: Comment Attachments
-          $ref: '#/components/schemas/CommentAttachments'
-        commentId:
-          type: string
-          description: Unique id of the comment.
-        parentCommentId:
-          type: string
-          description: Parent comment id if reply
-        replies:
-          type: array
-          description: Replies of a comment
-          items:
-            $ref: '#/components/schemas/Comment'
-        tags:
-          description: Tags of a comment
-          $ref: '#/components/schemas/CommentTags'
-        text:
-          type: string
-          description: Comment text
     NewCommentReply:
       type: object
       properties:
@@ -272,6 +188,90 @@ components:
           uniqueItems: true
           items:
             type: string
+        text:
+          type: string
+          description: Comment text
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    CommentUpdate:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        checkIds:
+          type: array
+          description: Check ids to which comment belongs to
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of comment
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        documentIds:
+          type: array
+          description: Data upload ids of the documents attached to this comment
+          uniqueItems: true
+          items:
+            type: string
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        imageIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        selectedCheckId:
+          type: string
+          description: Selected check id for this comment
+        selectedField:
+          type: string
+          description: Selected field
         text:
           type: string
           description: Comment text

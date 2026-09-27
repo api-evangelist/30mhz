@@ -212,7 +212,7 @@ paths:
       x-admin-only: true
 components:
   schemas:
-    Assembly:
+    NewAssembly:
       type: object
       properties:
         battery1:
@@ -242,7 +242,7 @@ components:
           type: string
         startDate:
           type: string
-    NewAssembly:
+    Assembly:
       type: object
       properties:
         battery1:

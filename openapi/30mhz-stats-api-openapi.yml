@@ -836,51 +836,6 @@ paths:
           description: Organization with given id doesn't exist
 components:
   schemas:
-    StatisticsInfoRequest:
-      type: object
-      properties:
-        checkIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        collectionIdsPerField:
-          type: object
-          description: Filter/group values based on fields and collection ids
-          additionalProperties:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-        cumulative:
-          type: boolean
-        interval:
-          type: string
-        intervalFrom:
-          type: string
-        intervalSize:
-          type: string
-        intervalTo:
-          type: string
-        organizationId:
-          type: string
-        partOfDay:
-          type: string
-          enum:
-          - ALLTIME
-          - DAYTIME
-          - NIGHTTIME
-        sensorType:
-          type: string
-        statisticType:
-          type: string
-        tags:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        tagsOperator:
-          type: string
     CheckStatsRequest:
       type: object
       properties:
@@ -937,12 +892,51 @@ components:
         tagsOperator:
           type: string
           description: Tags boolean operator (and/or).
-    EventsCount:
+    StatisticsInfoRequest:
       type: object
       properties:
-        events:
-          type: integer
-          format: int64
+        checkIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        cumulative:
+          type: boolean
+        interval:
+          type: string
+        intervalFrom:
+          type: string
+        intervalSize:
+          type: string
+        intervalTo:
+          type: string
+        organizationId:
+          type: string
+        partOfDay:
+          type: string
+          enum:
+          - ALLTIME
+          - DAYTIME
+          - NIGHTTIME
+        sensorType:
+          type: string
+        statisticType:
+          type: string
+        tags:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
     NetworkOverviewResponse:
       type: object
       properties:
@@ -1019,6 +1013,12 @@ components:
         timestamp:
           type: string
           description: Event's UTC timestamp in ISO 8601 format e.g. 2017-01-17T19:23:02Z
+    EventsCount:
+      type: object
+      properties:
+        events:
+          type: integer
+          format: int64
   securitySchemes:
     Bearer:
       description: ''

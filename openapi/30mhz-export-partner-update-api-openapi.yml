@@ -53,23 +53,6 @@ paths:
               $ref: '#/components/schemas/ExportPartnerUpdate'
 components:
   schemas:
-    ExportPartnerData:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        items:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ExportPartnerDataItem'
-        name:
-          type: string
     ExportPartnerUpdate:
       type: object
       properties:
@@ -122,6 +105,23 @@ components:
         id:
           type: integer
           format: int32
+        name:
+          type: string
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
         name:
           type: string
   securitySchemes:

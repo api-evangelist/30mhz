@@ -45,38 +45,6 @@ paths:
               $ref: '#/components/schemas/MetricUpdate'
 components:
   schemas:
-    MetricUpdate:
-      type: object
-      properties:
-        conversionUnits:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversionUnit'
-        defaultStatisticTypes:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        statisticTypes:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        unit:
-          type: string
-        unitLabel:
-          type: string
-      description: Updating metric properties
-    ConversionFormula:
-      type: object
-      properties:
-        type:
-          type: string
-        value:
-          type: number
-          format: double
     ConversionUnit:
       type: object
       properties:
@@ -120,6 +88,38 @@ components:
         unitLabel:
           type: string
       description: Metrics of sensor types
+    ConversionFormula:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: number
+          format: double
+    MetricUpdate:
+      type: object
+      properties:
+        conversionUnits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionUnit'
+        defaultStatisticTypes:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        statisticTypes:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        unit:
+          type: string
+        unitLabel:
+          type: string
+      description: Updating metric properties
   securitySchemes:
     Bearer:
       description: ''

@@ -203,6 +203,65 @@ components:
         toDate:
           type: string
       description: The created request to export data
+    DataExportRequest:
+      type: object
+      required:
+      - timezoneOffset
+      properties:
+        aggregationInterval:
+          type: string
+        aggregationMetric:
+          type: string
+        checkIds:
+          type: array
+          items:
+            type: string
+        decimalMark:
+          type: string
+        documentType:
+          type: string
+        email:
+          type: string
+        format:
+          type: string
+        fromDate:
+          type: string
+        location:
+          type: string
+        month:
+          type: string
+        organization:
+          type: string
+        sensorType:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        timezoneOffset:
+          type: integer
+          format: int32
+        toDate:
+          type: string
+        year:
+          type: string
+      description: A request to export data
+    DataExportCountResponse:
+      type: object
+      required:
+      - rowsCount
+      properties:
+        rowsCount:
+          type: integer
+          format: int64
+    DataExportResponse:
+      type: object
+      properties:
+        dataExport:
+          $ref: '#/components/schemas/DataExport'
+        resourceUrl:
+          type: string
+      description: A wrapper for the data export along with the resulting document url
     DataExport:
       type: object
       properties:
@@ -263,65 +322,6 @@ components:
           type: string
           description: The year parameter of the data export.
       description: DataExport
-    DataExportRequest:
-      type: object
-      required:
-      - timezoneOffset
-      properties:
-        aggregationInterval:
-          type: string
-        aggregationMetric:
-          type: string
-        checkIds:
-          type: array
-          items:
-            type: string
-        decimalMark:
-          type: string
-        documentType:
-          type: string
-        email:
-          type: string
-        format:
-          type: string
-        fromDate:
-          type: string
-        location:
-          type: string
-        month:
-          type: string
-        organization:
-          type: string
-        sensorType:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        timezoneOffset:
-          type: integer
-          format: int32
-        toDate:
-          type: string
-        year:
-          type: string
-      description: A request to export data
-    DataExportCountResponse:
-      type: object
-      required:
-      - rowsCount
-      properties:
-        rowsCount:
-          type: integer
-          format: int64
-    DataExportResponse:
-      type: object
-      properties:
-        dataExport:
-          $ref: '#/components/schemas/DataExport'
-        resourceUrl:
-          type: string
-      description: A wrapper for the data export along with the resulting document url
   securitySchemes:
     Bearer:
       description: ''

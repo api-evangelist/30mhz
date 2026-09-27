@@ -1200,9 +1200,10 @@ apis:
   humanURL: https://support.30mhz.com/api-endpoints-documentation-new
   baseURL: https://api.30mhz.com/api
   tags:
-  - Map
+  - Maps
   tags_raw:
   - map
+  - Map
   properties:
   - type: OpenAPI
     url: openapi/30mhz-map-api-openapi.yml

@@ -114,6 +114,56 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
+    UserEditable:
+      type: object
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        rateLimitTier:
+          type: string
+          enum:
+          - tier1
+          - tier2
+          - tier3
+          - tier4
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+      description: Object holding the editable properties of a user
     User:
       type: object
       required:
@@ -184,56 +234,6 @@ components:
           type: string
           description: Displayable title.
       description: A reference to a web page
-    UserEditable:
-      type: object
-      properties:
-        activityNotifications:
-          type: object
-          description: Activity notifications (type and frequency).
-          additionalProperties:
-            type: string
-            enum:
-            - NEVER
-            - IMMEDIATELY
-        favoritePages:
-          type: array
-          description: List of web pages marked as favorite by the user.
-          items:
-            $ref: '#/components/schemas/WebPageReference'
-        firstName:
-          type: string
-          description: First name.
-        language:
-          type: string
-          description: IETF language tag, e.g. en-US
-        lastName:
-          type: string
-          description: Last name.
-        metricSettings:
-          type: array
-          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
-          uniqueItems: true
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        phoneNumber:
-          type: string
-          description: Phone number.
-        rateLimitTier:
-          type: string
-          enum:
-          - tier1
-          - tier2
-          - tier3
-          - tier4
-        status:
-          type: string
-          description: Indicates when a user is active or inactive.
-        timezone:
-          type: string
-          description: The timezone of the user, defaults to Europe/Amsterdam
-      description: Object holding the editable properties of a user
   securitySchemes:
     Bearer:
       description: ''

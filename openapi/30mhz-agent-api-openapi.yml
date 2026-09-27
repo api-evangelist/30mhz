@@ -63,11 +63,43 @@ paths:
               $ref: '#/components/schemas/AgentMessageNew'
 components:
   schemas:
-    Type:
+    AgentMessage:
       type: object
+      required:
+      - conversationId
       properties:
-        typeName:
+        agentId:
           type: string
+          description: The unique identifier of the AI agent.
+        content:
+          type: string
+          description: Content of the message
+        isSystemGenerated:
+          type: boolean
+          description: Indicates whether it was automatically created by the system or sent by the user.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        requiredToolCall:
+          description: A tool call that the agent must perform for the task.
+          $ref: '#/components/schemas/AgentToolCall'
+        role:
+          type: string
+          description: Role of the message sender (e.g. assistant or user)
+        conversationId:
+          type: string
+          description: The unique identifier of the AI agent conversation.
+        createdAt:
+          type: integer
+          format: int64
+          description: Timestamp of when it was created.
+        messageId:
+          type: string
+          description: Unique identifier for the message.
+        runId:
+          type: string
+          description: The unique identifier of the AI agent run.
+      description: A message in the AI Agent conversation.
     ChunkedOutput:
       type: object
       properties:
@@ -115,43 +147,11 @@ components:
           type: string
           description: The unique identifier of the AI agent conversation.
       description: Object holding the required properties to create a new AgentMessage.
-    AgentMessage:
+    Type:
       type: object
-      required:
-      - conversationId
       properties:
-        agentId:
+        typeName:
           type: string
-          description: The unique identifier of the AI agent.
-        content:
-          type: string
-          description: Content of the message
-        isSystemGenerated:
-          type: boolean
-          description: Indicates whether it was automatically created by the system or sent by the user.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        requiredToolCall:
-          description: A tool call that the agent must perform for the task.
-          $ref: '#/components/schemas/AgentToolCall'
-        role:
-          type: string
-          description: Role of the message sender (e.g. assistant or user)
-        conversationId:
-          type: string
-          description: The unique identifier of the AI agent conversation.
-        createdAt:
-          type: integer
-          format: int64
-          description: Timestamp of when it was created.
-        messageId:
-          type: string
-          description: Unique identifier for the message.
-        runId:
-          type: string
-          description: The unique identifier of the AI agent run.
-      description: A message in the AI Agent conversation.
   securitySchemes:
     Bearer:
       description: ''

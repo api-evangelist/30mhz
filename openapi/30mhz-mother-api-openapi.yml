@@ -278,11 +278,6 @@ components:
           type: string
         xbeeAddress:
           type: string
-    MotherStatusResponse:
-      type: object
-      properties:
-        isMotherOnline:
-          type: boolean
     Mother:
       type: object
       properties:
@@ -349,6 +344,11 @@ components:
           type: string
           description: The address of the xbee.
       description: Mother
+    MotherStatusResponse:
+      type: object
+      properties:
+        isMotherOnline:
+          type: boolean
   securitySchemes:
     Bearer:
       description: ''

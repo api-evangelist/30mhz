@@ -485,46 +485,6 @@ paths:
               $ref: '#/components/schemas/CommentRequest'
 components:
   schemas:
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    PaginatedComments:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    AttachedDocument:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
     NewComment:
       type: object
       properties:
@@ -586,6 +546,56 @@ components:
         text:
           type: string
           description: Comment text
+    Comment:
+      type: object
+      properties:
+        activityType:
+          type: string
+        appInstallationId:
+          type: string
+        email:
+          type: string
+        groupId:
+          type: string
+        lastUpdatedTimestamp:
+          type: string
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
+          type: array
+          description: Replies of a comment
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
+        text:
+          type: string
+          description: Comment text
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
     ImageWithThumbnails:
       type: object
       properties:
@@ -638,68 +648,6 @@ components:
         selectedField:
           type: string
           description: Selected field id for this comment
-    CommentAttachments:
-      type: object
-      properties:
-        documents:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/AttachedDocument'
-        images:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ImageWithThumbnails'
-    Pagination:
-      type: object
-      properties:
-        lastPage:
-          type: integer
-          format: int64
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-    Comment:
-      type: object
-      properties:
-        activityType:
-          type: string
-        appInstallationId:
-          type: string
-        email:
-          type: string
-        groupId:
-          type: string
-        lastUpdatedTimestamp:
-          type: string
-        organizationId:
-          type: string
-        timestamp:
-          type: string
-        attachments:
-          description: Comment Attachments
-          $ref: '#/components/schemas/CommentAttachments'
-        commentId:
-          type: string
-          description: Unique id of the comment.
-        parentCommentId:
-          type: string
-          description: Parent comment id if reply
-        replies:
-          type: array
-          description: Replies of a comment
-          items:
-            $ref: '#/components/schemas/Comment'
-        tags:
-          description: Tags of a comment
-          $ref: '#/components/schemas/CommentTags'
-        text:
-          type: string
-          description: Comment text
     NewCommentReply:
       type: object
       properties:
@@ -759,6 +707,58 @@ components:
         text:
           type: string
           description: Text that should be in the comment
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        lastPage:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    PaginatedComments:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
   securitySchemes:
     Bearer:
       description: ''

@@ -98,6 +98,29 @@ paths:
               $ref: '#/components/schemas/NewCompanyDetails'
 components:
   schemas:
+    NewCompanyDetails:
+      type: object
+      properties:
+        accountManager:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        companyName:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        invoiceEmail:
+          type: string
+        postalCode:
+          type: string
+        telephoneNumber:
+          type: string
+        vatNumber:
+          type: string
     CompanyDetails:
       type: object
       required:
@@ -146,29 +169,6 @@ components:
         vatNumber:
           type: string
           description: The vat number of the company details
-    NewCompanyDetails:
-      type: object
-      properties:
-        accountManager:
-          type: string
-        address:
-          type: string
-        city:
-          type: string
-        companyName:
-          type: string
-        country:
-          type: string
-        countryCode:
-          type: string
-        invoiceEmail:
-          type: string
-        postalCode:
-          type: string
-        telephoneNumber:
-          type: string
-        vatNumber:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

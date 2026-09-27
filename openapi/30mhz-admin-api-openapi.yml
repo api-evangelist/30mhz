@@ -140,23 +140,26 @@ paths:
       x-admin-only: true
 components:
   schemas:
-    Throwable:
+    StackTraceElement:
       type: object
       properties:
-        cause:
-          $ref: '#/components/schemas/Throwable'
-        stackTrace:
-          type: array
-          items:
-            $ref: '#/components/schemas/StackTraceElement'
-        message:
+        classLoaderName:
           type: string
-        suppressed:
-          type: array
-          items:
-            $ref: '#/components/schemas/Throwable'
-        localizedMessage:
+        moduleName:
           type: string
+        moduleVersion:
+          type: string
+        methodName:
+          type: string
+        fileName:
+          type: string
+        lineNumber:
+          type: integer
+          format: int32
+        className:
+          type: string
+        nativeMethod:
+          type: boolean
     Result:
       type: object
       properties:
@@ -178,26 +181,23 @@ components:
           format: int64
         timestamp:
           type: string
-    StackTraceElement:
+    Throwable:
       type: object
       properties:
-        classLoaderName:
+        cause:
+          $ref: '#/components/schemas/Throwable'
+        stackTrace:
+          type: array
+          items:
+            $ref: '#/components/schemas/StackTraceElement'
+        message:
           type: string
-        moduleName:
+        suppressed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Throwable'
+        localizedMessage:
           type: string
-        moduleVersion:
-          type: string
-        methodName:
-          type: string
-        fileName:
-          type: string
-        lineNumber:
-          type: integer
-          format: int32
-        className:
-          type: string
-        nativeMethod:
-          type: boolean
   securitySchemes:
     Bearer:
       description: ''

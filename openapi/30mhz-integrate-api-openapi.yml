@@ -741,710 +741,6 @@ paths:
               $ref: '#/components/schemas/CalculationSettings'
 components:
   schemas:
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    Note:
-      type: object
-      required:
-      - category
-      - createdAt
-      - createdBy
-      - cultivationId
-      - noteId
-      - organizationId
-      properties:
-        category:
-          type: string
-          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
-          enum:
-          - general
-          - crop
-          - irrigation
-          - pest
-          - production
-          - nutrients
-        description:
-          type: string
-          description: The description added as text to the note
-        files:
-          type: array
-          description: List of files attached to the note, each containing a unique file identifier and MIME type.
-          items:
-            $ref: '#/components/schemas/NoteFile'
-        noteMeasurements:
-          description: Numeric measurements attached to the note
-          $ref: '#/components/schemas/NoteMeasurements'
-        plantGroupId:
-          type: string
-          description: Unique identifier of the plant group.
-        plantId:
-          type: string
-          description: Unique identifier of the plant.
-        subcategory:
-          type: string
-          description: Sub category of the note, e.g. observation, measurement, action etc.
-          enum:
-          - observation
-          - action
-          - measurement
-          - rating
-        timestamp:
-          type: string
-          description: Timestamp of the note
-        createdAt:
-          type: string
-          description: Timestamp of when it was created.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        noteId:
-          type: string
-          description: Unique identifier of the note
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-      description: Represents a note with its metadata and content.
-    NoteFile:
-      type: object
-      required:
-      - fileId
-      - mimeType
-      properties:
-        document:
-          description: Document details for non-image files, including presigned download URL and filename. Null for image files.
-          $ref: '#/components/schemas/NoteFileDocument'
-        fileId:
-          type: string
-          description: Unique identifier of the file.
-        imageWithThumbnails:
-          description: Presigned image URL with thumbnails for the file, if available.
-          $ref: '#/components/schemas/ImageWithThumbnails'
-        mimeType:
-          type: string
-          description: MIME type of the file, e.g. image/png.
-      description: Represents a file attached to a note, identified by its unique identifier and MIME type.
-    NoteNew:
-      type: object
-      required:
-      - category
-      - cultivationId
-      - description
-      - organizationId
-      - timestamp
-      properties:
-        category:
-          type: string
-          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
-          enum:
-          - general
-          - crop
-          - irrigation
-          - pest
-          - production
-          - nutrients
-        description:
-          type: string
-          description: The description added as text to the note
-        files:
-          type: array
-          description: List of files attached to the note, each containing a unique file identifier and MIME type.
-          items:
-            $ref: '#/components/schemas/NoteFile'
-        noteMeasurements:
-          description: Numeric measurements attached to the note
-          $ref: '#/components/schemas/NoteMeasurements'
-        plantGroupId:
-          type: string
-          description: Unique identifier of the plant group.
-        plantId:
-          type: string
-          description: Unique identifier of the plant.
-        subcategory:
-          type: string
-          description: Sub category of the note, e.g. observation, measurement, action etc.
-          enum:
-          - observation
-          - action
-          - measurement
-          - rating
-        timestamp:
-          type: string
-          description: Timestamp of the note
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-      description: Object holding the required properties to create a new Note.
-    SensorType:
-      type: object
-      required:
-      - decimals
-      - description
-      properties:
-        batteryVoltageChargedEnough:
-          type: string
-        batteryVoltageCritical:
-          type: string
-        batteryVoltageWarning:
-          type: string
-        canSleep:
-          type: boolean
-          description: States if this sensor is able to sleep
-        chartColor:
-          type: string
-        color:
-          type: string
-        createdAt:
-          type: string
-        dataTypes:
-          type: array
-          description: The data types of the json keys (long, double, boolean, string
-          items:
-            type: string
-        decimals:
-          type: integer
-          format: int32
-        description:
-          type: string
-        enums:
-          type: array
-          description: The enums (if any) in the sensor data
-          items:
-            $ref: '#/components/schemas/SensorTypeEnumData'
-        external:
-          type: boolean
-          description: States if the sensor type is external
-        hasVoltageInformation:
-          type: boolean
-        icon:
-          type: string
-          description: Embedded html that displays the sensor type's icon.
-        iconId:
-          type: string
-          description: Identifier of the sensor type's icon asset.
-        isBillable:
-          type: boolean
-          description: States if the sensor type is billable or not.
-        isForManualInput:
-          type: boolean
-          description: States if the sensor type is for manual input
-        jsonKeys:
-          type: array
-          items:
-            type: string
-        jsonLabels:
-          type: array
-          items:
-            type: string
-        metadata:
-          type: string
-          description: Describes sensor metadata
-        metrics:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        notificationTemplates:
-          type: array
-          description: Notification templates
-          items:
-            $ref: '#/components/schemas/NotificationTemplate'
-        organizationId:
-          type: string
-        productionStatus:
-          type: string
-          description: Production status of the sensor
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - OBSOLETE
-          - OUTGOING
-        queryParameters:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        queryParametersRequired:
-          type: boolean
-          description: States if the query parameters are required
-        radioId:
-          type: string
-          description: Radio identifier
-        rangeMax:
-          type: string
-          description: Maximum sensor values
-        rangeMin:
-          type: string
-          description: Minimum sensor values
-        typeId:
-          type: string
-        sharedDetails:
-          $ref: '#/components/schemas/SharedSensorType'
-      description: Authorization entity
-    SharedSensorType:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: The date and time a sensor type was shared.
-        organizationId:
-          type: string
-          description: ID of the organization to which the shared sensor type belongs
-        organizationName:
-          type: string
-        sensorTypeId:
-          type: string
-          description: Id of the original sensor type
-        sharedByUser:
-          type: string
-          description: User who shared the sensor type
-        sharedByUserDetails:
-          $ref: '#/components/schemas/SharedByUserDetails'
-        sharedSensorTypeId:
-          type: string
-          description: Id of the shared sensor type itself
-        sharedWithGroupId:
-          type: string
-          description: Group which the sensor type has been shared with
-        sharedWithGroupName:
-          type: string
-        sharedWithOrganizationId:
-          type: string
-          description: Organization which the sensor type has been shared with
-        sharedWithOrganizationName:
-          type: string
-        sharedWithUser:
-          type: string
-          description: User who the sensor type has been shared with
-        sharedWithUserDetails:
-          $ref: '#/components/schemas/SharedWithUserDetails'
-    ImportCheckEventsResponse:
-      type: object
-      required:
-      - failedEvents
-      properties:
-        failedEvents:
-          type: array
-          description: List of failed ingests in the batch.
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ImportCheckEventFailure'
-        failedEventsNo:
-          type: integer
-          format: int32
-          description: Number of failed ingests in the batch.
-        ingestedDocId:
-          type: string
-          description: Id of the created manual input event if any. It is always one single id since multiple events creation is not supported.
-        okEventsNo:
-          type: integer
-          format: int32
-          description: Number of successful ingests in the batch.
-    AgentToolCall:
-      type: object
-      properties:
-        agentToolId:
-          type: string
-          description: The unique identifier of the tool. This is also the name of the tool.
-        arguments:
-          type: object
-          description: A key-value map of the tool arguments.
-          additionalProperties:
-            type: object
-        toolCallId:
-          type: string
-          description: The unique identifier of the AI agents call to a tool.
-      description: An AI agent request to call a tool.
-    DataSourceCoordinates:
-      type: object
-      required:
-      - dataSourceId
-      - sinceDate
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-        dataSourceId:
-          type: string
-          description: Identifier of the data source
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
-        zoneName:
-          type: string
-          description: Name of the zone
-        zoneUuid:
-          type: string
-          description: Unique identifier of the zone
-      description: Coordinates of a data source since a given timestamp.
-    ImportCheckEventFailure:
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/ImportCheckEvent'
-        errorCode:
-          type: integer
-          format: int32
-        errorText:
-          type: string
-    SensorsDataResponse:
-      type: object
-      required:
-      - time
-      properties:
-        aggregations:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorsDataAggregation'
-        time:
-          $ref: '#/components/schemas/Time'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorsData'
-    SensorTypeEnumData:
-      type: object
-      properties:
-        key:
-          type: string
-        mappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
-    AgentMessage:
-      type: object
-      required:
-      - conversationId
-      properties:
-        agentId:
-          type: string
-          description: The unique identifier of the AI agent.
-        content:
-          type: string
-          description: Content of the message
-        isSystemGenerated:
-          type: boolean
-          description: Indicates whether it was automatically created by the system or sent by the user.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        requiredToolCall:
-          description: A tool call that the agent must perform for the task.
-          $ref: '#/components/schemas/AgentToolCall'
-        role:
-          type: string
-          description: Role of the message sender (e.g. assistant or user)
-        conversationId:
-          type: string
-          description: The unique identifier of the AI agent conversation.
-        createdAt:
-          type: integer
-          format: int64
-          description: Timestamp of when it was created.
-        messageId:
-          type: string
-          description: Unique identifier for the message.
-        runId:
-          type: string
-          description: The unique identifier of the AI agent run.
-      description: A message in the AI Agent conversation.
-    ExternalSensorEditable:
-      type: object
-      properties:
-        calculationSettings:
-          description: The calculation settings if this is a calculation data source.
-          $ref: '#/components/schemas/CalculationSettings'
-        dataSourceCoordinatesEditable:
-          description: A set of numbers that represent the current position of a data source
-          $ref: '#/components/schemas/DataSourceCoordinatesEditable'
-        decimalsPerField:
-          type: object
-          description: The number of decimals used for each field of the data source.
-          additionalProperties:
-            type: integer
-            format: int32
-        description:
-          type: string
-          description: Brief description that elaborates on the name
-        enabled:
-          type: boolean
-          description: Whether the data source is enabled.
-        ingestedForIndices:
-          type: object
-          description: The data source's indexes for ingested values
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        integrationType:
-          type: string
-          description: Integration type.
-        locationId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        name:
-          type: string
-          description: Displayable name.
-        notificationRelevance:
-          type: integer
-          format: int32
-          description: The notification relevance for import check hits.
-          minimum: 300
-        rangePerJsonKey:
-          type: object
-          description: Min/max ranges for each json key of the data source.
-          additionalProperties:
-            type: array
-            items:
-              type: number
-              format: double
-        sensorType:
-          type: string
-          description: The sensor type.
-        sourceId:
-          type: string
-          description: Optional source id.
-        status:
-          type: string
-          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
-          enum:
-          - ACTIVE
-          - DEACTIVATED
-          - PAUSED
-        tags:
-          type: array
-          description: The tags associated with the data source.
-          uniqueItems: true
-          items:
-            type: string
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-        unitPerField:
-          type: object
-          description: Identifier of the preferred unit conversion for each field.
-          additionalProperties:
-            type: string
-        useCollectionsAsRows:
-          type: boolean
-          description: Whether collections should be displayed as rows.
-        zoneId:
-          type: string
-          description: Identifier of the zone within a site where the data source belongs.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-    Notification:
-      type: object
-      required:
-      - notificationId
-      properties:
-        action:
-          type: string
-          description: Description of the action to take when the notification is triggered.
-        calculationSettings:
-          description: The calculation configuration
-          $ref: '#/components/schemas/CalculationSettings'
-        checkId:
-          type: string
-          description: Identifier of the check.
-        condition:
-          type: string
-          description: Conditional that defines the trigger of this notification
-        description:
-          type: string
-          description: Description of the notification
-        eventHook:
-          description: Event hook of the notification
-          $ref: '#/components/schemas/EventHook'
-        matchAfter:
-          type: integer
-          format: int32
-          description: Match after attribute
-          minimum: 0
-        throttleFor:
-          type: integer
-          format: int64
-          description: The amount of time in milliseconds to throttle notifications
-          minimum: 0
-        check:
-          description: Summary of the check that is linked to this notification
-          $ref: '#/components/schemas/CheckSummary'
-        createdBy:
-          type: string
-          description: Identifier of the user that created this notification
-        creationTimestamp:
-          type: integer
-          format: int64
-          description: Timestamp of when the notification was created
-        matched:
-          type: boolean
-          description: Matched attribute
-        matchedFor:
-          type: integer
-          format: int32
-          description: Matched for attribute
-        matchedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last matched notification was sent
-        notificationId:
-          type: string
-          description: Identifier of this notification object.
-        nrMatched:
-          type: integer
-          format: int32
-          description: Number of matches attribute
-        organizationId:
-          type: string
-          description: Identifier of the organization for which this notification is created
-        resolvedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last resolved notification was sent
-        structuredConditional:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          items:
-            $ref: '#/components/schemas/StructuredConditional'
-        widgetIds:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          uniqueItems: true
-          items:
-            type: string
-      description: Holds the editable properties of a Notification
-    Sensor:
-      type: object
-      required:
-      - notificationIds
-      properties:
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/Notification'
-        checkId:
-          type: string
-        organizationId:
-          type: string
-        siteId:
-          type: string
-        dataSourceCoordinateHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSourceCoordinates'
-        dataSourceCoordinates:
-          $ref: '#/components/schemas/DataSourceCoordinates'
-        decimalsPerField:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int32
-        notificationIds:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        enabled:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - DEACTIVATED
-          - PAUSED
-        rangePerJsonKey:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: number
-              format: double
-        sensorType:
-          type: string
-        timezone:
-          type: string
-        zoneId:
-          type: string
-    SensorsDataAggregation:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation to apply to the retrieved values.
-        sensorFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorField'
-        sensorIds:
-          type: array
-          description: Ids of the sensors to get data for. They must be of the same type.
-          items:
-            type: string
-    Type:
-      type: object
-      properties:
-        typeName:
-          type: string
-    Calculation:
-      type: object
-      properties:
-        calculationId:
-          type: string
-          description: Unique identifier for the calculation
-        description:
-          type: string
-          description: Description for the calculation
-        inputParams:
-          type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
-          additionalProperties:
-            type: string
-        name:
-          type: string
-          description: Displayable name for the calculation
-        outputFields:
-          type: object
-          description: A map of the selected output parameters and their type from the calculation response
-          additionalProperties:
-            type: string
-      description: Calculations allow querying data through operations and aggregations.
     ImportCheck:
       type: object
       required:
@@ -1579,24 +875,28 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Import check properties
-    ChunkedOutput:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/Type'
-        closed:
-          type: boolean
-    SensorsDataRequest:
+    EventHook:
       type: object
       required:
-      - time
+      - method
+      - url
       properties:
-        aggregations:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorsDataAggregation'
-        time:
-          $ref: '#/components/schemas/Time'
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
     ImageWithThumbnails:
       type: object
       properties:
@@ -1610,24 +910,484 @@ components:
             $ref: '#/components/schemas/ImageThumbnail'
         url:
           type: string
-    SensorTypeEnumDataMapping:
+    SharedByUserDetails:
       type: object
       properties:
-        color:
+        firstName:
           type: string
-        label:
+        lastName:
           type: string
-        value:
+    NoteFileDocument:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Original filename of the uploaded document.
+        url:
+          type: string
+          description: Presigned download URL for the document.
+      description: Represents a non-image document attached to a note file.
+    Note:
+      type: object
+      required:
+      - category
+      - createdAt
+      - createdBy
+      - cultivationId
+      - noteId
+      - organizationId
+      properties:
+        category:
+          type: string
+          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        description:
+          type: string
+          description: The description added as text to the note
+        files:
+          type: array
+          description: List of files attached to the note, each containing a unique file identifier and MIME type.
+          items:
+            $ref: '#/components/schemas/NoteFile'
+        noteMeasurements:
+          description: Numeric measurements attached to the note
+          $ref: '#/components/schemas/NoteMeasurements'
+        plantGroupId:
+          type: string
+          description: Unique identifier of the plant group.
+        plantId:
+          type: string
+          description: Unique identifier of the plant.
+        subcategory:
+          type: string
+          description: Sub category of the note, e.g. observation, measurement, action etc.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        timestamp:
+          type: string
+          description: Timestamp of the note
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        noteId:
+          type: string
+          description: Unique identifier of the note
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+      description: Represents a note with its metadata and content.
+    AgentMessageNew:
+      type: object
+      properties:
+        agentId:
+          type: string
+          description: The unique identifier of the AI agent.
+        content:
+          type: string
+          description: Content of the message
+        isSystemGenerated:
+          type: boolean
+          description: Indicates whether it was automatically created by the system or sent by the user.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        requiredToolCall:
+          description: A tool call that the agent must perform for the task.
+          $ref: '#/components/schemas/AgentToolCall'
+        role:
+          type: string
+          description: Role of the message sender (e.g. assistant or user)
+        conversationId:
+          type: string
+          description: The unique identifier of the AI agent conversation.
+      description: Object holding the required properties to create a new AgentMessage.
+    NoteNew:
+      type: object
+      required:
+      - category
+      - cultivationId
+      - description
+      - organizationId
+      - timestamp
+      properties:
+        category:
+          type: string
+          description: Main category of the note, e.g. general, crop, irrigation, pestcontrol etc.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        description:
+          type: string
+          description: The description added as text to the note
+        files:
+          type: array
+          description: List of files attached to the note, each containing a unique file identifier and MIME type.
+          items:
+            $ref: '#/components/schemas/NoteFile'
+        noteMeasurements:
+          description: Numeric measurements attached to the note
+          $ref: '#/components/schemas/NoteMeasurements'
+        plantGroupId:
+          type: string
+          description: Unique identifier of the plant group.
+        plantId:
+          type: string
+          description: Unique identifier of the plant.
+        subcategory:
+          type: string
+          description: Sub category of the note, e.g. observation, measurement, action etc.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        timestamp:
+          type: string
+          description: Timestamp of the note
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+      description: Object holding the required properties to create a new Note.
+    NoteFile:
+      type: object
+      required:
+      - fileId
+      - mimeType
+      properties:
+        document:
+          description: Document details for non-image files, including presigned download URL and filename. Null for image files.
+          $ref: '#/components/schemas/NoteFileDocument'
+        fileId:
+          type: string
+          description: Unique identifier of the file.
+        imageWithThumbnails:
+          description: Presigned image URL with thumbnails for the file, if available.
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        mimeType:
+          type: string
+          description: MIME type of the file, e.g. image/png.
+      description: Represents a file attached to a note, identified by its unique identifier and MIME type.
+    ImportCheckEventFailure:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/ImportCheckEvent'
+        errorCode:
           type: integer
           format: int32
-    NotificationTemplate:
+        errorText:
+          type: string
+    CalculationSettings:
+      type: object
+      required:
+      - inputParams
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: object
+      description: Settings used to perform a calculation.
+    AgentMessage:
+      type: object
+      required:
+      - conversationId
+      properties:
+        agentId:
+          type: string
+          description: The unique identifier of the AI agent.
+        content:
+          type: string
+          description: Content of the message
+        isSystemGenerated:
+          type: boolean
+          description: Indicates whether it was automatically created by the system or sent by the user.
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        requiredToolCall:
+          description: A tool call that the agent must perform for the task.
+          $ref: '#/components/schemas/AgentToolCall'
+        role:
+          type: string
+          description: Role of the message sender (e.g. assistant or user)
+        conversationId:
+          type: string
+          description: The unique identifier of the AI agent conversation.
+        createdAt:
+          type: integer
+          format: int64
+          description: Timestamp of when it was created.
+        messageId:
+          type: string
+          description: Unique identifier for the message.
+        runId:
+          type: string
+          description: The unique identifier of the AI agent run.
+      description: A message in the AI Agent conversation.
+    SharedSensorType:
       type: object
       properties:
-        condition:
+        createdAt:
           type: string
-        frontend:
+          description: The date and time a sensor type was shared.
+        organizationId:
           type: string
+          description: ID of the organization to which the shared sensor type belongs
+        organizationName:
+          type: string
+        sensorTypeId:
+          type: string
+          description: Id of the original sensor type
+        sharedByUser:
+          type: string
+          description: User who shared the sensor type
+        sharedByUserDetails:
+          $ref: '#/components/schemas/SharedByUserDetails'
+        sharedSensorTypeId:
+          type: string
+          description: Id of the shared sensor type itself
+        sharedWithGroupId:
+          type: string
+          description: Group which the sensor type has been shared with
+        sharedWithGroupName:
+          type: string
+        sharedWithOrganizationId:
+          type: string
+          description: Organization which the sensor type has been shared with
+        sharedWithOrganizationName:
+          type: string
+        sharedWithUser:
+          type: string
+          description: User who the sensor type has been shared with
+        sharedWithUserDetails:
+          $ref: '#/components/schemas/SharedWithUserDetails'
+    SensorsDataResponse:
+      type: object
+      required:
+      - time
+      properties:
+        aggregations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorsDataAggregation'
+        time:
+          $ref: '#/components/schemas/Time'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorsData'
+    SensorType:
+      type: object
+      required:
+      - decimals
+      - description
+      properties:
+        batteryVoltageChargedEnough:
+          type: string
+        batteryVoltageCritical:
+          type: string
+        batteryVoltageWarning:
+          type: string
+        canSleep:
+          type: boolean
+          description: States if this sensor is able to sleep
+        chartColor:
+          type: string
+        color:
+          type: string
+        createdAt:
+          type: string
+        dataTypes:
+          type: array
+          description: The data types of the json keys (long, double, boolean, string
+          items:
+            type: string
+        decimals:
+          type: integer
+          format: int32
+        description:
+          type: string
+        enums:
+          type: array
+          description: The enums (if any) in the sensor data
+          items:
+            $ref: '#/components/schemas/SensorTypeEnumData'
+        external:
+          type: boolean
+          description: States if the sensor type is external
+        hasVoltageInformation:
+          type: boolean
+        icon:
+          type: string
+          description: Embedded html that displays the sensor type's icon.
+        iconId:
+          type: string
+          description: Identifier of the sensor type's icon asset.
+        isBillable:
+          type: boolean
+          description: States if the sensor type is billable or not.
+        isForManualInput:
+          type: boolean
+          description: States if the sensor type is for manual input
+        jsonKeys:
+          type: array
+          items:
+            type: string
+        jsonLabels:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: string
+          description: Describes sensor metadata
+        metrics:
+          type: array
+          items:
+            type: string
         name:
+          type: string
+        notificationTemplates:
+          type: array
+          description: Notification templates
+          items:
+            $ref: '#/components/schemas/NotificationTemplate'
+        organizationId:
+          type: string
+        productionStatus:
+          type: string
+          description: Production status of the sensor
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - OBSOLETE
+          - OUTGOING
+        queryParameters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        queryParametersRequired:
+          type: boolean
+          description: States if the query parameters are required
+        radioId:
+          type: string
+          description: Radio identifier
+        rangeMax:
+          type: string
+          description: Maximum sensor values
+        rangeMin:
+          type: string
+          description: Minimum sensor values
+        typeId:
+          type: string
+        sharedDetails:
+          $ref: '#/components/schemas/SharedSensorType'
+      description: Authorization entity
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
+    Sensor:
+      type: object
+      required:
+      - notificationIds
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        checkId:
+          type: string
+        organizationId:
+          type: string
+        siteId:
+          type: string
+        dataSourceCoordinateHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSourceCoordinates'
+        dataSourceCoordinates:
+          $ref: '#/components/schemas/DataSourceCoordinates'
+        decimalsPerField:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int32
+        notificationIds:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        enabled:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PAUSED
+        rangePerJsonKey:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+        timezone:
+          type: string
+        zoneId:
           type: string
     Time:
       type: object
@@ -1649,29 +1409,6 @@ components:
         timezone:
           type: string
           description: Timezone of the provided time range. Defaults to sensors timezone.
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    CalculationSettings:
-      type: object
-      required:
-      - inputParams
-      properties:
-        calculationId:
-          type: string
-          description: Unique identifier for the calculation
-        inputParams:
-          type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
-          additionalProperties:
-            type: object
-      description: Settings used to perform a calculation.
     NoteEditable:
       type: object
       required:
@@ -1716,16 +1453,168 @@ components:
           type: string
           description: Timestamp of the note
       description: Object containing the editable properties of Note.
-    NoteFileDocument:
+    ImageDimensions:
       type: object
       properties:
-        filename:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    ExternalSensorEditable:
+      type: object
+      properties:
+        calculationSettings:
+          description: The calculation settings if this is a calculation data source.
+          $ref: '#/components/schemas/CalculationSettings'
+        dataSourceCoordinatesEditable:
+          description: A set of numbers that represent the current position of a data source
+          $ref: '#/components/schemas/DataSourceCoordinatesEditable'
+        decimalsPerField:
+          type: object
+          description: The number of decimals used for each field of the data source.
+          additionalProperties:
+            type: integer
+            format: int32
+        description:
           type: string
-          description: Original filename of the uploaded document.
+          description: Brief description that elaborates on the name
+        enabled:
+          type: boolean
+          description: Whether the data source is enabled.
+        ingestedForIndices:
+          type: object
+          description: The data source's indexes for ingested values
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        integrationType:
+          type: string
+          description: Integration type.
+        locationId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        name:
+          type: string
+          description: Displayable name.
+        notificationRelevance:
+          type: integer
+          format: int32
+          description: The notification relevance for import check hits.
+          minimum: 300
+        rangePerJsonKey:
+          type: object
+          description: Min/max ranges for each json key of the data source.
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        sensorType:
+          type: string
+          description: The sensor type.
+        sourceId:
+          type: string
+          description: Optional source id.
+        status:
+          type: string
+          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PAUSED
+        tags:
+          type: array
+          description: The tags associated with the data source.
+          uniqueItems: true
+          items:
+            type: string
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        unitPerField:
+          type: object
+          description: Identifier of the preferred unit conversion for each field.
+          additionalProperties:
+            type: string
+        useCollectionsAsRows:
+          type: boolean
+          description: Whether collections should be displayed as rows.
+        zoneId:
+          type: string
+          description: Identifier of the zone within a site where the data source belongs.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
         url:
           type: string
-          description: Presigned download URL for the document.
-      description: Represents a non-image document attached to a note file.
+        width:
+          type: integer
+          format: int32
+    DataSourceCoordinatesEditable:
+      type: object
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+      description: Object containing the editable properties of DataSourceCoordinates.
+    Type:
+      type: object
+      properties:
+        typeName:
+          type: string
+    AgentToolCall:
+      type: object
+      properties:
+        agentToolId:
+          type: string
+          description: The unique identifier of the tool. This is also the name of the tool.
+        arguments:
+          type: object
+          description: A key-value map of the tool arguments.
+          additionalProperties:
+            type: object
+        toolCallId:
+          type: string
+          description: The unique identifier of the AI agents call to a tool.
+      description: An AI agent request to call a tool.
+    SensorTypeEnumDataMapping:
+      type: object
+      properties:
+        color:
+          type: string
+        label:
+          type: string
+        value:
+          type: integer
+          format: int32
+    SensorTypeEnumData:
+      type: object
+      properties:
+        key:
+          type: string
+        mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
     NoteMeasurements:
       type: object
       required:
@@ -1756,23 +1645,73 @@ components:
           items:
             type: string
       description: represents measurements added to a note
-    SensorsData:
+    CheckCollection:
       type: object
       properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
+    ChunkedOutput:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        closed:
+          type: boolean
+    SensorsDataAggregation:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation to apply to the retrieved values.
         sensorFields:
           type: array
           items:
-            $ref: '#/components/schemas/SensorFieldInfo'
-        sensorType:
-          $ref: '#/components/schemas/SensorType'
-        sensors:
+            $ref: '#/components/schemas/SensorField'
+        sensorIds:
           type: array
+          description: Ids of the sensors to get data for. They must be of the same type.
           items:
-            $ref: '#/components/schemas/Sensor'
-        values:
+            type: string
+    DataSourceCoordinates:
+      type: object
+      required:
+      - dataSourceId
+      - sinceDate
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        geoJson:
           type: object
+          description: GeoJson definition.
           additionalProperties:
             type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
     ImportCheckEvent:
       type: object
       required:
@@ -1805,86 +1744,86 @@ components:
         updateData:
           type: boolean
           description: Whether to update an existing event at the given timestamp for the given checkId or to create a new one. Default is false, so if not set, a new event will be created. Multiple events for the same checkId at the same timestamp are aggregated when they are retrieved.
-    SensorField:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
-    EventHook:
+    Notification:
       type: object
       required:
-      - method
-      - url
+      - notificationId
       properties:
-        headers:
-          type: object
-          description: Headers of the HTTP request
-          additionalProperties:
-            type: object
-        method:
+        action:
           type: string
-          description: Method of the HTTP request
-        payload:
-          type: object
-          description: Payload of the HTTP request
-          additionalProperties:
-            type: object
-        url:
-          type: string
-          description: Url of the HTTP request
-    AgentMessageNew:
-      type: object
-      properties:
-        agentId:
-          type: string
-          description: The unique identifier of the AI agent.
-        content:
-          type: string
-          description: Content of the message
-        isSystemGenerated:
-          type: boolean
-          description: Indicates whether it was automatically created by the system or sent by the user.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        requiredToolCall:
-          description: A tool call that the agent must perform for the task.
-          $ref: '#/components/schemas/AgentToolCall'
-        role:
-          type: string
-          description: Role of the message sender (e.g. assistant or user)
-        conversationId:
-          type: string
-          description: The unique identifier of the AI agent conversation.
-      description: Object holding the required properties to create a new AgentMessage.
-    SensorFieldInfo:
-      type: object
-      properties:
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
         checkId:
           type: string
-          description: The id of the check this field belongs to.
-        id:
+          description: Identifier of the check.
+        condition:
           type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
+          description: Conditional that defines the trigger of this notification
+        description:
           type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
-        symbol:
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+        check:
+          description: Summary of the check that is linked to this notification
+          $ref: '#/components/schemas/CheckSummary'
+        createdBy:
           type: string
-    SharedByUserDetails:
-      type: object
-      properties:
-        firstName:
+          description: Identifier of the user that created this notification
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the notification was created
+        matched:
+          type: boolean
+          description: Matched attribute
+        matchedFor:
+          type: integer
+          format: int32
+          description: Matched for attribute
+        matchedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last matched notification was sent
+        notificationId:
           type: string
-        lastName:
+          description: Identifier of this notification object.
+        nrMatched:
+          type: integer
+          format: int32
+          description: Number of matches attribute
+        organizationId:
           type: string
+          description: Identifier of the organization for which this notification is created
+        resolvedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last resolved notification was sent
+        structuredConditional:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          items:
+            $ref: '#/components/schemas/StructuredConditional'
+        widgetIds:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          uniqueItems: true
+          items:
+            type: string
+      description: Holds the editable properties of a Notification
     StructuredConditional:
       type: object
       properties:
@@ -1914,41 +1853,54 @@ components:
         value:
           type: string
           description: Value of the key given the operator
-    CheckCollection:
+    Calculation:
       type: object
       properties:
-        collectionId:
+        calculationId:
           type: string
-          description: Id of the collection
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
         name:
           type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
-    SharedWithUserDetails:
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+      description: Calculations allow querying data through operations and aggregations.
+    SensorsDataRequest:
+      type: object
+      required:
+      - time
+      properties:
+        aggregations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorsDataAggregation'
+        time:
+          $ref: '#/components/schemas/Time'
+    SensorFieldInfo:
       type: object
       properties:
-        firstName:
+        checkId:
           type: string
-        lastName:
+          description: The id of the check this field belongs to.
+        id:
           type: string
-    DataSourceCoordinatesEditable:
-      type: object
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
+          description: Which field of the sensor to retrieve data for.
+        unit:
           type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-      description: Object containing the editable properties of DataSourceCoordinates.
+          description: The unit in which to retrieved the values. Defaults to system unit.
+        symbol:
+          type: string
     CheckSummary:
       type: object
       properties:
@@ -2001,6 +1953,54 @@ components:
           items:
             type: string
       description: Summary of a check
+    ImportCheckEventsResponse:
+      type: object
+      required:
+      - failedEvents
+      properties:
+        failedEvents:
+          type: array
+          description: List of failed ingests in the batch.
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImportCheckEventFailure'
+        failedEventsNo:
+          type: integer
+          format: int32
+          description: Number of failed ingests in the batch.
+        ingestedDocId:
+          type: string
+          description: Id of the created manual input event if any. It is always one single id since multiple events creation is not supported.
+        okEventsNo:
+          type: integer
+          format: int32
+          description: Number of successful ingests in the batch.
+    NotificationTemplate:
+      type: object
+      properties:
+        condition:
+          type: string
+        frontend:
+          type: string
+        name:
+          type: string
+    SensorsData:
+      type: object
+      properties:
+        sensorFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorFieldInfo'
+        sensorType:
+          $ref: '#/components/schemas/SensorType'
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor'
+        values:
+          type: object
+          additionalProperties:
+            type: object
   securitySchemes:
     Bearer:
       description: ''

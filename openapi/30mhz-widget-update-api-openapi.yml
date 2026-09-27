@@ -41,135 +41,6 @@ paths:
               $ref: '#/components/schemas/WidgetUpdate'
 components:
   schemas:
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    WidgetUpdate:
-      type: object
-      properties:
-        cultivationTargetId:
-          type: string
-        dataSourcePerCultivation:
-          type: object
-          description: Map of data sources selected per cultivation
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        derivative:
-          type: boolean
-          description: Whether the data of this widget represents the rate of change.
-        app:
-          type: string
-        chartConfiguration:
-          $ref: '#/components/schemas/ChartConfiguration'
-        chartVerticalAxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChartAxis'
-        collectionIdsPerField:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        cumulative:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Data'
-        fields:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        interval:
-          type: string
-        intervalFrom:
-          type: string
-        intervalSize:
-          type: string
-        intervalTo:
-          type: string
-        metricUnits:
-          type: object
-          additionalProperties:
-            type: string
-        partOfDay:
-          type: string
-        scope:
-          $ref: '#/components/schemas/Scope'
-        showSunEvents:
-          type: boolean
-        statisticType:
-          type: string
-        subtitle:
-          type: string
-        title:
-          type: string
-      description: Updating widget properties
-    Scope:
-      type: object
-      properties:
-        aggregated:
-          type: boolean
-        checkIds:
-          type: array
-          items:
-            type: string
-        notificationIds:
-          type: array
-          items:
-            type: string
-        sensorType:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        tagsOperator:
-          type: string
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
-    AttachedDocument:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
     CalculationSettings:
       type: object
       required:
@@ -184,58 +55,15 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
-    ChartAxis:
+    ImageDimensions:
       type: object
       properties:
-        axisPosition:
-          type: string
-          description: The position of the axis (e.g. left side)
-          enum:
-          - LEFT
-          - RIGHT
-          - HIDDEN
-        maxRange:
-          type: number
-          format: double
-          description: Maximum value of the range
-        minRange:
-          type: number
-          format: double
-          description: Minimum value of the range
-        name:
-          type: string
-          description: Name of the axis
-    Data:
-      type: object
-      properties:
-        content:
-          type: string
-        position:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
-        config:
-          type: object
-          additionalProperties:
-            type: object
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     Widget:
       type: object
       properties:
@@ -333,6 +161,43 @@ components:
         imageDimensions:
           $ref: '#/components/schemas/ImageDimensions'
       description: A dashboard widget
+    Comment:
+      type: object
+      properties:
+        activityType:
+          type: string
+        appInstallationId:
+          type: string
+        email:
+          type: string
+        groupId:
+          type: string
+        lastUpdatedTimestamp:
+          type: string
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
+          type: array
+          description: Replies of a comment
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
+        text:
+          type: string
+          description: Comment text
     CommentAttachments:
       type: object
       properties:
@@ -346,6 +211,53 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/ImageWithThumbnails'
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ChartAxis:
+      type: object
+      properties:
+        axisPosition:
+          type: string
+          description: The position of the axis (e.g. left side)
+          enum:
+          - LEFT
+          - RIGHT
+          - HIDDEN
+        maxRange:
+          type: number
+          format: double
+          description: Maximum value of the range
+        minRange:
+          type: number
+          format: double
+          description: Minimum value of the range
+        name:
+          type: string
+          description: Name of the axis
     CommentTags:
       type: object
       properties:
@@ -385,70 +297,91 @@ components:
         selectedField:
           type: string
           description: Selected field id for this comment
-    Comment:
+    Scope:
       type: object
       properties:
-        activityType:
-          type: string
-        appInstallationId:
-          type: string
-        email:
-          type: string
-        groupId:
-          type: string
-        lastUpdatedTimestamp:
-          type: string
-        organizationId:
-          type: string
-        timestamp:
-          type: string
-        attachments:
-          description: Comment Attachments
-          $ref: '#/components/schemas/CommentAttachments'
-        commentId:
-          type: string
-          description: Unique id of the comment.
-        parentCommentId:
-          type: string
-          description: Parent comment id if reply
-        replies:
+        aggregated:
+          type: boolean
+        checkIds:
           type: array
-          description: Replies of a comment
           items:
-            $ref: '#/components/schemas/Comment'
-        tags:
-          description: Tags of a comment
-          $ref: '#/components/schemas/CommentTags'
-        text:
+            type: string
+        notificationIds:
+          type: array
+          items:
+            type: string
+        sensorType:
           type: string
-          description: Comment text
-    ChartConfiguration:
+        tags:
+          type: array
+          items:
+            type: string
+        tagsOperator:
+          type: string
+    WidgetUpdate:
       type: object
       properties:
-        chartType:
+        cultivationTargetId:
           type: string
-          description: Type of chart visualisation (line or bar).
-          enum:
-          - LINE
-          - BAR
-        colorPerSensorField:
+        dataSourcePerCultivation:
           type: object
-          description: Color per data series of this widget
+          description: Map of data sources selected per cultivation
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        derivative:
+          type: boolean
+          description: Whether the data of this widget represents the rate of change.
+        app:
+          type: string
+        chartConfiguration:
+          $ref: '#/components/schemas/ChartConfiguration'
+        chartVerticalAxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartAxis'
+        collectionIdsPerField:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        cumulative:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Data'
+        fields:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        interval:
+          type: string
+        intervalFrom:
+          type: string
+        intervalSize:
+          type: string
+        intervalTo:
+          type: string
+        metricUnits:
+          type: object
           additionalProperties:
             type: string
-        colorScheme:
+        partOfDay:
           type: string
-          description: Color scheme of the chart.
-          enum:
-          - PER_METRIC
-          - CUSTOM
-          - DISTINCT
-        isStacked:
+        scope:
+          $ref: '#/components/schemas/Scope'
+        showSunEvents:
           type: boolean
-          description: Whether the chart's graph elements (lines or bars) are shown one on top of the other.
-        showWeekNumbers:
-          type: boolean
-          description: Whether to show week numbers in the chart
+        statisticType:
+          type: string
+        subtitle:
+          type: string
+        title:
+          type: string
+      description: Updating widget properties
     CheckSummary:
       type: object
       properties:
@@ -501,6 +434,73 @@ components:
           items:
             type: string
       description: Summary of a check
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+    Data:
+      type: object
+      properties:
+        content:
+          type: string
+        position:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        config:
+          type: object
+          additionalProperties:
+            type: object
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+    ChartConfiguration:
+      type: object
+      properties:
+        chartType:
+          type: string
+          description: Type of chart visualisation (line or bar).
+          enum:
+          - LINE
+          - BAR
+        colorPerSensorField:
+          type: object
+          description: Color per data series of this widget
+          additionalProperties:
+            type: string
+        colorScheme:
+          type: string
+          description: Color scheme of the chart.
+          enum:
+          - PER_METRIC
+          - CUSTOM
+          - DISTINCT
+        isStacked:
+          type: boolean
+          description: Whether the chart's graph elements (lines or bars) are shown one on top of the other.
+        showWeekNumbers:
+          type: boolean
+          description: Whether to show week numbers in the chart
   securitySchemes:
     Bearer:
       description: ''

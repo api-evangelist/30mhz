@@ -92,12 +92,6 @@ paths:
           description: Partner not found.
 components:
   schemas:
-    PartnerEditable:
-      type: object
-      properties:
-        partnerName:
-          type: string
-          description: Partner name.
     NewPartner:
       type: object
       properties:
@@ -128,6 +122,12 @@ components:
         createdBy:
           type: string
           description: User that created the partner.
+    PartnerEditable:
+      type: object
+      properties:
+        partnerName:
+          type: string
+          description: Partner name.
   securitySchemes:
     Bearer:
       description: ''

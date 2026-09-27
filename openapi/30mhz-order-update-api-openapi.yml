@@ -116,49 +116,6 @@ components:
           type: string
           description: The date and time a quote item was last updated.
       description: CustomerRequestItem
-    Order:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: The state of the order
-        createdAt:
-          type: string
-          description: Order's created at date.
-        customerRequest:
-          $ref: '#/components/schemas/CustomerRequest'
-        customerRequestId:
-          type: string
-          description: Customer request id.
-        date:
-          type: string
-          description: Order's date.
-        dateDone:
-          type: string
-          description: The date when the order's status became Done.
-        dateInProgress:
-          type: string
-          description: The date when the order's status became In Progress.
-        deliveredDate:
-          type: string
-          description: Order's delivered date.
-        dueDate:
-          type: string
-          description: Order's due date.
-        orderId:
-          type: string
-          description: Order id.
-        orderNumber:
-          type: integer
-          format: int32
-          description: Order number.
-        priority:
-          type: string
-          description: Order's priority
-        status:
-          type: string
-          description: Order's status.
-      description: Order
     CustomerRequest:
       type: object
       required:
@@ -274,6 +231,49 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
+    Order:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: The state of the order
+        createdAt:
+          type: string
+          description: Order's created at date.
+        customerRequest:
+          $ref: '#/components/schemas/CustomerRequest'
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        date:
+          type: string
+          description: Order's date.
+        dateDone:
+          type: string
+          description: The date when the order's status became Done.
+        dateInProgress:
+          type: string
+          description: The date when the order's status became In Progress.
+        deliveredDate:
+          type: string
+          description: Order's delivered date.
+        dueDate:
+          type: string
+          description: Order's due date.
+        orderId:
+          type: string
+          description: Order id.
+        orderNumber:
+          type: integer
+          format: int32
+          description: Order number.
+        priority:
+          type: string
+          description: Order's priority
+        status:
+          type: string
+          description: Order's status.
+      description: Order
   securitySchemes:
     Bearer:
       description: ''

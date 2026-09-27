@@ -246,18 +246,6 @@ paths:
           description: Error while retrieving subscriptions.
 components:
   schemas:
-    SubscriptionEditable:
-      type: object
-      properties:
-        actions:
-          type: array
-          description: The actions permitted by the license subscription.
-          items:
-            type: string
-        name:
-          type: string
-          description: Displayable name.
-      description: Object holding the editable properties of a subscription
     SubscriptionNew:
       type: object
       required:
@@ -279,6 +267,18 @@ components:
         subscriptionId:
           type: string
           description: Unique identifier for the subscription.
+      description: Object holding the editable properties of a subscription
+    SubscriptionEditable:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
       description: Object holding the editable properties of a subscription
     Subscription:
       type: object
