@@ -137,20 +137,15 @@ paths:
               - properties
 components:
   schemas:
-    RequiredSensor:
+    ImageDimensions:
       type: object
-      required:
-      - sensorTypeId
       properties:
-        configurationKeypathToCheckId:
-          type: string
-          description: Optional keypath in dynamic configurations where check id is stored
-        name:
-          type: string
-          description: Name of the sensor
-        sensorTypeId:
-          type: string
-          description: Id of the sensor type of the required sensor
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     DataUpload:
       type: object
       properties:
@@ -184,68 +179,20 @@ components:
         presignedUrl:
           type: string
       description: DataUpload
-    AppEditable:
+    RequiredSensor:
       type: object
+      required:
+      - sensorTypeId
       properties:
-        dashboards:
-          type: array
-          description: App's dashboards.
-          items:
-            type: object
-            additionalProperties:
-              type: object
-        defaultDynamicConfigurations:
-          type: object
-          description: The default dynamic configuration of the installable
-          additionalProperties:
-            type: object
-        description:
+        configurationKeypathToCheckId:
           type: string
-          description: Description of the installable.
-        logoDataId:
-          type: string
-          description: Id of the logo image data.
-        maxInstallationsPerOrg:
-          type: integer
-          format: int32
-          description: Maximum number of installations allowed for any given organization
+          description: Optional keypath in dynamic configurations where check id is stored
         name:
           type: string
-          description: Name of the installable
-        ownerName:
+          description: Name of the sensor
+        sensorTypeId:
           type: string
-          description: Installable's owner name.
-        packageDataId:
-          type: string
-          description: Id of the code package data.
-        primaryColor:
-          type: string
-          description: App's primary color.
-        requiredManualInputForms:
-          type: array
-          description: List of manual input forms required by the extension.
-          items:
-            $ref: '#/components/schemas/RequiredSensor'
-        sections:
-          type: object
-          description: App's sections, with sections id as keys and definitions as values.
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: object
-        settings:
-          type: object
-          description: Custom settings common to all extension's installations
-          additionalProperties:
-            type: object
-        supportUrl:
-          type: string
-          description: Extension's support web page URL.
-        widgets:
-          type: array
-          description: Widgets that belong to the installable.
-          items:
-            type: object
+          description: Id of the sensor type of the required sensor
     App:
       type: object
       required:
@@ -340,15 +287,68 @@ components:
         type:
           type: string
           description: Type of the application.
-    ImageDimensions:
+    AppEditable:
       type: object
       properties:
-        height:
+        dashboards:
+          type: array
+          description: App's dashboards.
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        defaultDynamicConfigurations:
+          type: object
+          description: The default dynamic configuration of the installable
+          additionalProperties:
+            type: object
+        description:
+          type: string
+          description: Description of the installable.
+        logoDataId:
+          type: string
+          description: Id of the logo image data.
+        maxInstallationsPerOrg:
           type: integer
           format: int32
-        width:
-          type: integer
-          format: int32
+          description: Maximum number of installations allowed for any given organization
+        name:
+          type: string
+          description: Name of the installable
+        ownerName:
+          type: string
+          description: Installable's owner name.
+        packageDataId:
+          type: string
+          description: Id of the code package data.
+        primaryColor:
+          type: string
+          description: App's primary color.
+        requiredManualInputForms:
+          type: array
+          description: List of manual input forms required by the extension.
+          items:
+            $ref: '#/components/schemas/RequiredSensor'
+        sections:
+          type: object
+          description: App's sections, with sections id as keys and definitions as values.
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+        settings:
+          type: object
+          description: Custom settings common to all extension's installations
+          additionalProperties:
+            type: object
+        supportUrl:
+          type: string
+          description: Extension's support web page URL.
+        widgets:
+          type: array
+          description: Widgets that belong to the installable.
+          items:
+            type: object
     ImageThumbnail:
       type: object
       properties:

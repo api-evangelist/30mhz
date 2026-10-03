@@ -146,6 +146,15 @@ paths:
           description: User not allowed to perform the operation
 components:
   schemas:
+    NewNotificationTopic:
+      type: object
+      properties:
+        conditionDescription:
+          type: string
+        description:
+          type: string
+        notificationTopicId:
+          type: string
     NotificationTopic:
       type: object
       properties:
@@ -156,15 +165,6 @@ components:
         notificationTopicId:
           type: string
       description: Notification topic
-    NewNotificationTopic:
-      type: object
-      properties:
-        conditionDescription:
-          type: string
-        description:
-          type: string
-        notificationTopicId:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

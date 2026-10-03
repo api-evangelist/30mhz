@@ -255,6 +255,13 @@ components:
           uniqueItems: true
           items:
             type: string
+    SharedByUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
     DashboardSummary:
       type: object
       properties:
@@ -265,13 +272,6 @@ components:
         organizationId:
           type: string
       description: Summary of a dashboard
-    SharedByUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     SharedWithUserDetails:
       type: object
       properties:

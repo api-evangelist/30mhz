@@ -97,6 +97,46 @@ components:
           type: string
           description: Unique identifier of the zone
       description: Object containing the editable properties of a Zone used for bulk edit.
+    DataSourceCoordinatesEditable:
+      type: object
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+      description: Object containing the editable properties of DataSourceCoordinates.
+    MapEditable:
+      type: object
+      required:
+      - dataSourceUpdates
+      - organizationId
+      - siteId
+      - zoneUpdates
+      properties:
+        dataSourceUpdates:
+          type: array
+          description: List of data source updates
+          items:
+            $ref: '#/components/schemas/DataSourceBulkEdit'
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        zoneUpdates:
+          type: array
+          description: List of zone updates
+          items:
+            $ref: '#/components/schemas/ZoneBulkEdit'
+      description: Object containing the editable properties of the map of a site within an organization.
     DataSourceBulkEdit:
       type: object
       required:
@@ -154,46 +194,6 @@ components:
           type: string
           description: Identifier of the zone within a site where the data source belongs.
       description: Object containing the editable properties of a Data Source used for bulk edit.
-    DataSourceCoordinatesEditable:
-      type: object
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-      description: Object containing the editable properties of DataSourceCoordinates.
-    MapEditable:
-      type: object
-      required:
-      - dataSourceUpdates
-      - organizationId
-      - siteId
-      - zoneUpdates
-      properties:
-        dataSourceUpdates:
-          type: array
-          description: List of data source updates
-          items:
-            $ref: '#/components/schemas/DataSourceBulkEdit'
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        zoneUpdates:
-          type: array
-          description: List of zone updates
-          items:
-            $ref: '#/components/schemas/ZoneBulkEdit'
-      description: Object containing the editable properties of the map of a site within an organization.
   securitySchemes:
     Bearer:
       description: ''

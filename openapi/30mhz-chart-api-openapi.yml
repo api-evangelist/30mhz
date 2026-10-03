@@ -74,246 +74,26 @@ paths:
               $ref: '#/components/schemas/CultivationTargetSeriesRequest'
 components:
   schemas:
-    CultivationTargetSeriesSetpoint:
+    Time:
       type: object
       required:
-      - timestamp
+      - end
+      - start
       properties:
-        maxValue:
-          type: number
-          format: double
-          description: Upper limit for the target bandwidth.
-        minValue:
-          type: number
-          format: double
-          description: Lower limit for the target bandwidth.
-        targetValue:
-          type: number
-          format: double
-          description: Target value.
-        timestamp:
-          type: integer
-          format: int64
-          description: Epoch timestamp in milliseconds, required
-      description: Represents a computed datapoint in a cultivation target line series, where timestamp is expressed in epoch milliseconds
-    CultivationZonesHistoryItemDetails:
-      type: object
-      properties:
-        dateStart:
+        end:
           type: string
-          description: Date when the cultivation starts covering a group of zones in UTC as ISO 8601 format e.g. 2025-07-30T00:00:00Z
-        zoneUuids:
-          type: array
-          description: Unique identifiers of the zones covered by the cultivation
-          items:
-            type: string
-        zones:
-          type: array
-          description: List of zones covered by the cultivation
-          items:
-            $ref: '#/components/schemas/Zone'
-      description: The details of the zones a cultivation covers since a given date
-    CultivationZonesHistoryItem:
-      type: object
-      properties:
-        dateStart:
+          format: date-time
+          description: Time range exclusive end in ISO 8601 format without timezone, e.g., '2023-03-06T00:00:00'.
+        resolution:
           type: string
-          description: Date when the cultivation starts covering a group of zones in UTC as ISO 8601 format e.g. 2025-07-30T00:00:00Z
-        zoneUuids:
-          type: array
-          description: Unique identifiers of the zones covered by the cultivation
-          items:
-            type: string
-      description: The zones a cultivation covers since a given date
-    Chart:
-      type: object
-      required:
-      - axes
-      - series
-      properties:
-        axes:
-          $ref: '#/components/schemas/Axes'
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/Series'
-    ScatterplotRequest:
-      type: object
-      required:
-      - time
-      - x
-      - y
-      properties:
-        time:
-          $ref: '#/components/schemas/Time'
-        x:
-          $ref: '#/components/schemas/Sources'
-        y:
-          $ref: '#/components/schemas/Sources'
-    Axes:
-      type: object
-      required:
-      - x
-      - y
-      properties:
-        x:
-          $ref: '#/components/schemas/Axis'
-        y:
-          $ref: '#/components/schemas/Axis'
-    Sources:
-      type: object
-      required:
-      - aggregation
-      properties:
-        aggregation:
-          $ref: '#/components/schemas/Aggregation'
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source'
-    CultivationTargetSeriesRequest:
-      type: object
-      required:
-      - target
-      - time
-      properties:
-        aggregation:
-          description: Describes the aggregation for a data request. If not set, the aggregation defaults to average.
-          $ref: '#/components/schemas/Aggregation'
-        target:
-          $ref: '#/components/schemas/CultivationTarget'
-        time:
-          $ref: '#/components/schemas/Time'
-      description: Request to retrieve cultivation target series.
-    CultivationPhase:
-      type: object
-      required:
-      - startDay
-      properties:
-        color:
+          description: Interval size of the requested data points. Allowed values are [m, 5m, h, d, w, M]. Defaults to d.
+        start:
           type: string
-          description: Display color of the phase as a hex string, e.g. '#FAEEDA'.
-          readOnly: true
-        name:
+          format: date-time
+          description: Time range start in ISO 8601 format without timezone, e.g., '2023-03-06T00:00:00'.
+        timezone:
           type: string
-          description: Name of the cultivation phase, from its organization-wide definition. Sent along a uuid it renames that definition, so the phase is renamed on every cultivation using it; sent without one it defines the phase.
-        startDay:
-          type: integer
-          format: int32
-          description: 'Day the phase starts on, counted in whole days from the cultivation start, e.g. 0 for the first day of the cultivation. Phases are contiguous: a phase runs until the start of the next one, or until the end of the cultivation for the last phase.'
-        uuid:
-          type: string
-          description: Identifier of the organization-wide phase definition this phase refers to. Leave it empty to add a phase the organization does not define yet, and its name is used to define it.
-      description: Contains information on a phase within the cultivation timeline.
-    Aggregation:
-      type: object
-      properties:
-        conversionUnit:
-          type: string
-        cumulative:
-          type: boolean
-        type:
-          type: string
-      description: Describes the aggregation for a data request.
-    PlantGroup:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the plant group.
-        name:
-          type: string
-          description: Name of the plant group.
-        plants:
-          type: array
-          description: Plants within this plant group.
-          items:
-            $ref: '#/components/schemas/Plant'
-      description: Contains information on a plant group within the cultivation hierarchy.
-    CultivationTargetSeriesResponse:
-      type: object
-      required:
-      - cultivation
-      - cultivationTarget
-      - setpoints
-      - time
-      properties:
-        cultivation:
-          $ref: '#/components/schemas/Cultivation'
-        cultivationTarget:
-          $ref: '#/components/schemas/CultivationTarget'
-        setpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/CultivationTargetSeriesSetpoint'
-        time:
-          $ref: '#/components/schemas/Time'
-    Axis:
-      type: object
-      properties:
-        max:
-          type: number
-          format: float
-        metric:
-          type: string
-        min:
-          type: number
-          format: float
-        unit:
-          type: string
-    Plant:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the plant.
-        name:
-          type: string
-          description: Name of the plant
-      description: Information on a plant within the cultivation - plant group hierarchy.
-    Crop:
-      type: object
-      required:
-      - category
-      - cropId
-      - maxAllowableDepletion
-      properties:
-        category:
-          type: string
-          description: Category of the crop.
-        maxAllowableDepletion:
-          type: number
-          format: double
-          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
-          minimum: 0
-          maximum: 100
-        name:
-          type: string
-          description: Name of the crop.
-        createdAt:
-          type: integer
-          format: int64
-          description: The date and time the crop was created.
-        cropId:
-          type: string
-          description: Id of the crop.
-        organizationId:
-          type: string
-          description: The organization the crop belongs to.
-    Series:
-      type: object
-      required:
-      - timestamp
-      properties:
-        timestamp:
-          type: integer
-          format: int64
-        x:
-          type: number
-          format: float
-        y:
-          type: number
-          format: float
+          description: Timezone of the provided time range. Defaults to sensors timezone.
     Soil:
       type: object
       required:
@@ -355,6 +135,171 @@ components:
           format: double
           description: Total available water of the soil.
           readOnly: true
+    Chart:
+      type: object
+      required:
+      - axes
+      - series
+      properties:
+        axes:
+          $ref: '#/components/schemas/Axes'
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/Series'
+    CultivationTarget:
+      type: object
+      required:
+      - createdAt
+      - cultivationId
+      - cultivationTargetId
+      - organizationId
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+        createdAt:
+          type: string
+          description: Timestamp of when it was created. Identifies the target within the  cultivation.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        cultivationTargetId:
+          type: string
+          description: Universally unique identifier of a cultivation target.
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+      description: Represent a metric target for a cultivation.
+    Sources:
+      type: object
+      required:
+      - aggregation
+      properties:
+        aggregation:
+          $ref: '#/components/schemas/Aggregation'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+    CultivationZonesHistoryItemDetails:
+      type: object
+      properties:
+        dateStart:
+          type: string
+          description: Date when the cultivation starts covering a group of zones in UTC as ISO 8601 format e.g. 2025-07-30T00:00:00Z
+        zoneUuids:
+          type: array
+          description: Unique identifiers of the zones covered by the cultivation
+          items:
+            type: string
+        zones:
+          type: array
+          description: List of zones covered by the cultivation
+          items:
+            $ref: '#/components/schemas/Zone'
+      description: The details of the zones a cultivation covers since a given date
+    CultivationTargetSeriesSetpoint:
+      type: object
+      required:
+      - timestamp
+      properties:
+        maxValue:
+          type: number
+          format: double
+          description: Upper limit for the target bandwidth.
+        minValue:
+          type: number
+          format: double
+          description: Lower limit for the target bandwidth.
+        targetValue:
+          type: number
+          format: double
+          description: Target value.
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch timestamp in milliseconds, required
+      description: Represents a computed datapoint in a cultivation target line series, where timestamp is expressed in epoch milliseconds
+    CultivationPhase:
+      type: object
+      required:
+      - startDay
+      properties:
+        color:
+          type: string
+          description: Display color of the phase as a hex string, e.g. '#FAEEDA'.
+          readOnly: true
+        name:
+          type: string
+          description: Name of the cultivation phase, from its organization-wide definition. Sent along a uuid it renames that definition, so the phase is renamed on every cultivation using it; sent without one it defines the phase.
+        startDay:
+          type: integer
+          format: int32
+          description: 'Day the phase starts on, counted in whole days from the cultivation start, e.g. 0 for the first day of the cultivation. Phases are contiguous: a phase runs until the start of the next one, or until the end of the cultivation for the last phase.'
+        uuid:
+          type: string
+          description: Identifier of the organization-wide phase definition this phase refers to. Leave it empty to add a phase the organization does not define yet, and its name is used to define it.
+      description: Contains information on a phase within the cultivation timeline.
+    Series:
+      type: object
+      required:
+      - timestamp
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+    CultivationTargetSetpoint:
+      type: object
+      required:
+      - timestamp
+      properties:
+        maxValue:
+          type: number
+          format: double
+          description: Upper limit for the target bandwidth.
+        minValue:
+          type: number
+          format: double
+          description: Lower limit for the target bandwidth.
+        targetValue:
+          type: number
+          format: double
+          description: Target value.
+        timestamp:
+          type: integer
+          format: int64
+          description: Relative seconds since cultivation start date.
+    Aggregation:
+      type: object
+      properties:
+        conversionUnit:
+          type: string
+        cumulative:
+          type: boolean
+        type:
+          type: string
+      description: Describes the aggregation for a data request.
     Zone:
       type: object
       required:
@@ -403,27 +348,6 @@ components:
           type: string
           description: Universally unique identifier.
       description: A Zone is a physical subsection in a site.
-    CultivationTargetSetpoint:
-      type: object
-      required:
-      - timestamp
-      properties:
-        maxValue:
-          type: number
-          format: double
-          description: Upper limit for the target bandwidth.
-        minValue:
-          type: number
-          format: double
-          description: Lower limit for the target bandwidth.
-        targetValue:
-          type: number
-          format: double
-          description: Target value.
-        timestamp:
-          type: integer
-          format: int64
-          description: Relative seconds since cultivation start date.
     Source:
       type: object
       required:
@@ -433,44 +357,18 @@ components:
           type: string
         sensorField:
           type: string
-    CultivationTarget:
+    CultivationZonesHistoryItem:
       type: object
-      required:
-      - createdAt
-      - cultivationId
-      - cultivationTargetId
-      - organizationId
       properties:
-        hasNightTarget:
-          type: boolean
-          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
-        metricId:
+        dateStart:
           type: string
-          description: Identifier of the metric
-        name:
-          type: string
-          description: Displayable name.
-        setpoints:
+          description: Date when the cultivation starts covering a group of zones in UTC as ISO 8601 format e.g. 2025-07-30T00:00:00Z
+        zoneUuids:
           type: array
-          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          description: Unique identifiers of the zones covered by the cultivation
           items:
-            $ref: '#/components/schemas/CultivationTargetSetpoint'
-        createdAt:
-          type: string
-          description: Timestamp of when it was created. Identifies the target within the  cultivation.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        cultivationTargetId:
-          type: string
-          description: Universally unique identifier of a cultivation target.
-        organizationId:
-          type: string
-          description: The unique identifier of the organization it belongs to.
-      description: Represent a metric target for a cultivation.
+            type: string
+      description: The zones a cultivation covers since a given date
     Cultivation:
       type: object
       required:
@@ -580,26 +478,128 @@ components:
           items:
             $ref: '#/components/schemas/Zone'
       description: Cultivation information for a predefined period of time along with metric targets.
-    Time:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the plant.
+        name:
+          type: string
+          description: Name of the plant
+      description: Information on a plant within the cultivation - plant group hierarchy.
+    Crop:
       type: object
       required:
-      - end
-      - start
+      - category
+      - cropId
+      - maxAllowableDepletion
       properties:
-        end:
+        category:
           type: string
-          format: date-time
-          description: Time range exclusive end in ISO 8601 format without timezone, e.g., '2023-03-06T00:00:00'.
-        resolution:
+          description: Category of the crop.
+        maxAllowableDepletion:
+          type: number
+          format: double
+          description: Suggested theoretical Maximum Allowable Depletion (MAD) of the crop.
+          minimum: 0
+          maximum: 100
+        name:
           type: string
-          description: Interval size of the requested data points. Allowed values are [m, 5m, h, d, w, M]. Defaults to d.
-        start:
+          description: Name of the crop.
+        createdAt:
+          type: integer
+          format: int64
+          description: The date and time the crop was created.
+        cropId:
           type: string
-          format: date-time
-          description: Time range start in ISO 8601 format without timezone, e.g., '2023-03-06T00:00:00'.
-        timezone:
+          description: Id of the crop.
+        organizationId:
           type: string
-          description: Timezone of the provided time range. Defaults to sensors timezone.
+          description: The organization the crop belongs to.
+    Axis:
+      type: object
+      properties:
+        max:
+          type: number
+          format: float
+        metric:
+          type: string
+        min:
+          type: number
+          format: float
+        unit:
+          type: string
+    CultivationTargetSeriesResponse:
+      type: object
+      required:
+      - cultivation
+      - cultivationTarget
+      - setpoints
+      - time
+      properties:
+        cultivation:
+          $ref: '#/components/schemas/Cultivation'
+        cultivationTarget:
+          $ref: '#/components/schemas/CultivationTarget'
+        setpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/CultivationTargetSeriesSetpoint'
+        time:
+          $ref: '#/components/schemas/Time'
+    PlantGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the plant group.
+        name:
+          type: string
+          description: Name of the plant group.
+        plants:
+          type: array
+          description: Plants within this plant group.
+          items:
+            $ref: '#/components/schemas/Plant'
+      description: Contains information on a plant group within the cultivation hierarchy.
+    ScatterplotRequest:
+      type: object
+      required:
+      - time
+      - x
+      - y
+      properties:
+        time:
+          $ref: '#/components/schemas/Time'
+        x:
+          $ref: '#/components/schemas/Sources'
+        y:
+          $ref: '#/components/schemas/Sources'
+    Axes:
+      type: object
+      required:
+      - x
+      - y
+      properties:
+        x:
+          $ref: '#/components/schemas/Axis'
+        y:
+          $ref: '#/components/schemas/Axis'
+    CultivationTargetSeriesRequest:
+      type: object
+      required:
+      - target
+      - time
+      properties:
+        aggregation:
+          description: Describes the aggregation for a data request. If not set, the aggregation defaults to average.
+          $ref: '#/components/schemas/Aggregation'
+        target:
+          $ref: '#/components/schemas/CultivationTarget'
+        time:
+          $ref: '#/components/schemas/Time'
+      description: Request to retrieve cultivation target series.
   securitySchemes:
     Bearer:
       description: ''

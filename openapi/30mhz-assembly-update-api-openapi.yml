@@ -47,25 +47,6 @@ paths:
               $ref: '#/components/schemas/AssemblyEditable'
 components:
   schemas:
-    AssemblyEditable:
-      type: object
-      properties:
-        battery1:
-          type: string
-        battery2:
-          type: string
-        pcb1:
-          type: string
-        pcb2:
-          type: string
-        productNumber:
-          type: string
-        remarks:
-          type: string
-        xbee1:
-          type: string
-        xbee2:
-          type: string
     Assembly:
       type: object
       properties:
@@ -95,6 +76,25 @@ components:
         endDate:
           type: string
         startDate:
+          type: string
+    AssemblyEditable:
+      type: object
+      properties:
+        battery1:
+          type: string
+        battery2:
+          type: string
+        pcb1:
+          type: string
+        pcb2:
+          type: string
+        productNumber:
+          type: string
+        remarks:
+          type: string
+        xbee1:
+          type: string
+        xbee2:
           type: string
   securitySchemes:
     Bearer:

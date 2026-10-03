@@ -141,15 +141,6 @@ components:
           type: string
           description: The date and time a mother template was last updated.
       description: MotherTemplate
-    NewMotherTemplate:
-      type: object
-      properties:
-        configurationJson:
-          type: string
-        description:
-          type: string
-        name:
-          type: string
     Mother:
       type: object
       properties:
@@ -216,6 +207,15 @@ components:
           type: string
           description: The address of the xbee.
       description: Mother
+    NewMotherTemplate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

@@ -213,15 +213,6 @@ paths:
               $ref: '#/components/schemas/UserConfigEditable'
 components:
   schemas:
-    UserConfigEditable:
-      type: object
-      properties:
-        configKey:
-          type: string
-          description: The key of the user config key-value pair
-        configValue:
-          type: string
-          description: The value of the user config key-value pair
     UserConfig:
       type: object
       required:
@@ -240,6 +231,15 @@ components:
         email:
           type: string
           description: Email address of the user
+    UserConfigEditable:
+      type: object
+      properties:
+        configKey:
+          type: string
+          description: The key of the user config key-value pair
+        configValue:
+          type: string
+          description: The value of the user config key-value pair
   securitySchemes:
     Bearer:
       description: ''

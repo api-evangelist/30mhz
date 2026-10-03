@@ -392,6 +392,19 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CalculationSettings:
       type: object
       required:
@@ -406,44 +419,6 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
-    TwoValuesComparison:
-      type: object
-      properties:
-        totalFirstPeriod:
-          type: number
-          format: float
-          readOnly: true
-        totalSecondPeriod:
-          type: number
-          format: float
-          readOnly: true
-        difference:
-          type: number
-          format: float
-          readOnly: true
-        acceptable:
-          type: boolean
-          readOnly: true
-        absoluteDifference:
-          type: number
-          format: float
-          readOnly: true
-        percentageDifference:
-          type: number
-          format: float
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -496,6 +471,31 @@ components:
           items:
             type: string
       description: Summary of a check
+    TwoValuesComparison:
+      type: object
+      properties:
+        totalFirstPeriod:
+          type: number
+          format: float
+          readOnly: true
+        totalSecondPeriod:
+          type: number
+          format: float
+          readOnly: true
+        difference:
+          type: number
+          format: float
+          readOnly: true
+        acceptable:
+          type: boolean
+          readOnly: true
+        absoluteDifference:
+          type: number
+          format: float
+          readOnly: true
+        percentageDifference:
+          type: number
+          format: float
     IngestStatusResponse:
       type: object
       properties:

@@ -48,71 +48,18 @@ paths:
               $ref: '#/components/schemas/ExportPartnerJobUpdate'
 components:
   schemas:
-    ExportPartnerJob:
+    ExportPartnerDataItem:
       type: object
       required:
-      - active
-      - frequency
+      - id
       properties:
-        active:
-          type: boolean
-          description: States if the export partner job is active.
-        createdAt:
-          type: string
-          description: The date and time a export partner job was created.
         description:
           type: string
-          description: The description of export partner job.
-        exportPartnerAccess:
-          description: The access token of export partner.
-          $ref: '#/components/schemas/ExportPartnerAccess'
-        exportPartnerId:
-          type: string
-          description: Export partner id.
-        exportPartnerURL:
-          type: string
-          description: The url of export partner.
-        frequency:
+        id:
           type: integer
           format: int32
-          description: The frequency of export partner job.
-        jobId:
+        name:
           type: string
-          description: The id of the export partner job.
-        organizationId:
-          type: string
-          description: Organization of the export partner job
-        payload:
-          type: array
-          description: The payload of export partner job.
-          items:
-            $ref: '#/components/schemas/ExportPartnerJobMap'
-        updatedAt:
-          type: string
-          description: The date and time a export partner job was last updated.
-      description: ExportPartnerJob
-    ExportPartnerJobUpdate:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: States if the export partner job is active.
-        description:
-          type: string
-          description: The description of export partner job.
-        exportPartnerAccess:
-          description: The access token of export partner.
-          $ref: '#/components/schemas/ExportPartnerAccess'
-        frequency:
-          type: integer
-          format: int32
-          description: The frequency of export partner job.
-        payload:
-          type: array
-          description: The payload of export partner job.
-          items:
-            $ref: '#/components/schemas/ExportPartnerJobMap'
-      description: ExportPartnerJobUpdate
     ExportPartnerJobMap:
       type: object
       required:
@@ -161,18 +108,71 @@ components:
             $ref: '#/components/schemas/ExportPartnerDataItem'
         name:
           type: string
-    ExportPartnerDataItem:
+    ExportPartnerJobUpdate:
       type: object
-      required:
-      - id
       properties:
+        active:
+          type: boolean
+          description: States if the export partner job is active.
         description:
           type: string
-        id:
+          description: The description of export partner job.
+        exportPartnerAccess:
+          description: The access token of export partner.
+          $ref: '#/components/schemas/ExportPartnerAccess'
+        frequency:
           type: integer
           format: int32
-        name:
+          description: The frequency of export partner job.
+        payload:
+          type: array
+          description: The payload of export partner job.
+          items:
+            $ref: '#/components/schemas/ExportPartnerJobMap'
+      description: ExportPartnerJobUpdate
+    ExportPartnerJob:
+      type: object
+      required:
+      - active
+      - frequency
+      properties:
+        active:
+          type: boolean
+          description: States if the export partner job is active.
+        createdAt:
           type: string
+          description: The date and time a export partner job was created.
+        description:
+          type: string
+          description: The description of export partner job.
+        exportPartnerAccess:
+          description: The access token of export partner.
+          $ref: '#/components/schemas/ExportPartnerAccess'
+        exportPartnerId:
+          type: string
+          description: Export partner id.
+        exportPartnerURL:
+          type: string
+          description: The url of export partner.
+        frequency:
+          type: integer
+          format: int32
+          description: The frequency of export partner job.
+        jobId:
+          type: string
+          description: The id of the export partner job.
+        organizationId:
+          type: string
+          description: Organization of the export partner job
+        payload:
+          type: array
+          description: The payload of export partner job.
+          items:
+            $ref: '#/components/schemas/ExportPartnerJobMap'
+        updatedAt:
+          type: string
+          description: The date and time a export partner job was last updated.
+      description: ExportPartnerJob
   securitySchemes:
     Bearer:
       description: ''

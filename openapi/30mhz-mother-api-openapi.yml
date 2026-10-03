@@ -238,23 +238,6 @@ paths:
           description: Organization not found.
 components:
   schemas:
-    LimitedScopeMother:
-      type: object
-      properties:
-        isBillable:
-          type: boolean
-        locationName:
-          type: string
-        macAddress:
-          type: string
-        motherId:
-          type: string
-        name:
-          type: string
-        organizationId:
-          type: string
-        state:
-          type: string
     NewMother:
       type: object
       properties:
@@ -344,6 +327,23 @@ components:
           type: string
           description: The address of the xbee.
       description: Mother
+    LimitedScopeMother:
+      type: object
+      properties:
+        isBillable:
+          type: boolean
+        locationName:
+          type: string
+        macAddress:
+          type: string
+        motherId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+        state:
+          type: string
     MotherStatusResponse:
       type: object
       properties:

@@ -46,6 +46,18 @@ paths:
               $ref: '#/components/schemas/NotificationMethods'
 components:
   schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
     Notification_follow:
       type: object
       properties:
@@ -63,18 +75,6 @@ components:
         organizationId:
           type: string
       description: Notification follow represents a subscription of a user to a given notification with a given method, e.g. email, sms, etc.
-    NotificationMethods:
-      type: object
-      properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - EMAIL
-            - SMS
-            - WHATSAPP
   securitySchemes:
     Bearer:
       description: ''

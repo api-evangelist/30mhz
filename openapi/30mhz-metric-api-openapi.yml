@@ -196,23 +196,6 @@ paths:
                 type: string
 components:
   schemas:
-    ConversionUnit:
-      type: object
-      properties:
-        conversionFormulas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversionFormula'
-        decimals:
-          type: integer
-          format: int32
-          minimum: 0
-        unit:
-          type: string
-        unitId:
-          type: string
-        unitLabel:
-          type: string
     Metric:
       type: object
       properties:
@@ -239,6 +222,23 @@ components:
         unitLabel:
           type: string
       description: Metrics of sensor types
+    ConversionUnit:
+      type: object
+      properties:
+        conversionFormulas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionFormula'
+        decimals:
+          type: integer
+          format: int32
+          minimum: 0
+        unit:
+          type: string
+        unitId:
+          type: string
+        unitLabel:
+          type: string
     ConversionFormula:
       type: object
       properties:

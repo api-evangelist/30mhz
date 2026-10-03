@@ -126,6 +126,25 @@ paths:
         description: Check stats request
 components:
   schemas:
+    CheckUptimeResponse:
+      type: object
+      properties:
+        checkId:
+          type: string
+        expectedHits:
+          type: integer
+          format: int64
+        hits:
+          type: integer
+          format: int64
+        uptime:
+          type: number
+          format: double
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
     CheckStatsRequest:
       type: object
       properties:
@@ -182,25 +201,6 @@ components:
         tagsOperator:
           type: string
           description: Tags boolean operator (and/or).
-    CheckUptimeResponse:
-      type: object
-      properties:
-        checkId:
-          type: string
-        expectedHits:
-          type: integer
-          format: int64
-        hits:
-          type: integer
-          format: int64
-        uptime:
-          type: number
-          format: double
-        code:
-          type: integer
-          format: int64
-        message:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

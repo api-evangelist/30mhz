@@ -259,6 +259,55 @@ paths:
           description: Sorry, there was a problem retrieving the groups.
 components:
   schemas:
+    NewGroupMember:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - OWNER
+          - EDITOR
+          - FOLLOWER
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     Group:
       type: object
       properties:
@@ -292,23 +341,6 @@ components:
         title:
           type: string
           description: The title or name of the group
-    NewGroup:
-      type: object
-      properties:
-        dashboardThemeId:
-          type: string
-        description:
-          type: string
-        restrictInviteMembersTo:
-          type: array
-          items:
-            type: string
-            enum:
-            - OWNER
-            - EDITOR
-            - FOLLOWER
-        title:
-          type: string
     ImageWithThumbnails:
       type: object
       properties:
@@ -322,15 +354,6 @@ components:
             $ref: '#/components/schemas/ImageThumbnail'
         url:
           type: string
-    NewGroupMember:
-      type: object
-      properties:
-        role:
-          type: string
-          enum:
-          - OWNER
-          - EDITOR
-          - FOLLOWER
     DashboardThemeCSS:
       type: object
       properties:
@@ -387,37 +410,6 @@ components:
         menuTextColor:
           type: string
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-    DashboardTheme:
-      type: object
-      properties:
-        createdByEmail:
-          type: string
-          description: Created by
-        css:
-          description: Dashboard theme css
-          $ref: '#/components/schemas/DashboardThemeCSS'
-        dashboardThemeId:
-          type: string
-          description: Dashboard theme id
-        groupIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        logo:
-          description: Dashboard logo
-          $ref: '#/components/schemas/ImageWithThumbnails'
-        logoDataUploadId:
-          type: string
-          description: Dashboard logo data upload id
-        name:
-          type: string
-          description: Dashboard theme name
-        organizationIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
     GroupMember:
       type: object
       properties:
@@ -446,15 +438,23 @@ components:
           - OWNER
           - EDITOR
           - FOLLOWER
-    ImageDimensions:
+    NewGroup:
       type: object
       properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
+        dashboardThemeId:
+          type: string
+        description:
+          type: string
+        restrictInviteMembersTo:
+          type: array
+          items:
+            type: string
+            enum:
+            - OWNER
+            - EDITOR
+            - FOLLOWER
+        title:
+          type: string
     ImageThumbnail:
       type: object
       properties:

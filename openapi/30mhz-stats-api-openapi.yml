@@ -836,6 +836,127 @@ paths:
           description: Organization with given id doesn't exist
 components:
   schemas:
+    StatisticsInfoRequest:
+      type: object
+      properties:
+        checkIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        cumulative:
+          type: boolean
+        interval:
+          type: string
+        intervalFrom:
+          type: string
+        intervalSize:
+          type: string
+        intervalTo:
+          type: string
+        organizationId:
+          type: string
+        partOfDay:
+          type: string
+          enum:
+          - ALLTIME
+          - DAYTIME
+          - NIGHTTIME
+        sensorType:
+          type: string
+        statisticType:
+          type: string
+        tags:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
+    CheckLastRecordedStatInfo:
+      type: object
+      properties:
+        batteryStatus:
+          type: string
+          description: Sensor's battery status, if applies.
+        checkId:
+          type: string
+          description: Id of the check
+        code:
+          type: integer
+          format: int64
+          description: Error code.
+        json:
+          type: object
+          description: Event's data for webchecks.
+        lastRecordedStats:
+          type: object
+          description: Event's data
+        matchCondition:
+          type: boolean
+          description: Whether the condition is matched, if applies.
+        message:
+          type: string
+          description: Error message.
+        timestamp:
+          type: string
+          description: Event's UTC timestamp in ISO 8601 format e.g. 2017-01-17T19:23:02Z
+    NetworkOverviewResponse:
+      type: object
+      properties:
+        offlineGateways:
+          type: integer
+          format: int32
+        offlineRouters:
+          type: integer
+          format: int32
+        offlineSensors:
+          type: integer
+          format: int32
+        offlineWebChecks:
+          type: integer
+          format: int32
+        onlineGateways:
+          type: integer
+          format: int32
+        onlineRouters:
+          type: integer
+          format: int32
+        onlineSensors:
+          type: integer
+          format: int32
+        onlineWebChecks:
+          type: integer
+          format: int32
+        pausedRouters:
+          type: integer
+          format: int32
+        pausedSensors:
+          type: integer
+          format: int32
+        pausedWebChecks:
+          type: integer
+          format: int32
+        totalGateways:
+          type: integer
+          format: int32
+        totalRouters:
+          type: integer
+          format: int32
+        totalSensors:
+          type: integer
+          format: int32
+        totalWebChecks:
+          type: integer
+          format: int32
     CheckStatsRequest:
       type: object
       properties:
@@ -892,127 +1013,6 @@ components:
         tagsOperator:
           type: string
           description: Tags boolean operator (and/or).
-    StatisticsInfoRequest:
-      type: object
-      properties:
-        checkIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        collectionIdsPerField:
-          type: object
-          description: Filter/group values based on fields and collection ids
-          additionalProperties:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-        cumulative:
-          type: boolean
-        interval:
-          type: string
-        intervalFrom:
-          type: string
-        intervalSize:
-          type: string
-        intervalTo:
-          type: string
-        organizationId:
-          type: string
-        partOfDay:
-          type: string
-          enum:
-          - ALLTIME
-          - DAYTIME
-          - NIGHTTIME
-        sensorType:
-          type: string
-        statisticType:
-          type: string
-        tags:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        tagsOperator:
-          type: string
-    NetworkOverviewResponse:
-      type: object
-      properties:
-        offlineGateways:
-          type: integer
-          format: int32
-        offlineRouters:
-          type: integer
-          format: int32
-        offlineSensors:
-          type: integer
-          format: int32
-        offlineWebChecks:
-          type: integer
-          format: int32
-        onlineGateways:
-          type: integer
-          format: int32
-        onlineRouters:
-          type: integer
-          format: int32
-        onlineSensors:
-          type: integer
-          format: int32
-        onlineWebChecks:
-          type: integer
-          format: int32
-        pausedRouters:
-          type: integer
-          format: int32
-        pausedSensors:
-          type: integer
-          format: int32
-        pausedWebChecks:
-          type: integer
-          format: int32
-        totalGateways:
-          type: integer
-          format: int32
-        totalRouters:
-          type: integer
-          format: int32
-        totalSensors:
-          type: integer
-          format: int32
-        totalWebChecks:
-          type: integer
-          format: int32
-    CheckLastRecordedStatInfo:
-      type: object
-      properties:
-        batteryStatus:
-          type: string
-          description: Sensor's battery status, if applies.
-        checkId:
-          type: string
-          description: Id of the check
-        code:
-          type: integer
-          format: int64
-          description: Error code.
-        json:
-          type: object
-          description: Event's data for webchecks.
-        lastRecordedStats:
-          type: object
-          description: Event's data
-        matchCondition:
-          type: boolean
-          description: Whether the condition is matched, if applies.
-        message:
-          type: string
-          description: Error message.
-        timestamp:
-          type: string
-          description: Event's UTC timestamp in ISO 8601 format e.g. 2017-01-17T19:23:02Z
     EventsCount:
       type: object
       properties:

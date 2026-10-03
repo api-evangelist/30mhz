@@ -300,28 +300,6 @@ paths:
           description: Error while retrieving devices.
 components:
   schemas:
-    DeviceEditable:
-      type: object
-      properties:
-        deviceModel:
-          type: string
-          description: Model of device.
-        deviceType:
-          type: string
-          description: Type of device.
-        name:
-          type: string
-          description: Displayable name.
-        organizationId:
-          type: string
-          description: Identifier of the organization it belongs to.
-        serialNumber:
-          type: string
-          description: Serial number of the device.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-      description: Object holding the editable properties of a device.
     DeviceNew:
       type: object
       required:
@@ -349,6 +327,28 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Object holding the properties of a new device.
+    DeviceEditable:
+      type: object
+      properties:
+        deviceModel:
+          type: string
+          description: Model of device.
+        deviceType:
+          type: string
+          description: Type of device.
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Identifier of the organization it belongs to.
+        serialNumber:
+          type: string
+          description: Serial number of the device.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+      description: Object holding the editable properties of a device.
     Device:
       type: object
       properties:

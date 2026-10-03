@@ -143,21 +143,6 @@ paths:
           description: Not enough permissions to perform the operation
 components:
   schemas:
-    NewQuote:
-      type: object
-      properties:
-        customerRequestId:
-          type: string
-        date:
-          type: string
-        expirationDate:
-          type: string
-        remarks:
-          type: string
-        signedPdfId:
-          type: string
-        status:
-          type: string
     Order:
       type: object
       properties:
@@ -220,6 +205,73 @@ components:
           type: string
           description: Quote's status.
       description: updating of a quote
+    CustomerRequestItem:
+      type: object
+      required:
+      - lineTotal
+      - unitPrice
+      - units
+      properties:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a quote item was created.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItemId:
+          type: string
+          description: Customer request item id.
+        description:
+          type: string
+          description: The description for the quote item.
+        lineTotal:
+          type: number
+          format: float
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother id for the quote item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
+          type: integer
+          format: int32
+          description: CustomerRequest item's units.
+        updatedAt:
+          type: string
+          description: The date and time a quote item was last updated.
+      description: CustomerRequestItem
+    NewQuote:
+      type: object
+      properties:
+        customerRequestId:
+          type: string
+        date:
+          type: string
+        expirationDate:
+          type: string
+        remarks:
+          type: string
+        signedPdfId:
+          type: string
+        status:
+          type: string
     CustomerRequest:
       type: object
       required:
@@ -335,58 +387,6 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
-    CustomerRequestItem:
-      type: object
-      required:
-      - lineTotal
-      - unitPrice
-      - units
-      properties:
-        configuration:
-          type: object
-          description: Customer request item configuration
-          additionalProperties:
-            type: string
-        createdAt:
-          type: string
-          description: The date and time a quote item was created.
-        customerRequestId:
-          type: string
-          description: Customer request id.
-        customerRequestItemId:
-          type: string
-          description: Customer request item id.
-        description:
-          type: string
-          description: The description for the quote item.
-        lineTotal:
-          type: number
-          format: float
-          description: CustomerRequest item's line total.
-        motherIds:
-          type: array
-          description: The mother id for the quote item.
-          uniqueItems: true
-          items:
-            type: string
-        productId:
-          type: string
-          description: The product id for the quote item.
-        status:
-          type: string
-          description: The status of the quote item.
-        unitPrice:
-          type: number
-          format: float
-          description: CustomerRequest item's unit price.
-        units:
-          type: integer
-          format: int32
-          description: CustomerRequest item's units.
-        updatedAt:
-          type: string
-          description: The date and time a quote item was last updated.
-      description: CustomerRequestItem
   securitySchemes:
     Bearer:
       description: ''

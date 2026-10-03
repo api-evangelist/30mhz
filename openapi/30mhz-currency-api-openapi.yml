@@ -85,6 +85,15 @@ paths:
       x-admin-only: true
 components:
   schemas:
+    NewCurrency:
+      type: object
+      properties:
+        currencyId:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
     Currency:
       type: object
       properties:
@@ -97,15 +106,6 @@ components:
         symbol:
           type: string
           description: Symbol of the currency
-    NewCurrency:
-      type: object
-      properties:
-        currencyId:
-          type: string
-        name:
-          type: string
-        symbol:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

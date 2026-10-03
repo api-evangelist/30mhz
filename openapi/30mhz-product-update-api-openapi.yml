@@ -49,74 +49,6 @@ paths:
               $ref: '#/components/schemas/ProductUpdate'
 components:
   schemas:
-    ProductUpdate:
-      type: object
-      properties:
-        articleNumber:
-          type: string
-          description: Product article number
-        availabilityDate:
-          type: string
-          description: Product availability date.
-        batchSize:
-          type: integer
-          format: int32
-          description: Product batch size.
-        configuration:
-          type: object
-          description: Product configuration
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        costPrice:
-          type: number
-          format: float
-          description: Product cost price.
-        description:
-          type: string
-          description: Product description.
-        landOfOrigin:
-          type: string
-          description: Land of origin.
-        lockPrice:
-          type: boolean
-          description: Lock price
-        phase:
-          type: string
-          description: Product phase.
-        prices:
-          type: object
-          description: prices in different currencies for the product
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: number
-              format: float
-        productType:
-          type: string
-          description: Product type.
-        remark:
-          type: string
-          description: Product remark.
-        sensorType:
-          type: string
-          description: Product sensor type.
-        specificationSheetId:
-          type: string
-          description: Product specification sheet.
-        status:
-          type: string
-          description: Product status.
-        stock:
-          type: integer
-          format: int32
-          description: Product stock.
-        weight:
-          type: integer
-          format: int32
-          description: Product weight in grams.
-      description: Updating product properties.
     Product:
       type: object
       required:
@@ -199,6 +131,74 @@ components:
           format: int32
           description: Product weight in grams.
       description: Product
+    ProductUpdate:
+      type: object
+      properties:
+        articleNumber:
+          type: string
+          description: Product article number
+        availabilityDate:
+          type: string
+          description: Product availability date.
+        batchSize:
+          type: integer
+          format: int32
+          description: Product batch size.
+        configuration:
+          type: object
+          description: Product configuration
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+          description: Product cost price.
+        description:
+          type: string
+          description: Product description.
+        landOfOrigin:
+          type: string
+          description: Land of origin.
+        lockPrice:
+          type: boolean
+          description: Lock price
+        phase:
+          type: string
+          description: Product phase.
+        prices:
+          type: object
+          description: prices in different currencies for the product
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        productType:
+          type: string
+          description: Product type.
+        remark:
+          type: string
+          description: Product remark.
+        sensorType:
+          type: string
+          description: Product sensor type.
+        specificationSheetId:
+          type: string
+          description: Product specification sheet.
+        status:
+          type: string
+          description: Product status.
+        stock:
+          type: integer
+          format: int32
+          description: Product stock.
+        weight:
+          type: integer
+          format: int32
+          description: Product weight in grams.
+      description: Updating product properties.
   securitySchemes:
     Bearer:
       description: ''

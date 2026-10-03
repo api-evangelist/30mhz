@@ -45,23 +45,30 @@ paths:
               $ref: '#/components/schemas/MetricUpdate'
 components:
   schemas:
-    ConversionUnit:
+    MetricUpdate:
       type: object
       properties:
-        conversionFormulas:
+        conversionUnits:
           type: array
           items:
-            $ref: '#/components/schemas/ConversionFormula'
-        decimals:
-          type: integer
-          format: int32
-          minimum: 0
-        unit:
+            $ref: '#/components/schemas/ConversionUnit'
+        defaultStatisticTypes:
+          type: array
+          items:
+            type: string
+        name:
           type: string
-        unitId:
+        statisticTypes:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        unit:
           type: string
         unitLabel:
           type: string
+      description: Updating metric properties
     Metric:
       type: object
       properties:
@@ -88,6 +95,23 @@ components:
         unitLabel:
           type: string
       description: Metrics of sensor types
+    ConversionUnit:
+      type: object
+      properties:
+        conversionFormulas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversionFormula'
+        decimals:
+          type: integer
+          format: int32
+          minimum: 0
+        unit:
+          type: string
+        unitId:
+          type: string
+        unitLabel:
+          type: string
     ConversionFormula:
       type: object
       properties:
@@ -96,30 +120,6 @@ components:
         value:
           type: number
           format: double
-    MetricUpdate:
-      type: object
-      properties:
-        conversionUnits:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConversionUnit'
-        defaultStatisticTypes:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        statisticTypes:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        unit:
-          type: string
-        unitLabel:
-          type: string
-      description: Updating metric properties
   securitySchemes:
     Bearer:
       description: ''

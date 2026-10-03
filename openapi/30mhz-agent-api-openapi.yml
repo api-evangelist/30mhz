@@ -63,6 +63,21 @@ paths:
               $ref: '#/components/schemas/AgentMessageNew'
 components:
   schemas:
+    AgentToolCall:
+      type: object
+      properties:
+        agentToolId:
+          type: string
+          description: The unique identifier of the tool. This is also the name of the tool.
+        arguments:
+          type: object
+          description: A key-value map of the tool arguments.
+          additionalProperties:
+            type: object
+        toolCallId:
+          type: string
+          description: The unique identifier of the AI agents call to a tool.
+      description: An AI agent request to call a tool.
     AgentMessage:
       type: object
       required:
@@ -100,28 +115,11 @@ components:
           type: string
           description: The unique identifier of the AI agent run.
       description: A message in the AI Agent conversation.
-    ChunkedOutput:
+    Type:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/Type'
-        closed:
-          type: boolean
-    AgentToolCall:
-      type: object
-      properties:
-        agentToolId:
+        typeName:
           type: string
-          description: The unique identifier of the tool. This is also the name of the tool.
-        arguments:
-          type: object
-          description: A key-value map of the tool arguments.
-          additionalProperties:
-            type: object
-        toolCallId:
-          type: string
-          description: The unique identifier of the AI agents call to a tool.
-      description: An AI agent request to call a tool.
     AgentMessageNew:
       type: object
       properties:
@@ -147,11 +145,13 @@ components:
           type: string
           description: The unique identifier of the AI agent conversation.
       description: Object holding the required properties to create a new AgentMessage.
-    Type:
+    ChunkedOutput:
       type: object
       properties:
-        typeName:
-          type: string
+        type:
+          $ref: '#/components/schemas/Type'
+        closed:
+          type: boolean
   securitySchemes:
     Bearer:
       description: ''

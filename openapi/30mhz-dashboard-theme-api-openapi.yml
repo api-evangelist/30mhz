@@ -238,6 +238,57 @@ paths:
           description: Sorry, there was a problem getting the dashboard themes.
 components:
   schemas:
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    NewDashboardTheme:
+      type: object
+      required:
+      - css
+      properties:
+        css:
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        logoDataUploadId:
+          type: string
+        name:
+          type: string
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     ImageWithThumbnails:
       type: object
       properties:
@@ -307,57 +358,6 @@ components:
         menuTextColor:
           type: string
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-    NewDashboardTheme:
-      type: object
-      required:
-      - css
-      properties:
-        css:
-          $ref: '#/components/schemas/DashboardThemeCSS'
-        logoDataUploadId:
-          type: string
-        name:
-          type: string
-    DashboardTheme:
-      type: object
-      properties:
-        createdByEmail:
-          type: string
-          description: Created by
-        css:
-          description: Dashboard theme css
-          $ref: '#/components/schemas/DashboardThemeCSS'
-        dashboardThemeId:
-          type: string
-          description: Dashboard theme id
-        groupIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        logo:
-          description: Dashboard logo
-          $ref: '#/components/schemas/ImageWithThumbnails'
-        logoDataUploadId:
-          type: string
-          description: Dashboard logo data upload id
-        name:
-          type: string
-          description: Dashboard theme name
-        organizationIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
     ImageThumbnail:
       type: object
       properties:

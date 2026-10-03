@@ -77,6 +77,15 @@ paths:
               $ref: '#/components/schemas/NewCommentReply'
 components:
   schemas:
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     Comment:
       type: object
       properties:
@@ -114,32 +123,6 @@ components:
         text:
           type: string
           description: Comment text
-    CommentAttachments:
-      type: object
-      properties:
-        documents:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/AttachedDocument'
-        images:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ImageWithThumbnails'
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
     CommentTags:
       type: object
       properties:
@@ -200,28 +183,19 @@ components:
           type: string
         url:
           type: string
-    ImageDimensions:
+    ImageWithThumbnails:
       type: object
       properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
+        dataUploadId:
           type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
         url:
           type: string
-        width:
-          type: integer
-          format: int32
     CommentUpdate:
       type: object
       properties:
@@ -275,6 +249,32 @@ components:
         text:
           type: string
           description: Comment text
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
   securitySchemes:
     Bearer:
       description: ''

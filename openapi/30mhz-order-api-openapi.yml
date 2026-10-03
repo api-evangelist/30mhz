@@ -213,6 +213,58 @@ components:
           type: string
           description: Order's status.
       description: Order
+    CustomerRequestItem:
+      type: object
+      required:
+      - lineTotal
+      - unitPrice
+      - units
+      properties:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          description: The date and time a quote item was created.
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        customerRequestItemId:
+          type: string
+          description: Customer request item id.
+        description:
+          type: string
+          description: The description for the quote item.
+        lineTotal:
+          type: number
+          format: float
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother id for the quote item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
+          type: integer
+          format: int32
+          description: CustomerRequest item's units.
+        updatedAt:
+          type: string
+          description: The date and time a quote item was last updated.
+      description: CustomerRequestItem
     NewOrder:
       type: object
       properties:
@@ -379,58 +431,6 @@ components:
           type: string
           description: Invoice's status.
       description: Invoice
-    CustomerRequestItem:
-      type: object
-      required:
-      - lineTotal
-      - unitPrice
-      - units
-      properties:
-        configuration:
-          type: object
-          description: Customer request item configuration
-          additionalProperties:
-            type: string
-        createdAt:
-          type: string
-          description: The date and time a quote item was created.
-        customerRequestId:
-          type: string
-          description: Customer request id.
-        customerRequestItemId:
-          type: string
-          description: Customer request item id.
-        description:
-          type: string
-          description: The description for the quote item.
-        lineTotal:
-          type: number
-          format: float
-          description: CustomerRequest item's line total.
-        motherIds:
-          type: array
-          description: The mother id for the quote item.
-          uniqueItems: true
-          items:
-            type: string
-        productId:
-          type: string
-          description: The product id for the quote item.
-        status:
-          type: string
-          description: The status of the quote item.
-        unitPrice:
-          type: number
-          format: float
-          description: CustomerRequest item's unit price.
-        units:
-          type: integer
-          format: int32
-          description: CustomerRequest item's units.
-        updatedAt:
-          type: string
-          description: The date and time a quote item was last updated.
-      description: CustomerRequestItem
   securitySchemes:
     Bearer:
       description: ''

@@ -45,6 +45,54 @@ paths:
               $ref: '#/components/schemas/GatewayEditable'
 components:
   schemas:
+    GatewayEditable:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        greengrassCertificateArn:
+          type: string
+          description: The greengrass certificate arn.
+        greengrassCertificatePem:
+          type: string
+          description: The greengrass certificate pem.
+        greengrassKeyPair:
+          type: string
+          description: The greengrass key pair that is used to securely connect to the  greengrass core device.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
     Gateway:
       type: object
       properties:
@@ -114,54 +162,6 @@ components:
         updatedAt:
           type: string
           description: The date and time a gateway was last updated.
-    GatewayEditable:
-      type: object
-      properties:
-        alarmsChecks:
-          type: array
-          description: The alarms checks ids of the gateway.
-          uniqueItems: true
-          items:
-            type: string
-        fleetManagerDeviceId:
-          type: string
-          description: The fleet manager id.
-        gatewayClusterId:
-          type: string
-          description: The gateway cluster id.
-        gatewayInfoCheckId:
-          type: string
-          description: Id of the gateway info check.
-        greengrassCertificateArn:
-          type: string
-          description: The greengrass certificate arn.
-        greengrassCertificatePem:
-          type: string
-          description: The greengrass certificate pem.
-        greengrassKeyPair:
-          type: string
-          description: The greengrass key pair that is used to securely connect to the  greengrass core device.
-        isBillable:
-          type: boolean
-          description: States if the gateway is billable or not.
-        name:
-          type: string
-          description: Gateway name
-        organizationId:
-          type: string
-          description: The organization of the gateway.
-        remarks:
-          type: string
-          description: The remarks for the gateway.
-        siteId:
-          type: string
-          description: The site of the gateway.
-        state:
-          type: string
-          description: The state of the gateway.
-        templateId:
-          type: string
-          description: Gateway's template id.
   securitySchemes:
     Bearer:
       description: ''

@@ -52,15 +52,6 @@ paths:
               $ref: '#/components/schemas/NotificationSettingUpdate'
 components:
   schemas:
-    NotificationSettingUpdate:
-      type: object
-      properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-      description: Updating notification settings properties
     NotificationSetting:
       type: object
       properties:
@@ -74,6 +65,15 @@ components:
           items:
             type: string
       description: Notification Settings
+    NotificationSettingUpdate:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+      description: Updating notification settings properties
   securitySchemes:
     Bearer:
       description: ''

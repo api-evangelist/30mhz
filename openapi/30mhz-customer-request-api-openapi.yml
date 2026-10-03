@@ -115,63 +115,6 @@ paths:
           description: Not enough permissions to perform the operation
 components:
   schemas:
-    NewCustomerRequest:
-      type: object
-      required:
-      - shippingCost
-      properties:
-        accountManager:
-          type: string
-        contactPersonEmail:
-          type: string
-        contactPersonFirstName:
-          type: string
-        contactPersonLastName:
-          type: string
-        contactPersonPhone:
-          type: string
-        countryCode:
-          type: string
-        currency:
-          type: string
-        customVatPercentage:
-          type: integer
-          format: int32
-        dealer:
-          type: string
-        deliverOnlyToCustomerAddress:
-          type: boolean
-        deliveredPersonally:
-          type: boolean
-        description:
-          type: string
-        discountPercentage:
-          type: integer
-          format: int32
-        language:
-          type: string
-        measureFrequency:
-          type: integer
-          format: int32
-        organizationId:
-          type: string
-        organizationLocationName:
-          type: string
-        organizationName:
-          type: string
-        paymentConditions:
-          type: boolean
-        poNumber:
-          type: string
-        remarks:
-          type: string
-        shippingCost:
-          type: number
-          format: float
-        signatureRequired:
-          type: boolean
-        vertical:
-          type: string
     CustomerRequestItem:
       type: object
       required:
@@ -339,6 +282,63 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
+    NewCustomerRequest:
+      type: object
+      required:
+      - shippingCost
+      properties:
+        accountManager:
+          type: string
+        contactPersonEmail:
+          type: string
+        contactPersonFirstName:
+          type: string
+        contactPersonLastName:
+          type: string
+        contactPersonPhone:
+          type: string
+        countryCode:
+          type: string
+        currency:
+          type: string
+        customVatPercentage:
+          type: integer
+          format: int32
+        dealer:
+          type: string
+        deliverOnlyToCustomerAddress:
+          type: boolean
+        deliveredPersonally:
+          type: boolean
+        description:
+          type: string
+        discountPercentage:
+          type: integer
+          format: int32
+        language:
+          type: string
+        measureFrequency:
+          type: integer
+          format: int32
+        organizationId:
+          type: string
+        organizationLocationName:
+          type: string
+        organizationName:
+          type: string
+        paymentConditions:
+          type: boolean
+        poNumber:
+          type: string
+        remarks:
+          type: string
+        shippingCost:
+          type: number
+          format: float
+        signatureRequired:
+          type: boolean
+        vertical:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

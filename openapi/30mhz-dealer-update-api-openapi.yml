@@ -47,7 +47,7 @@ paths:
               $ref: '#/components/schemas/DealerUpdate'
 components:
   schemas:
-    DealerUpdate:
+    Dealer:
       type: object
       properties:
         city:
@@ -57,6 +57,8 @@ components:
         country:
           type: string
         countryCode:
+          type: string
+        email:
           type: string
         firstName:
           type: string
@@ -79,7 +81,7 @@ components:
           format: int32
         subscriptionMarginPercentageValidUntil:
           type: string
-    Dealer:
+    DealerUpdate:
       type: object
       properties:
         city:
@@ -89,8 +91,6 @@ components:
         country:
           type: string
         countryCode:
-          type: string
-        email:
           type: string
         firstName:
           type: string

@@ -96,6 +96,30 @@ paths:
                 $ref: '#/components/schemas/NewCustomerRequestItem'
 components:
   schemas:
+    NewCustomerRequestItem:
+      type: object
+      required:
+      - unitPrice
+      - units
+      properties:
+        configuration:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          type: string
+        productId:
+          type: string
+        status:
+          type: string
+        unitPrice:
+          type: number
+          format: float
+        units:
+          type: integer
+          format: int32
+        customerRequestId:
+          type: string
     CustomerRequestItem:
       type: object
       required:
@@ -148,30 +172,6 @@ components:
           type: string
           description: The date and time a quote item was last updated.
       description: CustomerRequestItem
-    NewCustomerRequestItem:
-      type: object
-      required:
-      - unitPrice
-      - units
-      properties:
-        configuration:
-          type: object
-          additionalProperties:
-            type: string
-        description:
-          type: string
-        productId:
-          type: string
-        status:
-          type: string
-        unitPrice:
-          type: number
-          format: float
-        units:
-          type: integer
-          format: int32
-        customerRequestId:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

@@ -185,14 +185,18 @@ paths:
           description: User not allowed to perform the operation
 components:
   schemas:
-    NotificationTopicFollowCount:
+    NotificationMethods:
       type: object
       properties:
-        count:
-          type: integer
-          format: int32
-        notificationTopicId:
-          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
     NotificationTopicFollow:
       type: object
       properties:
@@ -212,18 +216,14 @@ components:
         organizationId:
           type: string
       description: Notification topic follow
-    NotificationMethods:
+    NotificationTopicFollowCount:
       type: object
       properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - EMAIL
-            - SMS
-            - WHATSAPP
+        count:
+          type: integer
+          format: int32
+        notificationTopicId:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

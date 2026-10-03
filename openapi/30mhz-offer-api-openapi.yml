@@ -140,7 +140,7 @@ components:
             type: string
         subscriptionTier:
           type: string
-    NewOffer:
+    Offer:
       type: object
       properties:
         duration:
@@ -166,7 +166,7 @@ components:
         partnerId:
           type: string
           description: Partner id.
-    Offer:
+    NewOffer:
       type: object
       properties:
         duration:

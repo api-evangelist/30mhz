@@ -210,7 +210,7 @@ paths:
           description: Not enough permissions to perform the operation.
 components:
   schemas:
-    NewSoil:
+    Soil:
       type: object
       required:
       - category
@@ -251,7 +251,7 @@ components:
           format: double
           description: Total available water of the soil.
           readOnly: true
-    Soil:
+    NewSoil:
       type: object
       required:
       - category

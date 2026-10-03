@@ -38,6 +38,21 @@ paths:
                 $ref: '#/components/schemas/DataSourceBulkEdit'
 components:
   schemas:
+    DataSourceCoordinatesEditable:
+      type: object
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+      description: Object containing the editable properties of DataSourceCoordinates.
     DataSourceBulkEdit:
       type: object
       required:
@@ -95,21 +110,6 @@ components:
           type: string
           description: Identifier of the zone within a site where the data source belongs.
       description: Object containing the editable properties of a Data Source used for bulk edit.
-    DataSourceCoordinatesEditable:
-      type: object
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-      description: Object containing the editable properties of DataSourceCoordinates.
   securitySchemes:
     Bearer:
       description: ''

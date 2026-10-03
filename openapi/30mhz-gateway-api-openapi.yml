@@ -121,7 +121,7 @@ paths:
           description: Gateway does not exist.
 components:
   schemas:
-    Gateway:
+    NewGateway:
       type: object
       properties:
         alarmsChecks:
@@ -190,7 +190,7 @@ components:
         updatedAt:
           type: string
           description: The date and time a gateway was last updated.
-    NewGateway:
+    Gateway:
       type: object
       properties:
         alarmsChecks:

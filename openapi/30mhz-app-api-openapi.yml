@@ -293,20 +293,15 @@ paths:
                   format: binary
 components:
   schemas:
-    RequiredSensor:
+    ImageDimensions:
       type: object
-      required:
-      - sensorTypeId
       properties:
-        configurationKeypathToCheckId:
-          type: string
-          description: Optional keypath in dynamic configurations where check id is stored
-        name:
-          type: string
-          description: Name of the sensor
-        sensorTypeId:
-          type: string
-          description: Id of the sensor type of the required sensor
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     DataUpload:
       type: object
       properties:
@@ -340,6 +335,20 @@ components:
         presignedUrl:
           type: string
       description: DataUpload
+    RequiredSensor:
+      type: object
+      required:
+      - sensorTypeId
+      properties:
+        configurationKeypathToCheckId:
+          type: string
+          description: Optional keypath in dynamic configurations where check id is stored
+        name:
+          type: string
+          description: Name of the sensor
+        sensorTypeId:
+          type: string
+          description: Id of the sensor type of the required sensor
     App:
       type: object
       required:
@@ -434,15 +443,6 @@ components:
         type:
           type: string
           description: Type of the application.
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
     ImageThumbnail:
       type: object
       properties:

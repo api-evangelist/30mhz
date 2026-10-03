@@ -151,6 +151,33 @@ paths:
               $ref: '#/components/schemas/CheckStatsRequest'
 components:
   schemas:
+    DropResponse:
+      type: object
+      properties:
+        averageIrrigiationValue:
+          type: number
+          format: double
+        drop:
+          type: number
+          format: double
+        endDate:
+          type: integer
+          format: int64
+        irrigationStartTimestamp:
+          type: integer
+          format: int64
+        irrigationStartValue:
+          type: number
+          format: double
+        irrigationStopTimestamp:
+          type: integer
+          format: int64
+        irrigationStopValue:
+          type: number
+          format: double
+        startDate:
+          type: integer
+          format: int64
     CheckStatsRequest:
       type: object
       properties:
@@ -207,33 +234,6 @@ components:
         tagsOperator:
           type: string
           description: Tags boolean operator (and/or).
-    DropResponse:
-      type: object
-      properties:
-        averageIrrigiationValue:
-          type: number
-          format: double
-        drop:
-          type: number
-          format: double
-        endDate:
-          type: integer
-          format: int64
-        irrigationStartTimestamp:
-          type: integer
-          format: int64
-        irrigationStartValue:
-          type: number
-          format: double
-        irrigationStopTimestamp:
-          type: integer
-          format: int64
-        irrigationStopValue:
-          type: number
-          format: double
-        startDate:
-          type: integer
-          format: int64
   securitySchemes:
     Bearer:
       description: ''

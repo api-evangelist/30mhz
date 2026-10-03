@@ -628,6 +628,51 @@ components:
           type: string
           description: Universally unique identifier of a user.
       description: A person who uses the platform
+    UserToken:
+      type: object
+      properties:
+        apiToken:
+          type: string
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
+    UserCredentialsAsGuest:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        language:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+      description: Object holding the required properties to register a guest
+    SignUpRequest:
+      type: object
+      required:
+      - invitationToken
+      - language
+      properties:
+        invitationToken:
+          type: string
+          description: The invitation JWT (issued at invite time).
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        password:
+          type: string
+          description: The user's introduced password.
+      description: Payload submitted by an invited user to sign up.
     UserNew:
       type: object
       required:
@@ -685,41 +730,30 @@ components:
           type: string
           description: Email address.
       description: Object holding the required properties to create a new user
-    SignUpRequest:
+    OrganizationMembership:
       type: object
       required:
-      - invitationToken
-      - language
-      properties:
-        invitationToken:
-          type: string
-          description: The invitation JWT (issued at invite time).
-        language:
-          type: string
-          description: IETF language tag, e.g. en-US
-        password:
-          type: string
-          description: The user's introduced password.
-      description: Payload submitted by an invited user to sign up.
-    UserCredentialsAsGuest:
-      type: object
+      - email
       properties:
         email:
           type: string
+          description: User's email.
         firstName:
           type: string
-        language:
-          type: string
+          description: User's first name
         lastName:
           type: string
-        password:
+          description: User's last name
+        organizationId:
           type: string
-      description: Object holding the required properties to register a guest
-    UserToken:
-      type: object
-      properties:
-        apiToken:
+          description: Identifier for the organization.
+        purpose:
           type: string
+          description: Optional purpose of invitation
+        role:
+          type: string
+          description: Role of the user within the organization. It determines the user's permissions.
+      description: A user being a member of an organization with a given role.
     Credential:
       type: object
       properties:
@@ -798,40 +832,6 @@ components:
           type: string
           description: Role to assign the invited user within the organization
       description: User Invite to an organization
-    OrganizationMembership:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          description: User's email.
-        firstName:
-          type: string
-          description: User's first name
-        lastName:
-          type: string
-          description: User's last name
-        organizationId:
-          type: string
-          description: Identifier for the organization.
-        purpose:
-          type: string
-          description: Optional purpose of invitation
-        role:
-          type: string
-          description: Role of the user within the organization. It determines the user's permissions.
-      description: A user being a member of an organization with a given role.
-    WebPageReference:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of a web page.
-        title:
-          type: string
-          description: Displayable title.
-      description: A reference to a web page
   securitySchemes:
     Bearer:
       description: ''

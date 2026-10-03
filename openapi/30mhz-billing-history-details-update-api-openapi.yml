@@ -104,13 +104,6 @@ paths:
               $ref: '#/components/schemas/BillingHistoryDetailsUpdate'
 components:
   schemas:
-    BillingHistoryDetailsUpdate:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: States if the billing history record is active or not.
-      description: BillingHistoryDetailsUpdate
     BillingHistoryDetails:
       type: object
       properties:
@@ -160,6 +153,13 @@ components:
           type: string
           description: The sensor type of the billing details record.
       description: BillingHistoryDetails
+    BillingHistoryDetailsUpdate:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: States if the billing history record is active or not.
+      description: BillingHistoryDetailsUpdate
   securitySchemes:
     Bearer:
       description: ''
