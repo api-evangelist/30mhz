@@ -2204,6 +2204,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/30mhz-capability-edges.yml
+  name: 30MHz Business Capability Map
 - type: AgenticAccess
   url: agentic-access/30mhz-agentic-access.yml
 - type: DomainSecurity

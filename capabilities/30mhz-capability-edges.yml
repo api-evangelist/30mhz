@@ -1,0 +1,114 @@
+slug: 30mhz
+provider: 30MHz
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Authorization
+  spec_file: 30mhz-authorization-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /authorization/role-assignment/assignee/{assignee}/role/{role}/organization/{organizationId}  assignRoleOnOrganization;
+    GET /authorization/check/device/{deviceId}  checkUserAuthorizationOnDevice
+  reason: Role assignment/unassignment to users across organizations, sites and devices plus authorization
+    checks and token issuance is identity and access management.
+- tag: Status
+  spec_file: 30mhz-status-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.78
+  evidence: GET /status/backup-healthcheck 'Lookup in S3 if backups are being made'; GET /status/cloudwatch-alarm
+    'Retrieves cloud watch alarms that have status ALARM'; GET /status/elasticsearch/nodesstats/... 'Retrieves
+    node stats for elasticsearch cluster'
+  reason: These operations expose infrastructure health, alarms, throughput comparison and cluster metrics
+    for the running ZENSIE service — classic observability/monitoring of the platform rather than any
+    crop-domain function.
+- tag: License
+  spec_file: 30mhz-license-api-openapi.yml
+  capability_id: BC-4240.10
+  capability_id_l1: BC-4240
+  capability_name: Plan & Entitlement Design
+  confidence: 0.75
+  evidence: POST /license/{licenseId}/{organizationId}  createOrganizationLicense  Assign a license to
+    an existing organization
+  reason: Licenses are defined and assigned to tenant organizations, with OrganizationLicense and OrganizationExtensions
+    schemas — this is plan/entitlement definition and assignment in a multi-tenant SaaS. Could also read
+    as entitlement enforcement; moderate-high confidence on the L1.
+- tag: Quote
+  spec_file: 30mhz-quote-api-openapi.yml
+  capability_id: BC-410.40
+  capability_id_l1: BC-410
+  capability_name: Quote & Configuration Management
+  confidence: 0.75
+  evidence: POST /quote addQuote Add a quote; POST /quote/{quoteId}/order createOrderFromQuote Creates
+    an order from a quote
+  reason: Quote creation and conversion of a quote into an order, with schemas Quote, NewQuote, CustomerRequestItem
+    — the quote-to-order motion of Quote & Configuration Management. No configuration/pricing-engine detail
+    is shown, so not 0.9.
+- tag: User
+  spec_file: 30mhz-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: 'POST /user/sign-up signUp; POST /user/activate/user/{email} ''Activates a new user that was
+    added as member of an organization''; GET /user/has-api-key ''Checks if user has an api key''; schemas:
+    UserToken, Credential, OrganizationMembership'
+  reason: Operations cover account registration, activation, credentials, password change, organisation
+    membership and API keys — identity and access administration for platform users.
+- tag: billing-history
+  spec_file: 30mhz-billing-history-api-openapi.yml
+  capability_id: BC-4250.10
+  capability_id_l1: BC-4250
+  capability_name: Usage Metering
+  confidence: 0.72
+  evidence: GET /billing-history/all-organizations  'Return billing history for all organisations that
+    are billable'; POST '/billing-history/organization/{organizationId}/forecast  Return billing history
+    forecast for current month'
+  reason: Per-organization monthly billing records generated for all billable organizations, derived from
+    counts of checks/sensors — usage metering and aggregation feeding subscription billing in the SaaS
+    model. L2 choice between metering and invoicing is somewhat uncertain, hence moderate confidence.
+- tag: Group
+  spec_file: 30mhz-group-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /group-member/{email}/group/{groupId}  addUserToGroup  Add a user to a group
+  reason: User group membership administration — adding/removing users from groups — is access group management,
+    mapping to Identity & Access Management. Some chance it is merely organisational grouping of dashboards
+    (DashboardTheme schema present), hence not higher.
+- tag: billing-history-details
+  spec_file: 30mhz-billing-history-details-api-openapi.yml
+  capability_id: BC-4250.10
+  capability_id_l1: BC-4250
+  capability_name: Usage Metering
+  confidence: 0.7
+  evidence: GET /billing-history-details/organization/{organizationId}/year/{year}/month/{month}/json/{jsonCheck}  'Return
+    billing history details json / regular checks summary'
+  reason: Detail-level billing records summarising billable checks per organization per month — usage
+    aggregation underpinning subscription billing. Moderate confidence on the specific L2.
+- tag: subscription-assignment
+  spec_file: 30mhz-subscription-assignment-api-openapi.yml
+  capability_id: BC-4240
+  capability_id_l1: BC-4240
+  capability_name: Subscription Lifecycle Management
+  confidence: 0.7
+  evidence: DELETE /subscription-assignment/license/{licenseId}/subscription/{subscriptionId}/organization/{organizationId}
+    deleteSubscriptionAssignment
+  reason: Operations create, list and delete assignments of subscriptions/licenses to organizations (schemas
+    SubscriptionAssignment, Subscription), i.e. provisioning and holding of commercial entitlements for
+    tenants. L2 left null because the evidence does not distinguish plan design from provisioning versus
+    enforcement.
