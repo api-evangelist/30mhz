@@ -199,6 +199,29 @@ paths:
           description: Error while retrieving notes.
 components:
   schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    NoteFileDocument:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Original filename of the uploaded document.
+        url:
+          type: string
+          description: Presigned download URL for the document.
+      description: Represents a non-image document attached to a note file.
     NoteEditable:
       type: object
       required:
@@ -243,15 +266,6 @@ components:
           type: string
           description: Timestamp of the note
       description: Object containing the editable properties of Note.
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
     ImageWithThumbnails:
       type: object
       properties:
@@ -329,6 +343,36 @@ components:
           type: string
           description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
       description: Represents a note with its metadata and content.
+    NoteMeasurements:
+      type: object
+      required:
+      - data
+      - jsonLabels
+      - metrics
+      - units
+      properties:
+        data:
+          type: array
+          description: Ordered numeric values of the note measurements, e.g. [20, 48]
+          items:
+            type: number
+            format: double
+        jsonLabels:
+          type: array
+          description: Ordered labels of the note measurements, e.g. ['Inside Temperature', 'Outside Temperature']
+          items:
+            type: string
+        metrics:
+          type: array
+          description: Ordered metrics of the note measurements, e.g. ['temperature', 'temperature']
+          items:
+            type: string
+        units:
+          type: array
+          description: Ordered unitIds of the note measurements, e.g. ['°C', 'F']
+          items:
+            type: string
+      description: represents measurements added to a note
     NoteNew:
       type: object
       required:
@@ -383,6 +427,15 @@ components:
           type: string
           description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
       description: Object holding the required properties to create a new Note.
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     NoteFile:
       type: object
       required:
@@ -402,59 +455,6 @@ components:
           type: string
           description: MIME type of the file, e.g. image/png.
       description: Represents a file attached to a note, identified by its unique identifier and MIME type.
-    NoteMeasurements:
-      type: object
-      required:
-      - data
-      - jsonLabels
-      - metrics
-      - units
-      properties:
-        data:
-          type: array
-          description: Ordered numeric values of the note measurements, e.g. [20, 48]
-          items:
-            type: number
-            format: double
-        jsonLabels:
-          type: array
-          description: Ordered labels of the note measurements, e.g. ['Inside Temperature', 'Outside Temperature']
-          items:
-            type: string
-        metrics:
-          type: array
-          description: Ordered metrics of the note measurements, e.g. ['temperature', 'temperature']
-          items:
-            type: string
-        units:
-          type: array
-          description: Ordered unitIds of the note measurements, e.g. ['°C', 'F']
-          items:
-            type: string
-      description: represents measurements added to a note
-    NoteFileDocument:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: Original filename of the uploaded document.
-        url:
-          type: string
-          description: Presigned download URL for the document.
-      description: Represents a non-image document attached to a note file.
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
   securitySchemes:
     Bearer:
       description: ''

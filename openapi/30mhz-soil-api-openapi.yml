@@ -210,47 +210,6 @@ paths:
           description: Not enough permissions to perform the operation.
 components:
   schemas:
-    Soil:
-      type: object
-      required:
-      - category
-      - permanentWiltingPoint
-      - soilId
-      - totalAvailableWater
-      properties:
-        category:
-          type: string
-          description: Category of the soil.
-        fieldCapacity:
-          type: number
-          format: double
-          description: Field capacity of the soil.
-          minimum: 0
-          maximum: 100
-        name:
-          type: string
-          description: Name of the soil.
-        permanentWiltingPoint:
-          type: number
-          format: double
-          description: Permanent wilting point of the soil.
-          minimum: 0
-          maximum: 100
-        createdAt:
-          type: integer
-          format: int64
-          description: The epoch millis of the creation time.
-        organizationId:
-          type: string
-          description: The organization the soil belongs to.
-        soilId:
-          type: string
-          description: Id of the soil.
-        totalAvailableWater:
-          type: number
-          format: double
-          description: Total available water of the soil.
-          readOnly: true
     NewSoil:
       type: object
       required:
@@ -313,6 +272,47 @@ components:
           description: Permanent wilting point of the soil.
           minimum: 0
           maximum: 100
+    Soil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
   securitySchemes:
     Bearer:
       description: ''

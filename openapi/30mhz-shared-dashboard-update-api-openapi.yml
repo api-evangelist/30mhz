@@ -46,7 +46,7 @@ paths:
               $ref: '#/components/schemas/SharedDashboardUpdate'
 components:
   schemas:
-    SharedByUserDetails:
+    SharedWithUserDetails:
       type: object
       properties:
         firstName:
@@ -63,13 +63,12 @@ components:
         organizationId:
           type: string
       description: Summary of a dashboard
-    SharedWithUserDetails:
+    SharedDashboardUpdate:
       type: object
       properties:
-        firstName:
+        name:
           type: string
-        lastName:
-          type: string
+      description: Updating shared dashboard properties
     SharedDashboard:
       type: object
       properties:
@@ -104,12 +103,13 @@ components:
           description: User who the dashboard has been shared with
         sharedWithUserDetails:
           $ref: '#/components/schemas/SharedWithUserDetails'
-    SharedDashboardUpdate:
+    SharedByUserDetails:
       type: object
       properties:
-        name:
+        firstName:
           type: string
-      description: Updating shared dashboard properties
+        lastName:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

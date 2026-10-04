@@ -170,21 +170,6 @@ paths:
           description: XBee factory does not exist.
 components:
   schemas:
-    XBeeFactoryEditable:
-      type: object
-      properties:
-        checkId:
-          type: string
-        remarks:
-          type: string
-        configurations:
-          type: object
-          additionalProperties:
-            type: string
-        testResults:
-          type: object
-          additionalProperties:
-            type: string
     XBeeConfiguration:
       type: object
       properties:
@@ -197,18 +182,6 @@ components:
         configurationValue:
           type: string
           description: 'The value for this configuration: a json object or a string.'
-    XBeeTestResult:
-      type: object
-      properties:
-        changedByEmail:
-          type: string
-          description: The email address of the user that changed this test result
-        testResultKey:
-          type: string
-          description: The key for this test result.
-        testResultValue:
-          type: string
-          description: 'The value for this test result: a json object or a string.'
     XBeeFactory:
       type: object
       properties:
@@ -233,6 +206,33 @@ components:
         macAddress:
           type: string
           description: MAC Address.
+    XBeeTestResult:
+      type: object
+      properties:
+        changedByEmail:
+          type: string
+          description: The email address of the user that changed this test result
+        testResultKey:
+          type: string
+          description: The key for this test result.
+        testResultValue:
+          type: string
+          description: 'The value for this test result: a json object or a string.'
+    XBeeFactoryEditable:
+      type: object
+      properties:
+        checkId:
+          type: string
+        remarks:
+          type: string
+        configurations:
+          type: object
+          additionalProperties:
+            type: string
+        testResults:
+          type: object
+          additionalProperties:
+            type: string
   securitySchemes:
     Bearer:
       description: ''

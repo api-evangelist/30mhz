@@ -92,7 +92,7 @@ paths:
           description: Partner not found.
 components:
   schemas:
-    Partner:
+    NewPartner:
       type: object
       properties:
         partnerName:
@@ -107,7 +107,7 @@ components:
         createdBy:
           type: string
           description: User that created the partner.
-    NewPartner:
+    Partner:
       type: object
       properties:
         partnerName:

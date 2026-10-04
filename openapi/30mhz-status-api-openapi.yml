@@ -392,19 +392,16 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
-    CheckCollection:
+    IngestStatusResponse:
       type: object
       properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
+        checkSummary:
+          $ref: '#/components/schemas/CheckSummary'
+        hits:
           type: integer
-          format: int32
-          description: The position within all the collections
+          format: int64
+        lastValueTimestamp:
+          type: string
     CalculationSettings:
       type: object
       required:
@@ -471,6 +468,19 @@ components:
           items:
             type: string
       description: Summary of a check
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     TwoValuesComparison:
       type: object
       properties:
@@ -496,16 +506,6 @@ components:
         percentageDifference:
           type: number
           format: float
-    IngestStatusResponse:
-      type: object
-      properties:
-        checkSummary:
-          $ref: '#/components/schemas/CheckSummary'
-        hits:
-          type: integer
-          format: int64
-        lastValueTimestamp:
-          type: string
     DeviceStatusResponse:
       type: object
       properties:

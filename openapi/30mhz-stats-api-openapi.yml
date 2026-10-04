@@ -836,6 +836,62 @@ paths:
           description: Organization with given id doesn't exist
 components:
   schemas:
+    CheckStatsRequest:
+      type: object
+      properties:
+        checkIds:
+          type: array
+          description: Check ids for returning the historical data.
+          uniqueItems: true
+          items:
+            type: string
+        collectionIdsPerField:
+          type: object
+          description: Filter/group values based on fields and collection ids
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        daysOfMonth:
+          type: array
+          description: Day (1-31) list parameter, e.g. [1] for the first of the month.
+          items:
+            type: integer
+            format: int32
+        daysOfWeek:
+          type: array
+          description: Day of the week (1-7) list parameter, e.g. [1] for Monday.
+          items:
+            type: integer
+            format: int32
+        hoursOfDay:
+          type: array
+          description: Hour (0-23) list parameter, e.g. [2, 3] for 2:00 am and 3:00 am.
+          items:
+            type: integer
+            format: int32
+        minutesOfHour:
+          type: array
+          description: Minute within the hour (0-59) list parameter, e.g. [20, 30] for 20th and 30th minute.
+          items:
+            type: integer
+            format: int32
+        organizationId:
+          type: string
+          description: The id of an organization (when tags are set).
+        sensorType:
+          type: string
+          description: The id of a sensor type (when tags are set).
+        tags:
+          type: array
+          description: Set tags to automatically select checks based on their tags.
+          uniqueItems: true
+          items:
+            type: string
+        tagsOperator:
+          type: string
+          description: Tags boolean operator (and/or).
     StatisticsInfoRequest:
       type: object
       properties:
@@ -909,6 +965,12 @@ components:
         timestamp:
           type: string
           description: Event's UTC timestamp in ISO 8601 format e.g. 2017-01-17T19:23:02Z
+    EventsCount:
+      type: object
+      properties:
+        events:
+          type: integer
+          format: int64
     NetworkOverviewResponse:
       type: object
       properties:
@@ -957,68 +1019,6 @@ components:
         totalWebChecks:
           type: integer
           format: int32
-    CheckStatsRequest:
-      type: object
-      properties:
-        checkIds:
-          type: array
-          description: Check ids for returning the historical data.
-          uniqueItems: true
-          items:
-            type: string
-        collectionIdsPerField:
-          type: object
-          description: Filter/group values based on fields and collection ids
-          additionalProperties:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-        daysOfMonth:
-          type: array
-          description: Day (1-31) list parameter, e.g. [1] for the first of the month.
-          items:
-            type: integer
-            format: int32
-        daysOfWeek:
-          type: array
-          description: Day of the week (1-7) list parameter, e.g. [1] for Monday.
-          items:
-            type: integer
-            format: int32
-        hoursOfDay:
-          type: array
-          description: Hour (0-23) list parameter, e.g. [2, 3] for 2:00 am and 3:00 am.
-          items:
-            type: integer
-            format: int32
-        minutesOfHour:
-          type: array
-          description: Minute within the hour (0-59) list parameter, e.g. [20, 30] for 20th and 30th minute.
-          items:
-            type: integer
-            format: int32
-        organizationId:
-          type: string
-          description: The id of an organization (when tags are set).
-        sensorType:
-          type: string
-          description: The id of a sensor type (when tags are set).
-        tags:
-          type: array
-          description: Set tags to automatically select checks based on their tags.
-          uniqueItems: true
-          items:
-            type: string
-        tagsOperator:
-          type: string
-          description: Tags boolean operator (and/or).
-    EventsCount:
-      type: object
-      properties:
-        events:
-          type: integer
-          format: int64
   securitySchemes:
     Bearer:
       description: ''

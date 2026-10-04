@@ -114,6 +114,16 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
     User:
       type: object
       required:
@@ -224,16 +234,6 @@ components:
           type: string
           description: The timezone of the user, defaults to Europe/Amsterdam
       description: Object holding the editable properties of a user
-    WebPageReference:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of a web page.
-        title:
-          type: string
-          description: Displayable title.
-      description: A reference to a web page
   securitySchemes:
     Bearer:
       description: ''

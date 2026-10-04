@@ -29,17 +29,6 @@ paths:
                 $ref: '#/components/schemas/HealthResponse'
 components:
   schemas:
-    ServiceHealth:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Dependency readiness, either 'up' or 'down'.
-        latency_ms:
-          type: integer
-          format: int64
-          description: Time in milliseconds the dependency's health check took to respond.
-      description: Readiness of a single backing service.
     HealthResponse:
       type: object
       properties:
@@ -55,6 +44,17 @@ components:
           type: string
           description: UTC ISO 8601 timestamp of when this readiness snapshot was computed.
       description: Aggregate readiness of the API and its backing services.
+    ServiceHealth:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Dependency readiness, either 'up' or 'down'.
+        latency_ms:
+          type: integer
+          format: int64
+          description: Time in milliseconds the dependency's health check took to respond.
+      description: Readiness of a single backing service.
   securitySchemes:
     Bearer:
       description: ''

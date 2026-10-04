@@ -119,28 +119,6 @@ paths:
           description: Not enough permissions to perform the operation
 components:
   schemas:
-    MotherTemplate:
-      type: object
-      properties:
-        configurationJson:
-          type: string
-          description: JSON configuration variable for the mother template.
-        createdAt:
-          type: string
-          description: The date and time a mother template was created.
-        description:
-          type: string
-          description: The description for the mother template.
-        name:
-          type: string
-          description: The name for the mother template.
-        templateId:
-          type: string
-          description: Template id for the mother template.
-        updatedAt:
-          type: string
-          description: The date and time a mother template was last updated.
-      description: MotherTemplate
     Mother:
       type: object
       properties:
@@ -216,6 +194,28 @@ components:
           type: string
         name:
           type: string
+    MotherTemplate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+          description: JSON configuration variable for the mother template.
+        createdAt:
+          type: string
+          description: The date and time a mother template was created.
+        description:
+          type: string
+          description: The description for the mother template.
+        name:
+          type: string
+          description: The name for the mother template.
+        templateId:
+          type: string
+          description: Template id for the mother template.
+        updatedAt:
+          type: string
+          description: The date and time a mother template was last updated.
+      description: MotherTemplate
   securitySchemes:
     Bearer:
       description: ''

@@ -123,27 +123,6 @@ paths:
           description: Not enough permissions to perform the operation.
 components:
   schemas:
-    SubscriptionAssignment:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Timestamp of when it was created.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
-        licenseId:
-          type: string
-          description: Unique identifier for the license.
-        organizationId:
-          type: string
-          description: Id of the subscribed organization.
-        subscription:
-          description: The subscription of the organization
-          $ref: '#/components/schemas/Subscription'
-        subscriptionId:
-          type: string
-          description: Unique identifier for the subscription.
     Subscription:
       type: object
       properties:
@@ -168,6 +147,27 @@ components:
           type: string
           description: Unique identifier for the subscription.
       description: Object holding the editable properties of a subscription
+    SubscriptionAssignment:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        organizationId:
+          type: string
+          description: Id of the subscribed organization.
+        subscription:
+          description: The subscription of the organization
+          $ref: '#/components/schemas/Subscription'
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
   securitySchemes:
     Bearer:
       description: ''

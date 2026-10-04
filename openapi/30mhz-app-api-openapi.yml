@@ -293,15 +293,6 @@ paths:
                   format: binary
 components:
   schemas:
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
     DataUpload:
       type: object
       properties:
@@ -443,6 +434,15 @@ components:
         type:
           type: string
           description: Type of the application.
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     ImageThumbnail:
       type: object
       properties:

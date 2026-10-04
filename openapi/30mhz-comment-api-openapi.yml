@@ -485,53 +485,7 @@ paths:
               $ref: '#/components/schemas/CommentRequest'
 components:
   schemas:
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    Comment:
-      type: object
-      properties:
-        activityType:
-          type: string
-        appInstallationId:
-          type: string
-        email:
-          type: string
-        groupId:
-          type: string
-        lastUpdatedTimestamp:
-          type: string
-        organizationId:
-          type: string
-        timestamp:
-          type: string
-        attachments:
-          description: Comment Attachments
-          $ref: '#/components/schemas/CommentAttachments'
-        commentId:
-          type: string
-          description: Unique id of the comment.
-        parentCommentId:
-          type: string
-          description: Parent comment id if reply
-        replies:
-          type: array
-          description: Replies of a comment
-          items:
-            $ref: '#/components/schemas/Comment'
-        tags:
-          description: Tags of a comment
-          $ref: '#/components/schemas/CommentTags'
-        text:
-          type: string
-          description: Comment text
-    CommentTags:
+    CommentRequest:
       type: object
       properties:
         fields:
@@ -542,16 +496,15 @@ components:
             uniqueItems: true
             items:
               type: string
+        appInstallationId:
+          type: string
+          description: App installation id comments belong to
         checkIds:
           type: array
-          description: Check ids to which comment belongs to
+          description: Check ids comments belong to
           uniqueItems: true
           items:
             type: string
-        checkTimestamp:
-          type: integer
-          format: int64
-          description: Timestamp of the check
         collectionId:
           type: string
           description: Collection id within a check
@@ -560,59 +513,25 @@ components:
           description: Date entry id of a check
         emails:
           type: array
-          description: Users mentioned in the comments
+          description: Emails comments belong to (comment creators)
           uniqueItems: true
           items:
             type: string
-        selectedCheckId:
+        groupId:
           type: string
-          description: Selected check for this comment
-        selectedField:
-          type: string
-          description: Selected field id for this comment
-    NewCommentReply:
-      type: object
-      properties:
-        emails:
+          description: Group id comments belong to
+        mentions:
           type: array
-          description: Emails of mentioned users
+          description: Users that are mentioned in the comment
           uniqueItems: true
           items:
             type: string
+        organizationId:
+          type: string
+          description: Organization id comments belong to
         text:
           type: string
-          description: Comment text
-    AttachedDocument:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
-    PaginatedComments:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
+          description: Text that should be in the comment
     Pagination:
       type: object
       properties:
@@ -625,6 +544,15 @@ components:
         size:
           type: integer
           format: int32
+    AttachedDocument:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
     NewComment:
       type: object
       properties:
@@ -686,53 +614,19 @@ components:
         text:
           type: string
           description: Comment text
-    CommentRequest:
+    ImageWithThumbnails:
       type: object
       properties:
-        fields:
-          type: object
-          description: Check fields
-          additionalProperties:
-            type: array
-            uniqueItems: true
-            items:
-              type: string
-        appInstallationId:
+        dataUploadId:
           type: string
-          description: App installation id comments belong to
-        checkIds:
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
           type: array
-          description: Check ids comments belong to
-          uniqueItems: true
           items:
-            type: string
-        collectionId:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
           type: string
-          description: Collection id within a check
-        dateEntryId:
-          type: string
-          description: Date entry id of a check
-        emails:
-          type: array
-          description: Emails comments belong to (comment creators)
-          uniqueItems: true
-          items:
-            type: string
-        groupId:
-          type: string
-          description: Group id comments belong to
-        mentions:
-          type: array
-          description: Users that are mentioned in the comment
-          uniqueItems: true
-          items:
-            type: string
-        organizationId:
-          type: string
-          description: Organization id comments belong to
-        text:
-          type: string
-          description: Text that should be in the comment
     CommentAttachments:
       type: object
       properties:
@@ -746,6 +640,73 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/ImageWithThumbnails'
+    PaginatedComments:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Comment:
+      type: object
+      properties:
+        activityType:
+          type: string
+        appInstallationId:
+          type: string
+        email:
+          type: string
+        groupId:
+          type: string
+        lastUpdatedTimestamp:
+          type: string
+        organizationId:
+          type: string
+        timestamp:
+          type: string
+        attachments:
+          description: Comment Attachments
+          $ref: '#/components/schemas/CommentAttachments'
+        commentId:
+          type: string
+          description: Unique id of the comment.
+        parentCommentId:
+          type: string
+          description: Parent comment id if reply
+        replies:
+          type: array
+          description: Replies of a comment
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          description: Tags of a comment
+          $ref: '#/components/schemas/CommentTags'
+        text:
+          type: string
+          description: Comment text
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    NewCommentReply:
+      type: object
+      properties:
+        emails:
+          type: array
+          description: Emails of mentioned users
+          uniqueItems: true
+          items:
+            type: string
+        text:
+          type: string
+          description: Comment text
     ImageThumbnail:
       type: object
       properties:
@@ -759,6 +720,45 @@ components:
         width:
           type: integer
           format: int32
+    CommentTags:
+      type: object
+      properties:
+        fields:
+          type: object
+          description: Check fields
+          additionalProperties:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+        checkIds:
+          type: array
+          description: Check ids to which comment belongs to
+          uniqueItems: true
+          items:
+            type: string
+        checkTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of the check
+        collectionId:
+          type: string
+          description: Collection id within a check
+        dateEntryId:
+          type: string
+          description: Date entry id of a check
+        emails:
+          type: array
+          description: Users mentioned in the comments
+          uniqueItems: true
+          items:
+            type: string
+        selectedCheckId:
+          type: string
+          description: Selected check for this comment
+        selectedField:
+          type: string
+          description: Selected field id for this comment
   securitySchemes:
     Bearer:
       description: ''

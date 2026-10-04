@@ -749,6 +749,23 @@ components:
         role:
           type: string
           description: Assigned role
+    LicenseAccessTokenRequest:
+      type: object
+      required:
+      - audience
+      - clientSecret
+      - licenseId
+      properties:
+        audience:
+          type: string
+          description: The intended consumer of the token, usually this is https://api.cropspace.com/api
+        clientSecret:
+          type: string
+          description: The client secret of the machine-to-machine service
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+      description: Request used by licenses to get an access token for authorization on certain API operations
     AccessToken:
       type: object
       required:
@@ -767,23 +784,6 @@ components:
           type: string
           description: Type of the access token
       description: An access token used to grant authorization on certain API operations
-    LicenseAccessTokenRequest:
-      type: object
-      required:
-      - audience
-      - clientSecret
-      - licenseId
-      properties:
-        audience:
-          type: string
-          description: The intended consumer of the token, usually this is https://api.cropspace.com/api
-        clientSecret:
-          type: string
-          description: The client secret of the machine-to-machine service
-        licenseId:
-          type: string
-          description: Unique identifier for the license.
-      description: Request used by licenses to get an access token for authorization on certain API operations
   securitySchemes:
     Bearer:
       description: ''

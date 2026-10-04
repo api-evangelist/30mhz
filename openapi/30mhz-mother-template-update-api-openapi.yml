@@ -45,6 +45,19 @@ paths:
               $ref: '#/components/schemas/MotherTemplateUpdate'
 components:
   schemas:
+    MotherTemplateUpdate:
+      type: object
+      properties:
+        configurationJson:
+          type: string
+          description: JSON configuration variable for the Gateway template.
+        description:
+          type: string
+          description: The description for the mother template.
+        name:
+          type: string
+          description: The name for the mother template.
+      description: MotherTemplateUpdate
     MotherTemplate:
       type: object
       properties:
@@ -67,19 +80,6 @@ components:
           type: string
           description: The date and time a mother template was last updated.
       description: MotherTemplate
-    MotherTemplateUpdate:
-      type: object
-      properties:
-        configurationJson:
-          type: string
-          description: JSON configuration variable for the Gateway template.
-        description:
-          type: string
-          description: The description for the mother template.
-        name:
-          type: string
-          description: The name for the mother template.
-      description: MotherTemplateUpdate
   securitySchemes:
     Bearer:
       description: ''

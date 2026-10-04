@@ -196,6 +196,14 @@ paths:
                 type: string
 components:
   schemas:
+    ConversionFormula:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: number
+          format: double
     Metric:
       type: object
       properties:
@@ -239,14 +247,6 @@ components:
           type: string
         unitLabel:
           type: string
-    ConversionFormula:
-      type: object
-      properties:
-        type:
-          type: string
-        value:
-          type: number
-          format: double
   securitySchemes:
     Bearer:
       description: ''

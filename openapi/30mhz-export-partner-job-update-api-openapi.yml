@@ -48,29 +48,6 @@ paths:
               $ref: '#/components/schemas/ExportPartnerJobUpdate'
 components:
   schemas:
-    ExportPartnerDataItem:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-    ExportPartnerJobMap:
-      type: object
-      required:
-      - exportPartnerData
-      properties:
-        checkId:
-          type: string
-        checkJsonKey:
-          type: string
-        exportPartnerData:
-          $ref: '#/components/schemas/ExportPartnerData'
     ExportPartnerAccess:
       type: object
       required:
@@ -108,6 +85,17 @@ components:
             $ref: '#/components/schemas/ExportPartnerDataItem'
         name:
           type: string
+    ExportPartnerJobMap:
+      type: object
+      required:
+      - exportPartnerData
+      properties:
+        checkId:
+          type: string
+        checkJsonKey:
+          type: string
+        exportPartnerData:
+          $ref: '#/components/schemas/ExportPartnerData'
     ExportPartnerJobUpdate:
       type: object
       properties:
@@ -173,6 +161,18 @@ components:
           type: string
           description: The date and time a export partner job was last updated.
       description: ExportPartnerJob
+    ExportPartnerDataItem:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

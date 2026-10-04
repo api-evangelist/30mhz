@@ -45,25 +45,44 @@ paths:
               $ref: '#/components/schemas/SensorTypeUpdate'
 components:
   schemas:
-    NotificationTemplate:
+    SharedSensorType:
       type: object
       properties:
-        condition:
+        createdAt:
           type: string
-        frontend:
+          description: The date and time a sensor type was shared.
+        organizationId:
           type: string
-        name:
+          description: ID of the organization to which the shared sensor type belongs
+        organizationName:
           type: string
-    SensorTypeEnumData:
-      type: object
-      properties:
-        key:
+        sensorTypeId:
           type: string
-        mappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
-    SharedByUserDetails:
+          description: Id of the original sensor type
+        sharedByUser:
+          type: string
+          description: User who shared the sensor type
+        sharedByUserDetails:
+          $ref: '#/components/schemas/SharedByUserDetails'
+        sharedSensorTypeId:
+          type: string
+          description: Id of the shared sensor type itself
+        sharedWithGroupId:
+          type: string
+          description: Group which the sensor type has been shared with
+        sharedWithGroupName:
+          type: string
+        sharedWithOrganizationId:
+          type: string
+          description: Organization which the sensor type has been shared with
+        sharedWithOrganizationName:
+          type: string
+        sharedWithUser:
+          type: string
+          description: User who the sensor type has been shared with
+        sharedWithUserDetails:
+          $ref: '#/components/schemas/SharedWithUserDetails'
+    SharedWithUserDetails:
       type: object
       properties:
         firstName:
@@ -178,13 +197,6 @@ components:
         sharedDetails:
           $ref: '#/components/schemas/SharedSensorType'
       description: Authorization entity
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     SensorTypeUpdate:
       type: object
       properties:
@@ -276,43 +288,13 @@ components:
         rangeMin:
           type: string
       description: Updating sensor type properties
-    SharedSensorType:
+    SharedByUserDetails:
       type: object
       properties:
-        createdAt:
+        firstName:
           type: string
-          description: The date and time a sensor type was shared.
-        organizationId:
+        lastName:
           type: string
-          description: ID of the organization to which the shared sensor type belongs
-        organizationName:
-          type: string
-        sensorTypeId:
-          type: string
-          description: Id of the original sensor type
-        sharedByUser:
-          type: string
-          description: User who shared the sensor type
-        sharedByUserDetails:
-          $ref: '#/components/schemas/SharedByUserDetails'
-        sharedSensorTypeId:
-          type: string
-          description: Id of the shared sensor type itself
-        sharedWithGroupId:
-          type: string
-          description: Group which the sensor type has been shared with
-        sharedWithGroupName:
-          type: string
-        sharedWithOrganizationId:
-          type: string
-          description: Organization which the sensor type has been shared with
-        sharedWithOrganizationName:
-          type: string
-        sharedWithUser:
-          type: string
-          description: User who the sensor type has been shared with
-        sharedWithUserDetails:
-          $ref: '#/components/schemas/SharedWithUserDetails'
     SensorTypeEnumDataMapping:
       type: object
       properties:
@@ -323,6 +305,24 @@ components:
         value:
           type: integer
           format: int32
+    NotificationTemplate:
+      type: object
+      properties:
+        condition:
+          type: string
+        frontend:
+          type: string
+        name:
+          type: string
+    SensorTypeEnumData:
+      type: object
+      properties:
+        key:
+          type: string
+        mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
   securitySchemes:
     Bearer:
       description: ''

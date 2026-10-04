@@ -337,241 +337,89 @@ paths:
                 $ref: '#/components/schemas/CheckProperties'
 components:
   schemas:
-    SensorField:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
-    Check:
+    DataSourceCoordinates:
       type: object
       required:
-      - checkId
-      - enabled
-      - frequency
-      - hasNotifications
-      - healthyThreshold
-      - locationThreshold
-      - maxReminders
-      - method
-      - name
-      - notificationIds
-      - notifications
-      - organizationId
-      - recentlyDownAt
-      - remindEvery
-      - state
-      - statusCodes
-      - timeout
-      - unhealthyThreshold
-      - url
+      - dataSourceId
+      - sinceDate
       properties:
-        allowRedirects:
-          type: boolean
-          description: Whether to follow redirects when a page returns HTTP code 302. Default is false.
-        calculationId:
-          type: string
-          description: The id of the calculation called by the webcheck
-        collectJson:
-          type: boolean
-          description: If the recollection of the JSON object has to be effectuated or not
-        conditional:
-          type: string
-          description: A javascript expression that is applied to the json result and has to evaluate to true for the data source to be UP.
-        contains:
-          type: string
-          description: Verify that the page returned contains this text, otherwise the data source will be reported as DOWN.
-        containsNot:
-          type: string
-          description: Verify that the page returned does NOT contain this text, if it does, the data source will be reported as DOWN.
-        cookies:
-          type: string
-          description: Send these cookies in each request when pinging the data source. You can use this, for example, for adding authentication data.
-        cron:
-          type: string
-          description: Only run this data source in the given schedule. This is written in Unix-like notation. For example, to run it only weekdays 8 to 17, write '* * 8-17 ? * MON-FRI'
-        data:
-          type: string
-          description: Payload to send, usually for POST or PUT methods
-        decimalsPerField:
-          type: object
-          description: The number of decimals used for each field of the data source.
-          additionalProperties:
-            type: integer
-            format: int32
-        description:
-          type: string
-          description: Brief description that elaborates on the name
-        email:
-          type: string
-          description: Email address.
-        enabled:
-          type: boolean
-          description: Whether the data source is enabled.
-        frequency:
-          type: integer
-          format: int32
-          description: The frequency with which the data source is pinged, in seconds.
-        gatewayId:
-          type: string
-          description: Identifier of the gateway the data source belongs to.
-        headers:
-          type: string
-          description: Send these HTTP headers in each request when pinging the data source. You can use this, for example, for adding authentication data.
-        healthyThreshold:
-          type: integer
-          format: int32
-          description: How many consecutive successful responses indicate that the data source is up.
-        locationThreshold:
-          type: integer
-          format: int64
-          description: How many locations indicate the data source is up/down.
-        locations:
-          type: array
-          description: From which locations to ping the data source from.
-          uniqueItems: true
-          items:
-            type: string
-        maxDecimals:
-          type: integer
-          format: int32
-          description: Max decimals for fields of the data source.
-        maxReminders:
-          type: integer
-          format: int32
-          description: The maximum number of times you want to be notified if DOWN.
-        method:
-          type: string
-          description: HTTP method (get/post/put/delete) to user for pinging the data source
-        name:
-          type: string
-          description: Displayable name.
-        organizationId:
-          type: string
-          description: Identifier of the organization this data source belongs to.
-        params:
-          type: string
-          description: Send these HTTP parameters in each request when pinging the data source.
-        remindEvery:
-          type: integer
-          format: int32
-          description: Every how many seconds to send another notification if data source is still DOWN. (See also Number of reminders).
-        sensorType:
-          type: string
-          description: The sensor type.
-        siteId:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        status:
-          type: string
-          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
-          enum:
-          - ACTIVE
-          - DEACTIVATED
-          - PAUSED
-        statusCodes:
-          type: array
-          description: What HTTP status code are expected when pinging the data source. If the received HTTP status is not in this list, the data source will be reported as DOWN.
-          uniqueItems: true
-          items:
-            type: integer
-            format: int32
-          maxItems: 2147483647
-          minItems: 1
-        stream:
-          type: boolean
-          description: Whether the stream is enabled for the response validation
-        tags:
-          type: array
-          description: The tags associated with the data source.
-          uniqueItems: true
-          items:
-            type: string
-        timeout:
-          type: integer
-          format: int32
-          description: How long we wait for the data source to respond before we consider it down.
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-        unhealthyThreshold:
-          type: integer
-          format: int32
-          description: How many consecutive failed responses indicate that the data source is down.
-        units:
-          type: array
-          description: The units associated with the sensor data source.
-          uniqueItems: true
-          items:
-            type: string
-        url:
-          type: string
-          description: The URL of the data source.
-        verify:
-          type: boolean
-          description: Whether SSL verification is enabled.
-        zoneId:
-          type: string
-          description: Identifier of the zone within a site where the data source belongs.
-        rangePerJsonKey:
-          type: object
-          description: Min/max ranges for each json key of the data source.
-          additionalProperties:
-            type: array
-            items:
-              type: number
-              format: double
-        timezoneOffset:
-          type: integer
-          format: int64
-          description: Offset of the timezone in minutes.
-        batteryStatus:
-          type: string
-          description: The battery status warnings or errors associated with this data source. Expected values are OK, WARNING and CRITICAL.
-        checkId:
-          type: string
-          description: Identifier of the data source
-        createdAt:
-          type: string
-          description: Timestamp of when it was created.
-        dataSourceCoordinateHistory:
-          type: array
-          description: A collection of all positions of this data source.
-          items:
-            $ref: '#/components/schemas/DataSourceCoordinates'
-        dataSourceCoordinates:
-          description: A set of numbers that represent the current position of a data source
-          $ref: '#/components/schemas/DataSourceCoordinates'
-        hasNotifications:
-          type: boolean
-          description: Does the data source have any notifications associated with it
-        notificationIds:
-          type: array
-          description: Ids of the notifications for this check
-          items:
-            type: string
-        notifications:
-          type: array
-          description: The notifications set for this sensor.
-          items:
-            $ref: '#/components/schemas/Notification'
-        recentlyDownAt:
+        coordinateX:
           type: number
           format: double
-          description: Last moment when the data source was DOWN, as a Unix Timestamp
-        state:
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
           type: string
-          description: 'The current state of the data source: UP or DOWN.'
-        owner:
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
           type: string
-          description: Email address.
-      description: A check
+          description: Identifier of the data source
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
+    EventHook:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
     CheckProperties:
       type: object
       properties:
@@ -817,57 +665,20 @@ components:
           items:
             type: string
       description: Holds the editable properties of a Notification
-    StructuredConditional:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation.
-        checkFields:
-          type: array
-          description: List of fields represented by the check id and field name
-          items:
-            $ref: '#/components/schemas/SensorField'
-        interval:
-          type: string
-          description: The time interval to aggregate over.
-        key:
-          type: string
-          description: Key of the structured conditional
-        operator:
-          type: string
-          description: Operator of the conditional
-        operatorType:
-          type: string
-          description: Operator type of the conditional
-          enum:
-          - COMPARISON
-          - LOGICAL
-        value:
-          type: string
-          description: Value of the key given the operator
-    EventHook:
+    CalculationSettings:
       type: object
       required:
-      - method
-      - url
+      - inputParams
       properties:
-        headers:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        inputParams:
           type: object
-          description: Headers of the HTTP request
+          description: A map of the necessary input parameters and their type for performing the calculation
           additionalProperties:
             type: object
-        method:
-          type: string
-          description: Method of the HTTP request
-        payload:
-          type: object
-          description: Payload of the HTTP request
-          additionalProperties:
-            type: object
-        url:
-          type: string
-          description: Url of the HTTP request
+      description: Settings used to perform a calculation.
     CheckSummary:
       type: object
       properties:
@@ -920,6 +731,18 @@ components:
           items:
             type: string
       description: Summary of a check
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
     DataSourceCoordinatesEditable:
       type: object
       properties:
@@ -935,38 +758,6 @@ components:
           type: string
           description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
       description: Object containing the editable properties of DataSourceCoordinates.
-    DataSourceCoordinates:
-      type: object
-      required:
-      - dataSourceId
-      - sinceDate
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-        dataSourceId:
-          type: string
-          description: Identifier of the data source
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
-        zoneName:
-          type: string
-          description: Name of the zone
-        zoneUuid:
-          type: string
-          description: Unique identifier of the zone
-      description: Coordinates of a data source since a given timestamp.
     CheckCollection:
       type: object
       properties:
@@ -980,20 +771,229 @@ components:
           type: integer
           format: int32
           description: The position within all the collections
-    CalculationSettings:
+    Check:
       type: object
       required:
-      - inputParams
+      - checkId
+      - enabled
+      - frequency
+      - hasNotifications
+      - healthyThreshold
+      - locationThreshold
+      - maxReminders
+      - method
+      - name
+      - notificationIds
+      - notifications
+      - organizationId
+      - recentlyDownAt
+      - remindEvery
+      - state
+      - statusCodes
+      - timeout
+      - unhealthyThreshold
+      - url
       properties:
+        allowRedirects:
+          type: boolean
+          description: Whether to follow redirects when a page returns HTTP code 302. Default is false.
         calculationId:
           type: string
-          description: Unique identifier for the calculation
-        inputParams:
+          description: The id of the calculation called by the webcheck
+        collectJson:
+          type: boolean
+          description: If the recollection of the JSON object has to be effectuated or not
+        conditional:
+          type: string
+          description: A javascript expression that is applied to the json result and has to evaluate to true for the data source to be UP.
+        contains:
+          type: string
+          description: Verify that the page returned contains this text, otherwise the data source will be reported as DOWN.
+        containsNot:
+          type: string
+          description: Verify that the page returned does NOT contain this text, if it does, the data source will be reported as DOWN.
+        cookies:
+          type: string
+          description: Send these cookies in each request when pinging the data source. You can use this, for example, for adding authentication data.
+        cron:
+          type: string
+          description: Only run this data source in the given schedule. This is written in Unix-like notation. For example, to run it only weekdays 8 to 17, write '* * 8-17 ? * MON-FRI'
+        data:
+          type: string
+          description: Payload to send, usually for POST or PUT methods
+        decimalsPerField:
           type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
+          description: The number of decimals used for each field of the data source.
           additionalProperties:
-            type: object
-      description: Settings used to perform a calculation.
+            type: integer
+            format: int32
+        description:
+          type: string
+          description: Brief description that elaborates on the name
+        email:
+          type: string
+          description: Email address.
+        enabled:
+          type: boolean
+          description: Whether the data source is enabled.
+        frequency:
+          type: integer
+          format: int32
+          description: The frequency with which the data source is pinged, in seconds.
+        gatewayId:
+          type: string
+          description: Identifier of the gateway the data source belongs to.
+        headers:
+          type: string
+          description: Send these HTTP headers in each request when pinging the data source. You can use this, for example, for adding authentication data.
+        healthyThreshold:
+          type: integer
+          format: int32
+          description: How many consecutive successful responses indicate that the data source is up.
+        locationThreshold:
+          type: integer
+          format: int64
+          description: How many locations indicate the data source is up/down.
+        locations:
+          type: array
+          description: From which locations to ping the data source from.
+          uniqueItems: true
+          items:
+            type: string
+        maxDecimals:
+          type: integer
+          format: int32
+          description: Max decimals for fields of the data source.
+        maxReminders:
+          type: integer
+          format: int32
+          description: The maximum number of times you want to be notified if DOWN.
+        method:
+          type: string
+          description: HTTP method (get/post/put/delete) to user for pinging the data source
+        name:
+          type: string
+          description: Displayable name.
+        organizationId:
+          type: string
+          description: Identifier of the organization this data source belongs to.
+        params:
+          type: string
+          description: Send these HTTP parameters in each request when pinging the data source.
+        remindEvery:
+          type: integer
+          format: int32
+          description: Every how many seconds to send another notification if data source is still DOWN. (See also Number of reminders).
+        sensorType:
+          type: string
+          description: The sensor type.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        status:
+          type: string
+          description: The status of the data source, e.g. ACTIVE, DEACTIVATED or PAUSED.
+          enum:
+          - ACTIVE
+          - DEACTIVATED
+          - PAUSED
+        statusCodes:
+          type: array
+          description: What HTTP status code are expected when pinging the data source. If the received HTTP status is not in this list, the data source will be reported as DOWN.
+          uniqueItems: true
+          items:
+            type: integer
+            format: int32
+          maxItems: 2147483647
+          minItems: 1
+        stream:
+          type: boolean
+          description: Whether the stream is enabled for the response validation
+        tags:
+          type: array
+          description: The tags associated with the data source.
+          uniqueItems: true
+          items:
+            type: string
+        timeout:
+          type: integer
+          format: int32
+          description: How long we wait for the data source to respond before we consider it down.
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        unhealthyThreshold:
+          type: integer
+          format: int32
+          description: How many consecutive failed responses indicate that the data source is down.
+        units:
+          type: array
+          description: The units associated with the sensor data source.
+          uniqueItems: true
+          items:
+            type: string
+        url:
+          type: string
+          description: The URL of the data source.
+        verify:
+          type: boolean
+          description: Whether SSL verification is enabled.
+        zoneId:
+          type: string
+          description: Identifier of the zone within a site where the data source belongs.
+        rangePerJsonKey:
+          type: object
+          description: Min/max ranges for each json key of the data source.
+          additionalProperties:
+            type: array
+            items:
+              type: number
+              format: double
+        timezoneOffset:
+          type: integer
+          format: int64
+          description: Offset of the timezone in minutes.
+        batteryStatus:
+          type: string
+          description: The battery status warnings or errors associated with this data source. Expected values are OK, WARNING and CRITICAL.
+        checkId:
+          type: string
+          description: Identifier of the data source
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        dataSourceCoordinateHistory:
+          type: array
+          description: A collection of all positions of this data source.
+          items:
+            $ref: '#/components/schemas/DataSourceCoordinates'
+        dataSourceCoordinates:
+          description: A set of numbers that represent the current position of a data source
+          $ref: '#/components/schemas/DataSourceCoordinates'
+        hasNotifications:
+          type: boolean
+          description: Does the data source have any notifications associated with it
+        notificationIds:
+          type: array
+          description: Ids of the notifications for this check
+          items:
+            type: string
+        notifications:
+          type: array
+          description: The notifications set for this sensor.
+          items:
+            $ref: '#/components/schemas/Notification'
+        recentlyDownAt:
+          type: number
+          format: double
+          description: Last moment when the data source was DOWN, as a Unix Timestamp
+        state:
+          type: string
+          description: 'The current state of the data source: UP or DOWN.'
+        owner:
+          type: string
+          description: Email address.
+      description: A check
   securitySchemes:
     Bearer:
       description: ''

@@ -246,8 +246,12 @@ paths:
           description: Error while retrieving subscriptions.
 components:
   schemas:
-    Subscription:
+    SubscriptionNew:
       type: object
+      required:
+      - licenseId
+      - name
+      - subscriptionId
       properties:
         actions:
           type: array
@@ -257,12 +261,6 @@ components:
         name:
           type: string
           description: Displayable name.
-        createdAt:
-          type: string
-          description: Timestamp of when it was created.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
         licenseId:
           type: string
           description: Unique identifier for the license.
@@ -282,12 +280,8 @@ components:
           type: string
           description: Displayable name.
       description: Object holding the editable properties of a subscription
-    SubscriptionNew:
+    Subscription:
       type: object
-      required:
-      - licenseId
-      - name
-      - subscriptionId
       properties:
         actions:
           type: array
@@ -297,6 +291,12 @@ components:
         name:
           type: string
           description: Displayable name.
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
         licenseId:
           type: string
           description: Unique identifier for the license.

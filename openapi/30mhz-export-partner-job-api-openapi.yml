@@ -134,7 +134,20 @@ paths:
               $ref: '#/components/schemas/ExportPartnerGetJobRequest'
 components:
   schemas:
-    ExportPartnerDataItem:
+    ExportPartnerGetJobRequest:
+      type: object
+      required:
+      - active
+      - frequency
+      properties:
+        active:
+          type: boolean
+        exportPartnerId:
+          type: string
+        frequency:
+          type: integer
+          format: int32
+    ExportPartnerData:
       type: object
       required:
       - id
@@ -144,6 +157,11 @@ components:
         id:
           type: integer
           format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
         name:
           type: string
     ExportPartnerJobMap:
@@ -157,6 +175,18 @@ components:
           type: string
         exportPartnerData:
           $ref: '#/components/schemas/ExportPartnerData'
+    ExportPartnerDataItem:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
     NewExportPartnerJob:
       type: object
       required:
@@ -180,36 +210,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExportPartnerJobMap'
-    ExportPartnerData:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        items:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ExportPartnerDataItem'
-        name:
-          type: string
-    ExportPartnerGetJobRequest:
-      type: object
-      required:
-      - active
-      - frequency
-      properties:
-        active:
-          type: boolean
-        exportPartnerId:
-          type: string
-        frequency:
-          type: integer
-          format: int32
   securitySchemes:
     Bearer:
       description: ''

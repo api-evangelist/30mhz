@@ -279,6 +279,73 @@ paths:
               $ref: '#/components/schemas/CultivationTargetNew'
 components:
   schemas:
+    CultivationTargetNew:
+      type: object
+      required:
+      - cultivationId
+      - metricId
+      - name
+      - organizationId
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+      description: Object holding the required properties to create a new CultivationTarget.
+    CultivationTarget:
+      type: object
+      required:
+      - createdAt
+      - cultivationId
+      - cultivationTargetId
+      - organizationId
+      properties:
+        hasNightTarget:
+          type: boolean
+          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
+        metricId:
+          type: string
+          description: Identifier of the metric
+        name:
+          type: string
+          description: Displayable name.
+        setpoints:
+          type: array
+          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
+          items:
+            $ref: '#/components/schemas/CultivationTargetSetpoint'
+        createdAt:
+          type: string
+          description: Timestamp of when it was created. Identifies the target within the  cultivation.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        cultivationId:
+          type: string
+          description: Universally unique identifier of a cultivation.
+        cultivationTargetId:
+          type: string
+          description: Universally unique identifier of a cultivation target.
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+      description: Represent a metric target for a cultivation.
     CultivationTargetSetpoint:
       type: object
       required:
@@ -318,73 +385,6 @@ components:
           items:
             $ref: '#/components/schemas/CultivationTargetSetpoint'
       description: Object containing the editable properties of CultivationTarget.
-    CultivationTarget:
-      type: object
-      required:
-      - createdAt
-      - cultivationId
-      - cultivationTargetId
-      - organizationId
-      properties:
-        hasNightTarget:
-          type: boolean
-          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
-        metricId:
-          type: string
-          description: Identifier of the metric
-        name:
-          type: string
-          description: Displayable name.
-        setpoints:
-          type: array
-          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
-          items:
-            $ref: '#/components/schemas/CultivationTargetSetpoint'
-        createdAt:
-          type: string
-          description: Timestamp of when it was created. Identifies the target within the  cultivation.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        cultivationTargetId:
-          type: string
-          description: Universally unique identifier of a cultivation target.
-        organizationId:
-          type: string
-          description: The unique identifier of the organization it belongs to.
-      description: Represent a metric target for a cultivation.
-    CultivationTargetNew:
-      type: object
-      required:
-      - cultivationId
-      - metricId
-      - name
-      - organizationId
-      properties:
-        hasNightTarget:
-          type: boolean
-          description: Whether this target defines separate day and night values. Only allowed on a cultivation with DAILY target resolution that has both start-of-day and start-of-night times set.
-        metricId:
-          type: string
-          description: Identifier of the metric
-        name:
-          type: string
-          description: Displayable name.
-        setpoints:
-          type: array
-          description: The metric target and bandwidth setpoints in the cultivation, sorted by timestamp
-          items:
-            $ref: '#/components/schemas/CultivationTargetSetpoint'
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        organizationId:
-          type: string
-          description: The unique identifier of the organization it belongs to.
-      description: Object holding the required properties to create a new CultivationTarget.
   securitySchemes:
     Bearer:
       description: ''

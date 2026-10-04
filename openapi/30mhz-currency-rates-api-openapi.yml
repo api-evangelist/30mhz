@@ -40,22 +40,6 @@ paths:
               $ref: '#/components/schemas/CurrencyRatesMapper'
 components:
   schemas:
-    CurrencyRates:
-      type: object
-      properties:
-        base:
-          type: string
-          description: Currency rates base.
-        date:
-          type: string
-          description: Currency rates date.
-        rates:
-          type: object
-          description: Currency rates.
-          additionalProperties:
-            type: number
-            format: double
-      description: CurrencyRates
     CurrencyRatesMapper:
       type: object
       properties:
@@ -77,6 +61,22 @@ components:
           type: string
         rates:
           type: string
+    CurrencyRates:
+      type: object
+      properties:
+        base:
+          type: string
+          description: Currency rates base.
+        date:
+          type: string
+          description: Currency rates date.
+        rates:
+          type: object
+          description: Currency rates.
+          additionalProperties:
+            type: number
+            format: double
+      description: CurrencyRates
   securitySchemes:
     Bearer:
       description: ''

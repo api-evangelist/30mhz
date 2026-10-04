@@ -135,6 +135,48 @@ paths:
       x-admin-only: true
 components:
   schemas:
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
+        name:
+          type: string
+    ExportPartnerDataItem:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    NewExportPartner:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportPartnerData'
+        description:
+          type: string
+        exportPartnerId:
+          type: string
+        exportPartnerURL:
+          type: string
     ExportPartner:
       type: object
       properties:
@@ -162,48 +204,6 @@ components:
           type: string
           description: The date and time a export partner was last updated.
       description: ExportPartner
-    NewExportPartner:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExportPartnerData'
-        description:
-          type: string
-        exportPartnerId:
-          type: string
-        exportPartnerURL:
-          type: string
-    ExportPartnerDataItem:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-    ExportPartnerData:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        items:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ExportPartnerDataItem'
-        name:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

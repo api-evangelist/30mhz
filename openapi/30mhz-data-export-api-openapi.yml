@@ -162,63 +162,6 @@ paths:
               $ref: '#/components/schemas/DataExportRequest'
 components:
   schemas:
-    DataExportBackgroundRequest:
-      type: object
-      required:
-      - timeZone
-      properties:
-        aggregationInterval:
-          type: string
-        aggregationMetric:
-          type: string
-        checkIds:
-          type: array
-          items:
-            type: string
-        dataExportId:
-          type: string
-        decimalMark:
-          type: string
-        documentType:
-          type: string
-        email:
-          type: string
-        format:
-          type: string
-        fromDate:
-          type: string
-        location:
-          type: string
-        organization:
-          type: string
-        sensorType:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        timeZone:
-          type: integer
-          format: int32
-        toDate:
-          type: string
-      description: The created request to export data
-    DataExportResponse:
-      type: object
-      properties:
-        dataExport:
-          $ref: '#/components/schemas/DataExport'
-        resourceUrl:
-          type: string
-      description: A wrapper for the data export along with the resulting document url
-    DataExportCountResponse:
-      type: object
-      required:
-      - rowsCount
-      properties:
-        rowsCount:
-          type: integer
-          format: int64
     DataExport:
       type: object
       properties:
@@ -279,6 +222,14 @@ components:
           type: string
           description: The year parameter of the data export.
       description: DataExport
+    DataExportResponse:
+      type: object
+      properties:
+        dataExport:
+          $ref: '#/components/schemas/DataExport'
+        resourceUrl:
+          type: string
+      description: A wrapper for the data export along with the resulting document url
     DataExportRequest:
       type: object
       required:
@@ -322,6 +273,55 @@ components:
         year:
           type: string
       description: A request to export data
+    DataExportCountResponse:
+      type: object
+      required:
+      - rowsCount
+      properties:
+        rowsCount:
+          type: integer
+          format: int64
+    DataExportBackgroundRequest:
+      type: object
+      required:
+      - timeZone
+      properties:
+        aggregationInterval:
+          type: string
+        aggregationMetric:
+          type: string
+        checkIds:
+          type: array
+          items:
+            type: string
+        dataExportId:
+          type: string
+        decimalMark:
+          type: string
+        documentType:
+          type: string
+        email:
+          type: string
+        format:
+          type: string
+        fromDate:
+          type: string
+        location:
+          type: string
+        organization:
+          type: string
+        sensorType:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        timeZone:
+          type: integer
+          format: int32
+        toDate:
+          type: string
+      description: The created request to export data
   securitySchemes:
     Bearer:
       description: ''

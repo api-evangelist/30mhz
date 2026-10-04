@@ -244,21 +244,6 @@ paths:
           description: User not allowed to perform the operation
 components:
   schemas:
-    DashboardNew:
-      type: object
-      required:
-      - name
-      properties:
-        appId:
-          type: string
-          description: Identifier of the application the dashboard belongs to.
-        description:
-          type: string
-          description: Description of the dashboard.
-        name:
-          type: string
-          description: Name of the dashboard.
-      description: Object holding the required properties to create a new dashboard
     Dashboard:
       type: object
       required:
@@ -293,6 +278,21 @@ components:
           type: string
           description: Identifier of the organization that owns the dashboard.
       description: Core object in the platform used for grouping widget objects
+    DashboardNew:
+      type: object
+      required:
+      - name
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+      description: Object holding the required properties to create a new dashboard
   securitySchemes:
     Bearer:
       description: ''

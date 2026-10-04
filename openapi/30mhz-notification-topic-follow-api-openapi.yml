@@ -185,18 +185,6 @@ paths:
           description: User not allowed to perform the operation
 components:
   schemas:
-    NotificationMethods:
-      type: object
-      properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - EMAIL
-            - SMS
-            - WHATSAPP
     NotificationTopicFollow:
       type: object
       properties:
@@ -224,6 +212,18 @@ components:
           format: int32
         notificationTopicId:
           type: string
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
   securitySchemes:
     Bearer:
       description: ''

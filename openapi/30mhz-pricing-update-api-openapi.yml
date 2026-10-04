@@ -49,6 +49,61 @@ paths:
               $ref: '#/components/schemas/PricingUpdate'
 components:
   schemas:
+    PricingUpdate:
+      type: object
+      properties:
+        checks:
+          type: object
+          description: The values for the checks component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        currency:
+          type: string
+          description: The currency of the pricing record.
+        discountPercentage:
+          type: number
+          format: float
+          description: The discount percentage for the pricing record.
+        email:
+          type: object
+          description: The values for the checks component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        json:
+          type: array
+          description: The values for the json hits component of the pricing record.
+          items:
+            type: object
+            additionalProperties:
+              type: number
+              format: double
+        mothers:
+          type: object
+          description: The values for the mothers component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        regular:
+          type: array
+          description: The values for the regular hits component of the pricing record.
+          items:
+            type: object
+            additionalProperties:
+              type: number
+              format: double
+        sms:
+          type: object
+          description: The values for the sms component of the pricing record.
+          additionalProperties:
+            type: number
+            format: double
+        vatPercentage:
+          type: number
+          format: float
+          description: The VAT (value-added tax) percentage for the pricing record.
+      description: PricingUpdate
     Pricing:
       type: object
       properties:
@@ -107,61 +162,6 @@ components:
           format: float
           description: The VAT (value-added tax) percentage for the pricing record.
       description: Pricing
-    PricingUpdate:
-      type: object
-      properties:
-        checks:
-          type: object
-          description: The values for the checks component of the pricing record.
-          additionalProperties:
-            type: number
-            format: double
-        currency:
-          type: string
-          description: The currency of the pricing record.
-        discountPercentage:
-          type: number
-          format: float
-          description: The discount percentage for the pricing record.
-        email:
-          type: object
-          description: The values for the checks component of the pricing record.
-          additionalProperties:
-            type: number
-            format: double
-        json:
-          type: array
-          description: The values for the json hits component of the pricing record.
-          items:
-            type: object
-            additionalProperties:
-              type: number
-              format: double
-        mothers:
-          type: object
-          description: The values for the mothers component of the pricing record.
-          additionalProperties:
-            type: number
-            format: double
-        regular:
-          type: array
-          description: The values for the regular hits component of the pricing record.
-          items:
-            type: object
-            additionalProperties:
-              type: number
-              format: double
-        sms:
-          type: object
-          description: The values for the sms component of the pricing record.
-          additionalProperties:
-            type: number
-            format: double
-        vatPercentage:
-          type: number
-          format: float
-          description: The VAT (value-added tax) percentage for the pricing record.
-      description: PricingUpdate
   securitySchemes:
     Bearer:
       description: ''

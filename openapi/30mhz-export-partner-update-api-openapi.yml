@@ -53,33 +53,6 @@ paths:
               $ref: '#/components/schemas/ExportPartnerUpdate'
 components:
   schemas:
-    ExportPartner:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: The date and time a export partner was created.
-        data:
-          type: array
-          description: The json data of export partner.
-          items:
-            $ref: '#/components/schemas/ExportPartnerData'
-        description:
-          type: string
-          description: The description of export partner.
-        exportPartnerId:
-          type: string
-          description: Export partner id.
-        exportPartnerURL:
-          type: string
-          description: The url of export partner.
-        organizationId:
-          type: string
-          description: UUID of the check
-        updatedAt:
-          type: string
-          description: The date and time a export partner was last updated.
-      description: ExportPartner
     ExportPartnerData:
       type: object
       required:
@@ -124,6 +97,33 @@ components:
           type: string
           description: The url of export partner.
       description: ExportPartnerUpdate
+    ExportPartner:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: The date and time a export partner was created.
+        data:
+          type: array
+          description: The json data of export partner.
+          items:
+            $ref: '#/components/schemas/ExportPartnerData'
+        description:
+          type: string
+          description: The description of export partner.
+        exportPartnerId:
+          type: string
+          description: Export partner id.
+        exportPartnerURL:
+          type: string
+          description: The url of export partner.
+        organizationId:
+          type: string
+          description: UUID of the check
+        updatedAt:
+          type: string
+          description: The date and time a export partner was last updated.
+      description: ExportPartner
   securitySchemes:
     Bearer:
       description: ''

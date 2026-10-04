@@ -147,6 +147,28 @@ paths:
                   format: binary
 components:
   schemas:
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
     DataUpload:
       type: object
       properties:
@@ -180,28 +202,6 @@ components:
         presignedUrl:
           type: string
       description: DataUpload
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
   securitySchemes:
     Bearer:
       description: ''

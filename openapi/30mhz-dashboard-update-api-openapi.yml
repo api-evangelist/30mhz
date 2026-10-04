@@ -163,19 +163,6 @@ paths:
               $ref: '#/components/schemas/DashboardEditable'
 components:
   schemas:
-    DashboardEditable:
-      type: object
-      properties:
-        appId:
-          type: string
-          description: Identifier of the application the dashboard belongs to.
-        description:
-          type: string
-          description: Description of the dashboard.
-        name:
-          type: string
-          description: Name of the dashboard.
-      description: Object holding the editable properties of a dashboard
     Dashboard:
       type: object
       required:
@@ -210,6 +197,19 @@ components:
           type: string
           description: Identifier of the organization that owns the dashboard.
       description: Core object in the platform used for grouping widget objects
+    DashboardEditable:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: Identifier of the application the dashboard belongs to.
+        description:
+          type: string
+          description: Description of the dashboard.
+        name:
+          type: string
+          description: Name of the dashboard.
+      description: Object holding the editable properties of a dashboard
   securitySchemes:
     Bearer:
       description: ''

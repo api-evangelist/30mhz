@@ -129,29 +129,6 @@ paths:
               $ref: '#/components/schemas/NewCalculation'
 components:
   schemas:
-    Calculation:
-      type: object
-      properties:
-        calculationId:
-          type: string
-          description: Unique identifier for the calculation
-        description:
-          type: string
-          description: Description for the calculation
-        inputParams:
-          type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
-          additionalProperties:
-            type: string
-        name:
-          type: string
-          description: Displayable name for the calculation
-        outputFields:
-          type: object
-          description: A map of the selected output parameters and their type from the calculation response
-          additionalProperties:
-            type: string
-      description: Calculations allow querying data through operations and aggregations.
     NewCalculation:
       type: object
       required:
@@ -187,6 +164,29 @@ components:
           type: string
           description: Unique identifier for the calculation template
       description: Object holding the properties of a new calculation.
+    Calculation:
+      type: object
+      properties:
+        calculationId:
+          type: string
+          description: Unique identifier for the calculation
+        description:
+          type: string
+          description: Description for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: string
+        name:
+          type: string
+          description: Displayable name for the calculation
+        outputFields:
+          type: object
+          description: A map of the selected output parameters and their type from the calculation response
+          additionalProperties:
+            type: string
+      description: Calculations allow querying data through operations and aggregations.
     CalculationSettings:
       type: object
       required:

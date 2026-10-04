@@ -127,19 +127,6 @@ paths:
               $ref: '#/components/schemas/NewOffer'
 components:
   schemas:
-    OfferEditable:
-      type: object
-      properties:
-        duration:
-          type: string
-          description: Duration of the offer.
-        requiredExtensionIds:
-          type: array
-          description: Extension ids to install.
-          items:
-            type: string
-        subscriptionTier:
-          type: string
     Offer:
       type: object
       properties:
@@ -192,6 +179,19 @@ components:
         partnerId:
           type: string
           description: Partner id.
+    OfferEditable:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: Duration of the offer.
+        requiredExtensionIds:
+          type: array
+          description: Extension ids to install.
+          items:
+            type: string
+        subscriptionTier:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

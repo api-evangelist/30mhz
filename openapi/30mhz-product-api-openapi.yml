@@ -117,60 +117,6 @@ paths:
       x-admin-only: true
 components:
   schemas:
-    NewProduct:
-      type: object
-      required:
-      - stock
-      properties:
-        prices:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: number
-              format: float
-        articleNumber:
-          type: string
-        availabilityDate:
-          type: string
-        batchSize:
-          type: integer
-          format: int32
-        configuration:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        costPrice:
-          type: number
-          format: float
-        description:
-          type: string
-        landOfOrigin:
-          type: string
-        lockPrice:
-          type: boolean
-        phase:
-          type: string
-        productId:
-          type: string
-        productType:
-          type: string
-        remark:
-          type: string
-        sensorType:
-          type: string
-        status:
-          type: string
-        stock:
-          type: integer
-          format: int32
-        weight:
-          type: integer
-          format: int32
-        specificationSheetId:
-          type: string
     Product:
       type: object
       required:
@@ -253,6 +199,60 @@ components:
           format: int32
           description: Product weight in grams.
       description: Product
+    NewProduct:
+      type: object
+      required:
+      - stock
+      properties:
+        prices:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: float
+        articleNumber:
+          type: string
+        availabilityDate:
+          type: string
+        batchSize:
+          type: integer
+          format: int32
+        configuration:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        costPrice:
+          type: number
+          format: float
+        description:
+          type: string
+        landOfOrigin:
+          type: string
+        lockPrice:
+          type: boolean
+        phase:
+          type: string
+        productId:
+          type: string
+        productType:
+          type: string
+        remark:
+          type: string
+        sensorType:
+          type: string
+        status:
+          type: string
+        stock:
+          type: integer
+          format: int32
+        weight:
+          type: integer
+          format: int32
+        specificationSheetId:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

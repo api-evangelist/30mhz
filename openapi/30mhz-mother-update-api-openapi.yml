@@ -45,49 +45,6 @@ paths:
               $ref: '#/components/schemas/MotherUpdate'
 components:
   schemas:
-    MotherUpdate:
-      type: object
-      properties:
-        alarmsChecks:
-          type: array
-          description: The alarms checks ids of the mother.
-          uniqueItems: true
-          items:
-            type: string
-        deletedAt:
-          type: string
-          description: The date and time a mother was deleted.
-        deployedAt:
-          type: string
-          description: The date and time a mother was deployed.
-        isBillable:
-          type: boolean
-          description: States if the mother is billable or not.
-        locationName:
-          type: string
-          description: The mother's location.
-        name:
-          type: string
-          description: Mother's name.
-        organizationId:
-          type: string
-          description: The organization of the mother.
-        remarks:
-          type: string
-          description: The remarks for the mother.
-        sqsAccessKey:
-          type: string
-          description: The mother probe sqs access key.
-        sqsSecretKey:
-          type: string
-          description: The mother probe sqs secret key.
-        state:
-          type: string
-          description: The state of the mother.
-        templateId:
-          type: string
-          description: Mother's template id.
-      description: Update Mother properties.
     Mother:
       type: object
       properties:
@@ -154,6 +111,49 @@ components:
           type: string
           description: The address of the xbee.
       description: Mother
+    MotherUpdate:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the mother.
+          uniqueItems: true
+          items:
+            type: string
+        deletedAt:
+          type: string
+          description: The date and time a mother was deleted.
+        deployedAt:
+          type: string
+          description: The date and time a mother was deployed.
+        isBillable:
+          type: boolean
+          description: States if the mother is billable or not.
+        locationName:
+          type: string
+          description: The mother's location.
+        name:
+          type: string
+          description: Mother's name.
+        organizationId:
+          type: string
+          description: The organization of the mother.
+        remarks:
+          type: string
+          description: The remarks for the mother.
+        sqsAccessKey:
+          type: string
+          description: The mother probe sqs access key.
+        sqsSecretKey:
+          type: string
+          description: The mother probe sqs secret key.
+        state:
+          type: string
+          description: The state of the mother.
+        templateId:
+          type: string
+          description: Mother's template id.
+      description: Update Mother properties.
   securitySchemes:
     Bearer:
       description: ''

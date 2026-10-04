@@ -568,202 +568,6 @@ paths:
           description: Unauthenticated or unauthorized to perform the operation
 components:
   schemas:
-    User:
-      type: object
-      required:
-      - email
-      properties:
-        activityNotifications:
-          type: object
-          description: Activity notifications (type and frequency).
-          additionalProperties:
-            type: string
-            enum:
-            - NEVER
-            - IMMEDIATELY
-        favoritePages:
-          type: array
-          description: List of web pages marked as favorite by the user.
-          items:
-            $ref: '#/components/schemas/WebPageReference'
-        firstName:
-          type: string
-          description: First name.
-        language:
-          type: string
-          description: IETF language tag, e.g. en-US
-        lastName:
-          type: string
-          description: Last name.
-        metricSettings:
-          type: array
-          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
-          uniqueItems: true
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        phoneNumber:
-          type: string
-          description: Phone number.
-        status:
-          type: string
-          description: Indicates when a user is active or inactive.
-        timezone:
-          type: string
-          description: The timezone of the user, defaults to Europe/Amsterdam
-        activatedAt:
-          type: string
-          description: UTC ISO 8601 timestamp of activation, e.g. e.g 2023-12-12T15:00:00Z.
-        email:
-          type: string
-          description: Email address.
-        invitedBy:
-          type: string
-          description: Email address of user that sent the invite.
-        systemRole:
-          type: string
-          description: 'System-wide role like: ''admin'''
-        userId:
-          type: string
-          description: Universally unique identifier of a user.
-      description: A person who uses the platform
-    UserToken:
-      type: object
-      properties:
-        apiToken:
-          type: string
-    WebPageReference:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of a web page.
-        title:
-          type: string
-          description: Displayable title.
-      description: A reference to a web page
-    UserCredentialsAsGuest:
-      type: object
-      properties:
-        email:
-          type: string
-        firstName:
-          type: string
-        language:
-          type: string
-        lastName:
-          type: string
-        password:
-          type: string
-      description: Object holding the required properties to register a guest
-    SignUpRequest:
-      type: object
-      required:
-      - invitationToken
-      - language
-      properties:
-        invitationToken:
-          type: string
-          description: The invitation JWT (issued at invite time).
-        language:
-          type: string
-          description: IETF language tag, e.g. en-US
-        password:
-          type: string
-          description: The user's introduced password.
-      description: Payload submitted by an invited user to sign up.
-    UserNew:
-      type: object
-      required:
-      - email
-      - firstName
-      - lastName
-      properties:
-        activityNotifications:
-          type: object
-          description: Activity notifications (type and frequency).
-          additionalProperties:
-            type: string
-            enum:
-            - NEVER
-            - IMMEDIATELY
-        favoritePages:
-          type: array
-          description: List of web pages marked as favorite by the user.
-          items:
-            $ref: '#/components/schemas/WebPageReference'
-        firstName:
-          type: string
-          description: First name.
-        language:
-          type: string
-          description: IETF language tag, e.g. en-US
-        lastName:
-          type: string
-          description: Last name.
-        metricSettings:
-          type: array
-          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
-          uniqueItems: true
-          items:
-            type: object
-            additionalProperties:
-              type: string
-        phoneNumber:
-          type: string
-          description: Phone number.
-        rateLimitTier:
-          type: string
-          enum:
-          - tier1
-          - tier2
-          - tier3
-          - tier4
-        status:
-          type: string
-          description: Indicates when a user is active or inactive.
-        timezone:
-          type: string
-          description: The timezone of the user, defaults to Europe/Amsterdam
-        email:
-          type: string
-          description: Email address.
-      description: Object holding the required properties to create a new user
-    OrganizationMembership:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          description: User's email.
-        firstName:
-          type: string
-          description: User's first name
-        lastName:
-          type: string
-          description: User's last name
-        organizationId:
-          type: string
-          description: Identifier for the organization.
-        purpose:
-          type: string
-          description: Optional purpose of invitation
-        role:
-          type: string
-          description: Role of the user within the organization. It determines the user's permissions.
-      description: A user being a member of an organization with a given role.
-    Credential:
-      type: object
-      properties:
-        email:
-          type: string
-        language:
-          type: string
-        password:
-          type: string
-      description: Object holding user's credentials
     UserInviteRequest:
       type: object
       required:
@@ -832,6 +636,202 @@ components:
           type: string
           description: Role to assign the invited user within the organization
       description: User Invite to an organization
+    User:
+      type: object
+      required:
+      - email
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        activatedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of activation, e.g. e.g 2023-12-12T15:00:00Z.
+        email:
+          type: string
+          description: Email address.
+        invitedBy:
+          type: string
+          description: Email address of user that sent the invite.
+        systemRole:
+          type: string
+          description: 'System-wide role like: ''admin'''
+        userId:
+          type: string
+          description: Universally unique identifier of a user.
+      description: A person who uses the platform
+    OrganizationMembership:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          description: User's email.
+        firstName:
+          type: string
+          description: User's first name
+        lastName:
+          type: string
+          description: User's last name
+        organizationId:
+          type: string
+          description: Identifier for the organization.
+        purpose:
+          type: string
+          description: Optional purpose of invitation
+        role:
+          type: string
+          description: Role of the user within the organization. It determines the user's permissions.
+      description: A user being a member of an organization with a given role.
+    UserNew:
+      type: object
+      required:
+      - email
+      - firstName
+      - lastName
+      properties:
+        activityNotifications:
+          type: object
+          description: Activity notifications (type and frequency).
+          additionalProperties:
+            type: string
+            enum:
+            - NEVER
+            - IMMEDIATELY
+        favoritePages:
+          type: array
+          description: List of web pages marked as favorite by the user.
+          items:
+            $ref: '#/components/schemas/WebPageReference'
+        firstName:
+          type: string
+          description: First name.
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        lastName:
+          type: string
+          description: Last name.
+        metricSettings:
+          type: array
+          description: 'The user''s preferred unit per metric, e.g. temperature: Fahrenheit'
+          uniqueItems: true
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        phoneNumber:
+          type: string
+          description: Phone number.
+        rateLimitTier:
+          type: string
+          enum:
+          - tier1
+          - tier2
+          - tier3
+          - tier4
+        status:
+          type: string
+          description: Indicates when a user is active or inactive.
+        timezone:
+          type: string
+          description: The timezone of the user, defaults to Europe/Amsterdam
+        email:
+          type: string
+          description: Email address.
+      description: Object holding the required properties to create a new user
+    Credential:
+      type: object
+      properties:
+        email:
+          type: string
+        language:
+          type: string
+        password:
+          type: string
+      description: Object holding user's credentials
+    SignUpRequest:
+      type: object
+      required:
+      - invitationToken
+      - language
+      properties:
+        invitationToken:
+          type: string
+          description: The invitation JWT (issued at invite time).
+        language:
+          type: string
+          description: IETF language tag, e.g. en-US
+        password:
+          type: string
+          description: The user's introduced password.
+      description: Payload submitted by an invited user to sign up.
+    UserToken:
+      type: object
+      properties:
+        apiToken:
+          type: string
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
+    UserCredentialsAsGuest:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        language:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+      description: Object holding the required properties to register a guest
   securitySchemes:
     Bearer:
       description: ''

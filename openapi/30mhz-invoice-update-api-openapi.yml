@@ -46,6 +46,61 @@ paths:
               $ref: '#/components/schemas/InvoiceUpdate'
 components:
   schemas:
+    Invoice:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: Invoice's created at date.
+        customerRequest:
+          $ref: '#/components/schemas/CustomerRequest'
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        date:
+          type: string
+          description: Invoice's date.
+        datePaid:
+          type: string
+          description: The date when the invoice's status became Paid.
+        dateSent:
+          type: string
+          description: The date when the invoice's status became Sent.
+        deliveredDate:
+          type: string
+          description: Invoice's delivered date.
+        dueDate:
+          type: string
+          description: Invoice's due date.
+        invoiceId:
+          type: string
+          description: Invoice id.
+        invoiceNumber:
+          type: string
+          description: Invoice number.
+        status:
+          type: string
+          description: Invoice's status.
+      description: Invoice
+    InvoiceUpdate:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Invoice's date.
+        deliveredDate:
+          type: string
+          description: Invoice's delivered date.
+        dueDate:
+          type: string
+          description: Invoice's due date.
+        invoiceNumber:
+          type: string
+          description: Invoice's number
+        status:
+          type: string
+          description: Invoice's status.
+      description: Updating of an invoice
     CustomerRequestItem:
       type: object
       required:
@@ -213,61 +268,6 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
-    Invoice:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          description: Invoice's created at date.
-        customerRequest:
-          $ref: '#/components/schemas/CustomerRequest'
-        customerRequestId:
-          type: string
-          description: Customer request id.
-        date:
-          type: string
-          description: Invoice's date.
-        datePaid:
-          type: string
-          description: The date when the invoice's status became Paid.
-        dateSent:
-          type: string
-          description: The date when the invoice's status became Sent.
-        deliveredDate:
-          type: string
-          description: Invoice's delivered date.
-        dueDate:
-          type: string
-          description: Invoice's due date.
-        invoiceId:
-          type: string
-          description: Invoice id.
-        invoiceNumber:
-          type: string
-          description: Invoice number.
-        status:
-          type: string
-          description: Invoice's status.
-      description: Invoice
-    InvoiceUpdate:
-      type: object
-      properties:
-        date:
-          type: string
-          description: Invoice's date.
-        deliveredDate:
-          type: string
-          description: Invoice's delivered date.
-        dueDate:
-          type: string
-          description: Invoice's due date.
-        invoiceNumber:
-          type: string
-          description: Invoice's number
-        status:
-          type: string
-          description: Invoice's status.
-      description: Updating of an invoice
   securitySchemes:
     Bearer:
       description: ''

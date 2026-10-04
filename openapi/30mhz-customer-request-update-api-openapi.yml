@@ -45,58 +45,106 @@ paths:
               $ref: '#/components/schemas/CustomerRequestUpdate'
 components:
   schemas:
-    CustomerRequestItem:
+    CustomerRequestUpdate:
       type: object
-      required:
-      - lineTotal
-      - unitPrice
-      - units
       properties:
-        configuration:
-          type: object
-          description: Customer request item configuration
-          additionalProperties:
-            type: string
-        createdAt:
+        accountManager:
           type: string
-          description: The date and time a quote item was created.
-        customerRequestId:
+          description: Customer request's account manager.
+        contactPersonEmail:
           type: string
-          description: Customer request id.
-        customerRequestItemId:
+          description: CustomerRequest's contact person email.
+        contactPersonFirstName:
           type: string
-          description: Customer request item id.
-        description:
+          description: CustomerRequest's contact person first name.
+        contactPersonLastName:
           type: string
-          description: The description for the quote item.
-        lineTotal:
-          type: number
-          format: float
-          description: CustomerRequest item's line total.
-        motherIds:
-          type: array
-          description: The mother id for the quote item.
-          uniqueItems: true
-          items:
-            type: string
-        productId:
+          description: CustomerRequest's contact person last name.
+        contactPersonPhone:
           type: string
-          description: The product id for the quote item.
-        status:
+          description: Customer request's contact person phone number.
+        countryCode:
           type: string
-          description: The status of the quote item.
-        unitPrice:
-          type: number
-          format: float
-          description: CustomerRequest item's unit price.
-        units:
+          description: Customer request's country code .
+        currency:
+          type: string
+          description: Customer request's currency.
+        customVatPercentage:
           type: integer
           format: int32
-          description: CustomerRequest item's units.
-        updatedAt:
+          description: Customer request's custom vat percentage.
+        dealer:
           type: string
-          description: The date and time a quote item was last updated.
-      description: CustomerRequestItem
+          description: Customer request's dealer email.
+        deliverOnlyToCustomerAddress:
+          type: boolean
+          description: Can the order be delivered to neighbours
+        deliveredPersonally:
+          type: boolean
+          description: Is the order delivered by us.
+        description:
+          type: string
+          description: Customer request's description.
+        discountAmount:
+          type: number
+          format: float
+          description: Customer request's discount amount.
+        discountPercentage:
+          type: integer
+          format: int32
+          description: Customer request's discount percentage.
+        language:
+          type: string
+          description: Customer request's language
+        measureFrequency:
+          type: integer
+          format: int32
+          description: Customer request's measure frequency
+        organizationId:
+          type: string
+          description: Customer request's organization id.
+        organizationLocationName:
+          type: string
+          description: Customer request's organization location name.
+        organizationName:
+          type: string
+          description: Customer request's organization name.
+        paymentConditions:
+          type: boolean
+          description: CustomerRequest's payment conditions.
+        poNumber:
+          type: string
+          description: Customer PO number remarks
+        remarks:
+          type: string
+          description: Customer request's remarks
+        shippingCost:
+          type: number
+          format: float
+          description: CustomerRequest's shipping cost.
+        signatureRequired:
+          type: boolean
+          description: Is a signature required when delivering
+        totalPrice:
+          type: number
+          format: float
+          description: Customer request's total price.
+        totalPriceIncludingDiscount:
+          type: number
+          format: float
+          description: CustomerRequest's total including discount.
+        totalPriceIncludingVat:
+          type: number
+          format: float
+          description: Customer request's total including vat amount.
+        vatAmount:
+          type: number
+          format: float
+          description: Customer request's vat amount.
+        vertical:
+          type: string
+          description: Customer request's vertical.
+      description: Update customer request properties
     CustomerRequest:
       type: object
       required:
@@ -212,106 +260,58 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
-    CustomerRequestUpdate:
+    CustomerRequestItem:
       type: object
+      required:
+      - lineTotal
+      - unitPrice
+      - units
       properties:
-        accountManager:
+        configuration:
+          type: object
+          description: Customer request item configuration
+          additionalProperties:
+            type: string
+        createdAt:
           type: string
-          description: Customer request's account manager.
-        contactPersonEmail:
+          description: The date and time a quote item was created.
+        customerRequestId:
           type: string
-          description: CustomerRequest's contact person email.
-        contactPersonFirstName:
+          description: Customer request id.
+        customerRequestItemId:
           type: string
-          description: CustomerRequest's contact person first name.
-        contactPersonLastName:
-          type: string
-          description: CustomerRequest's contact person last name.
-        contactPersonPhone:
-          type: string
-          description: Customer request's contact person phone number.
-        countryCode:
-          type: string
-          description: Customer request's country code .
-        currency:
-          type: string
-          description: Customer request's currency.
-        customVatPercentage:
-          type: integer
-          format: int32
-          description: Customer request's custom vat percentage.
-        dealer:
-          type: string
-          description: Customer request's dealer email.
-        deliverOnlyToCustomerAddress:
-          type: boolean
-          description: Can the order be delivered to neighbours
-        deliveredPersonally:
-          type: boolean
-          description: Is the order delivered by us.
+          description: Customer request item id.
         description:
           type: string
-          description: Customer request's description.
-        discountAmount:
+          description: The description for the quote item.
+        lineTotal:
           type: number
           format: float
-          description: Customer request's discount amount.
-        discountPercentage:
+          description: CustomerRequest item's line total.
+        motherIds:
+          type: array
+          description: The mother id for the quote item.
+          uniqueItems: true
+          items:
+            type: string
+        productId:
+          type: string
+          description: The product id for the quote item.
+        status:
+          type: string
+          description: The status of the quote item.
+        unitPrice:
+          type: number
+          format: float
+          description: CustomerRequest item's unit price.
+        units:
           type: integer
           format: int32
-          description: Customer request's discount percentage.
-        language:
+          description: CustomerRequest item's units.
+        updatedAt:
           type: string
-          description: Customer request's language
-        measureFrequency:
-          type: integer
-          format: int32
-          description: Customer request's measure frequency
-        organizationId:
-          type: string
-          description: Customer request's organization id.
-        organizationLocationName:
-          type: string
-          description: Customer request's organization location name.
-        organizationName:
-          type: string
-          description: Customer request's organization name.
-        paymentConditions:
-          type: boolean
-          description: CustomerRequest's payment conditions.
-        poNumber:
-          type: string
-          description: Customer PO number remarks
-        remarks:
-          type: string
-          description: Customer request's remarks
-        shippingCost:
-          type: number
-          format: float
-          description: CustomerRequest's shipping cost.
-        signatureRequired:
-          type: boolean
-          description: Is a signature required when delivering
-        totalPrice:
-          type: number
-          format: float
-          description: Customer request's total price.
-        totalPriceIncludingDiscount:
-          type: number
-          format: float
-          description: CustomerRequest's total including discount.
-        totalPriceIncludingVat:
-          type: number
-          format: float
-          description: Customer request's total including vat amount.
-        vatAmount:
-          type: number
-          format: float
-          description: Customer request's vat amount.
-        vertical:
-          type: string
-          description: Customer request's vertical.
-      description: Update customer request properties
+          description: The date and time a quote item was last updated.
+      description: CustomerRequestItem
   securitySchemes:
     Bearer:
       description: ''

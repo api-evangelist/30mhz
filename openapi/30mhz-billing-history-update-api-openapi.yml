@@ -59,6 +59,28 @@ paths:
               $ref: '#/components/schemas/BillingHistoryUpdate'
 components:
   schemas:
+    BillingHistoryUpdate:
+      type: object
+      properties:
+        checksCount:
+          type: string
+          description: The number of checks of the billing record.
+        isLocked:
+          type: boolean
+          description: States if the billing history record is locked for change or not.
+        jsonCount:
+          type: string
+          description: The number of json events of the billing record.
+        mothersCount:
+          type: string
+          description: The number of mothers of the billing record.
+        regularCount:
+          type: string
+          description: The number of regular events of the billing record.
+        remarks:
+          type: string
+          description: Remarks made by account manager
+      description: BillingHistoryUpdate
     BillingHistory:
       type: object
       properties:
@@ -134,28 +156,6 @@ components:
           type: string
           description: The VAT amount value for the billing record.
       description: BillingHistory
-    BillingHistoryUpdate:
-      type: object
-      properties:
-        checksCount:
-          type: string
-          description: The number of checks of the billing record.
-        isLocked:
-          type: boolean
-          description: States if the billing history record is locked for change or not.
-        jsonCount:
-          type: string
-          description: The number of json events of the billing record.
-        mothersCount:
-          type: string
-          description: The number of mothers of the billing record.
-        regularCount:
-          type: string
-          description: The number of regular events of the billing record.
-        remarks:
-          type: string
-          description: Remarks made by account manager
-      description: BillingHistoryUpdate
   securitySchemes:
     Bearer:
       description: ''
