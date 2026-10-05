@@ -1,0 +1,12 @@
+{
+ "url": "https://api.30mhz.com/api/swagger.json",
+ "requested_url": "https://api.30mhz.com/api/swagger.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1058635,
+ "sha256": "8bb6fc307efaa0f6d06fef514d5b8fc0b4d687b5c9035a8fc224c24918299f77",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.998), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
