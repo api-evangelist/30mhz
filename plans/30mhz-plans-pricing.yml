@@ -68,3 +68,31 @@ add_ons:
 hardware:
   catalogue: https://www.30mhz.com/wireless-sensor-catalog/
   note: Sensor specifications and pricing are published in a downloadable catalogue, not on the web page.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Connect
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Business
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Custom
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - month
