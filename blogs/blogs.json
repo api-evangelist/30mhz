@@ -2,6 +2,27 @@
   "repo": "30mhz",
   "feeds": [
     {
+      "source": "https://30mhz.com/news/",
+      "feed_url": "https://30mhz.com/news/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://30mhz.com/news/feed/",
+      "feed_url": "https://30mhz.com/news/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.30mhz.com/news",
+      "feed_url": "https://30mhz.com/news/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
       "source": "https://support.30mhz.com/",
       "feed_url": "https://support.30mhz.com/",
       "title": "",
@@ -10,5 +31,5 @@
     }
   ],
   "post_count": 0,
-  "fetched": "2026-10-03T12:30:02Z"
+  "fetched": "2026-10-10T13:15:00Z"
 }
