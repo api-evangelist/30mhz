@@ -293,53 +293,28 @@ paths:
                   format: binary
 components:
   schemas:
-    DataUpload:
+    ImageDimensions:
       type: object
       properties:
-        creationTimestamp:
-          type: integer
-          format: int64
-          description: The creation timestamp.
-        dataUploadId:
-          type: string
-          description: Data upload id.
-        filename:
-          type: string
-          description: The name of the uploaded file
-        groupId:
-          type: string
-          description: Group id for the data upload.
-        imageDimensions:
-          description: The image dimensions
-          $ref: '#/components/schemas/ImageDimensions'
-        imageThumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        organizationId:
-          type: string
-          description: Organization id for the data upload.
-        orientation:
+        height:
           type: integer
           format: int32
-          description: The orientation of the image
-        presignedUrl:
-          type: string
-      description: DataUpload
-    RequiredSensor:
+        width:
+          type: integer
+          format: int32
+    ImageThumbnail:
       type: object
-      required:
-      - sensorTypeId
       properties:
-        configurationKeypathToCheckId:
+        height:
+          type: integer
+          format: int32
+        path:
           type: string
-          description: Optional keypath in dynamic configurations where check id is stored
-        name:
+        url:
           type: string
-          description: Name of the sensor
-        sensorTypeId:
-          type: string
-          description: Id of the sensor type of the required sensor
+        width:
+          type: integer
+          format: int32
     App:
       type: object
       required:
@@ -434,28 +409,53 @@ components:
         type:
           type: string
           description: Type of the application.
-    ImageDimensions:
+    RequiredSensor:
+      type: object
+      required:
+      - sensorTypeId
+      properties:
+        configurationKeypathToCheckId:
+          type: string
+          description: Optional keypath in dynamic configurations where check id is stored
+        name:
+          type: string
+          description: Name of the sensor
+        sensorTypeId:
+          type: string
+          description: Id of the sensor type of the required sensor
+    DataUpload:
       type: object
       properties:
-        height:
+        creationTimestamp:
           type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
+          format: int64
+          description: The creation timestamp.
+        dataUploadId:
           type: string
-        url:
+          description: Data upload id.
+        filename:
           type: string
-        width:
+          description: The name of the uploaded file
+        groupId:
+          type: string
+          description: Group id for the data upload.
+        imageDimensions:
+          description: The image dimensions
+          $ref: '#/components/schemas/ImageDimensions'
+        imageThumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        organizationId:
+          type: string
+          description: Organization id for the data upload.
+        orientation:
           type: integer
           format: int32
+          description: The orientation of the image
+        presignedUrl:
+          type: string
+      description: DataUpload
   securitySchemes:
     Bearer:
       description: ''

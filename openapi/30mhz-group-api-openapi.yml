@@ -259,77 +259,6 @@ paths:
           description: Sorry, there was a problem retrieving the groups.
 components:
   schemas:
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    GroupMember:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address of the member.
-        firstName:
-          type: string
-          description: The first name of the member
-        groupId:
-          type: string
-          description: Unique id of the group itself
-        invitedBy:
-          type: string
-          description: The email of the user who invited this member
-        lastName:
-          type: string
-          description: The last name of the member
-        memberSince:
-          type: string
-          description: The date and time since the user is a member
-        role:
-          type: string
-          description: The role of the member within the group e.g owner
-          enum:
-          - OWNER
-          - EDITOR
-          - FOLLOWER
-    NewGroup:
-      type: object
-      properties:
-        dashboardThemeId:
-          type: string
-        description:
-          type: string
-        restrictInviteMembersTo:
-          type: array
-          items:
-            type: string
-            enum:
-            - OWNER
-            - EDITOR
-            - FOLLOWER
-        title:
-          type: string
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
     Group:
       type: object
       properties:
@@ -363,11 +292,30 @@ components:
         title:
           type: string
           description: The title or name of the group
-    NewGroupMember:
+    GroupMember:
       type: object
       properties:
+        email:
+          type: string
+          description: The email address of the member.
+        firstName:
+          type: string
+          description: The first name of the member
+        groupId:
+          type: string
+          description: Unique id of the group itself
+        invitedBy:
+          type: string
+          description: The email of the user who invited this member
+        lastName:
+          type: string
+          description: The last name of the member
+        memberSince:
+          type: string
+          description: The date and time since the user is a member
         role:
           type: string
+          description: The role of the member within the group e.g owner
           enum:
           - OWNER
           - EDITOR
@@ -437,6 +385,36 @@ components:
         menuTextColor:
           type: string
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    NewGroup:
+      type: object
+      properties:
+        dashboardThemeId:
+          type: string
+        description:
+          type: string
+        restrictInviteMembersTo:
+          type: array
+          items:
+            type: string
+            enum:
+            - OWNER
+            - EDITOR
+            - FOLLOWER
+        title:
+          type: string
     DashboardTheme:
       type: object
       properties:
@@ -468,6 +446,28 @@ components:
           uniqueItems: true
           items:
             type: string
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    NewGroupMember:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - OWNER
+          - EDITOR
+          - FOLLOWER
   securitySchemes:
     Bearer:
       description: ''

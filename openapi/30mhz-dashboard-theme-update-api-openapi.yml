@@ -43,41 +43,6 @@ paths:
               $ref: '#/components/schemas/DashboardThemeUpdate'
 components:
   schemas:
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    DashboardThemeUpdate:
-      type: object
-      properties:
-        css:
-          $ref: '#/components/schemas/DashboardThemeCSS'
-        logoDataUploadId:
-          type: string
-        name:
-          type: string
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
     ImageDimensions:
       type: object
       properties:
@@ -143,6 +108,28 @@ components:
         menuTextColor:
           type: string
           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+    DashboardThemeUpdate:
+      type: object
+      properties:
+        css:
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        logoDataUploadId:
+          type: string
+        name:
+          type: string
     DashboardTheme:
       type: object
       properties:
@@ -174,6 +161,19 @@ components:
           uniqueItems: true
           items:
             type: string
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

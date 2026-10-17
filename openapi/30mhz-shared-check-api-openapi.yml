@@ -264,13 +264,6 @@ paths:
           description: Sorry, there was a problem retrieving the sensors.
 components:
   schemas:
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     SharedWithGroupDetails:
       type: object
       properties:
@@ -300,6 +293,48 @@ components:
           uniqueItems: true
           items:
             type: string
+    SharedCheck:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: Id of the original check that is being shared
+        checkSummary:
+          description: The underlying check that is shared
+          $ref: '#/components/schemas/CheckSummary'
+        createdAt:
+          type: string
+          description: The date and time a check was shared. It can be blank for older shared checks
+        organizationId:
+          type: string
+          description: ID of the organization to which the shared check belongs
+        organizationName:
+          type: string
+          description: Name of the organization to which the shared check belongs
+        shareEndDate:
+          type: string
+          description: Until when can sensor data be viewed
+        shareStartDate:
+          type: string
+          description: Starting from when can sensor data be viewed
+        sharedByUser:
+          type: string
+          description: User who shared the check
+        sharedByUserDetails:
+          $ref: '#/components/schemas/SharedByUserDetails'
+        sharedCheckId:
+          type: string
+          description: Id of the shared-check itself
+        sharedWithGroup:
+          type: string
+          description: Group which the check has been shared with
+        sharedWithGroupDetails:
+          $ref: '#/components/schemas/SharedWithGroupDetails'
+        sharedWithUser:
+          type: string
+          description: User who the check has been shared with
+        sharedWithUserDetails:
+          $ref: '#/components/schemas/SharedWithUserDetails'
     CalculationSettings:
       type: object
       required:
@@ -314,6 +349,26 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -366,19 +421,6 @@ components:
           items:
             type: string
       description: Summary of a check
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
     SharedByUserDetails:
       type: object
       properties:
@@ -386,48 +428,6 @@ components:
           type: string
         lastName:
           type: string
-    SharedCheck:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: Id of the original check that is being shared
-        checkSummary:
-          description: The underlying check that is shared
-          $ref: '#/components/schemas/CheckSummary'
-        createdAt:
-          type: string
-          description: The date and time a check was shared. It can be blank for older shared checks
-        organizationId:
-          type: string
-          description: ID of the organization to which the shared check belongs
-        organizationName:
-          type: string
-          description: Name of the organization to which the shared check belongs
-        shareEndDate:
-          type: string
-          description: Until when can sensor data be viewed
-        shareStartDate:
-          type: string
-          description: Starting from when can sensor data be viewed
-        sharedByUser:
-          type: string
-          description: User who shared the check
-        sharedByUserDetails:
-          $ref: '#/components/schemas/SharedByUserDetails'
-        sharedCheckId:
-          type: string
-          description: Id of the shared-check itself
-        sharedWithGroup:
-          type: string
-          description: Group which the check has been shared with
-        sharedWithGroupDetails:
-          $ref: '#/components/schemas/SharedWithGroupDetails'
-        sharedWithUser:
-          type: string
-          description: User who the check has been shared with
-        sharedWithUserDetails:
-          $ref: '#/components/schemas/SharedWithUserDetails'
   securitySchemes:
     Bearer:
       description: ''

@@ -71,6 +71,14 @@ components:
         unitLabel:
           type: string
       description: Metrics of sensor types
+    ConversionFormula:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: number
+          format: double
     ConversionUnit:
       type: object
       properties:
@@ -88,14 +96,6 @@ components:
           type: string
         unitLabel:
           type: string
-    ConversionFormula:
-      type: object
-      properties:
-        type:
-          type: string
-        value:
-          type: number
-          format: double
     MetricUpdate:
       type: object
       properties:

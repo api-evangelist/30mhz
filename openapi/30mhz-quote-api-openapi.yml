@@ -143,49 +143,25 @@ paths:
           description: Not enough permissions to perform the operation
 components:
   schemas:
-    Order:
+    Quote:
       type: object
       properties:
-        active:
-          type: boolean
-          description: The state of the order
-        createdAt:
-          type: string
-          description: Order's created at date.
-        customerRequest:
-          $ref: '#/components/schemas/CustomerRequest'
-        customerRequestId:
-          type: string
-          description: Customer request id.
         date:
           type: string
-          description: Order's date.
-        dateDone:
+          description: Quote's date.
+        expirationDate:
           type: string
-          description: The date when the order's status became Done.
-        dateInProgress:
+          description: Quote's expiration date.
+        remarks:
           type: string
-          description: The date when the order's status became In Progress.
-        deliveredDate:
+          description: Quote's remarks.
+        signedPdfId:
           type: string
-          description: Order's delivered date.
-        dueDate:
-          type: string
-          description: Order's due date.
-        orderId:
-          type: string
-          description: Order id.
-        orderNumber:
-          type: integer
-          format: int32
-          description: Order number.
-        priority:
-          type: string
-          description: Order's priority
+          description: Quote's signed pdf id
         status:
           type: string
-          description: Order's status.
-      description: Order
+          description: Quote's status.
+      description: updating of a quote
     CustomerRequest:
       type: object
       required:
@@ -301,6 +277,64 @@ components:
           type: string
           description: The vertical of the quote.
       description: Customer request
+    Order:
+      type: object
+      properties:
+        active:
+          type: boolean
+          description: The state of the order
+        createdAt:
+          type: string
+          description: Order's created at date.
+        customerRequest:
+          $ref: '#/components/schemas/CustomerRequest'
+        customerRequestId:
+          type: string
+          description: Customer request id.
+        date:
+          type: string
+          description: Order's date.
+        dateDone:
+          type: string
+          description: The date when the order's status became Done.
+        dateInProgress:
+          type: string
+          description: The date when the order's status became In Progress.
+        deliveredDate:
+          type: string
+          description: Order's delivered date.
+        dueDate:
+          type: string
+          description: Order's due date.
+        orderId:
+          type: string
+          description: Order id.
+        orderNumber:
+          type: integer
+          format: int32
+          description: Order number.
+        priority:
+          type: string
+          description: Order's priority
+        status:
+          type: string
+          description: Order's status.
+      description: Order
+    NewQuote:
+      type: object
+      properties:
+        customerRequestId:
+          type: string
+        date:
+          type: string
+        expirationDate:
+          type: string
+        remarks:
+          type: string
+        signedPdfId:
+          type: string
+        status:
+          type: string
     CustomerRequestItem:
       type: object
       required:
@@ -353,40 +387,6 @@ components:
           type: string
           description: The date and time a quote item was last updated.
       description: CustomerRequestItem
-    Quote:
-      type: object
-      properties:
-        date:
-          type: string
-          description: Quote's date.
-        expirationDate:
-          type: string
-          description: Quote's expiration date.
-        remarks:
-          type: string
-          description: Quote's remarks.
-        signedPdfId:
-          type: string
-          description: Quote's signed pdf id
-        status:
-          type: string
-          description: Quote's status.
-      description: updating of a quote
-    NewQuote:
-      type: object
-      properties:
-        customerRequestId:
-          type: string
-        date:
-          type: string
-        expirationDate:
-          type: string
-        remarks:
-          type: string
-        signedPdfId:
-          type: string
-        status:
-          type: string
   securitySchemes:
     Bearer:
       description: ''

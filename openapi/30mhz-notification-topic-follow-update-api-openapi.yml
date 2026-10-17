@@ -51,6 +51,18 @@ paths:
               $ref: '#/components/schemas/NotificationMethods'
 components:
   schemas:
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
     NotificationTopicFollow:
       type: object
       properties:
@@ -70,18 +82,6 @@ components:
         organizationId:
           type: string
       description: Notification topic follow
-    NotificationMethods:
-      type: object
-      properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - EMAIL
-            - SMS
-            - WHATSAPP
   securitySchemes:
     Bearer:
       description: ''

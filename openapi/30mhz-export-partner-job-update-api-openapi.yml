@@ -48,54 +48,6 @@ paths:
               $ref: '#/components/schemas/ExportPartnerJobUpdate'
 components:
   schemas:
-    ExportPartnerAccess:
-      type: object
-      required:
-      - expiresAt
-      - expiresIn
-      properties:
-        expires:
-          type: string
-        expiresAt:
-          type: integer
-          format: int32
-        expiresIn:
-          type: integer
-          format: int32
-        issued:
-          type: string
-        token:
-          type: string
-        tokenType:
-          type: string
-    ExportPartnerData:
-      type: object
-      required:
-      - id
-      properties:
-        description:
-          type: string
-        id:
-          type: integer
-          format: int32
-        items:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ExportPartnerDataItem'
-        name:
-          type: string
-    ExportPartnerJobMap:
-      type: object
-      required:
-      - exportPartnerData
-      properties:
-        checkId:
-          type: string
-        checkJsonKey:
-          type: string
-        exportPartnerData:
-          $ref: '#/components/schemas/ExportPartnerData'
     ExportPartnerJobUpdate:
       type: object
       properties:
@@ -161,6 +113,54 @@ components:
           type: string
           description: The date and time a export partner job was last updated.
       description: ExportPartnerJob
+    ExportPartnerJobMap:
+      type: object
+      required:
+      - exportPartnerData
+      properties:
+        checkId:
+          type: string
+        checkJsonKey:
+          type: string
+        exportPartnerData:
+          $ref: '#/components/schemas/ExportPartnerData'
+    ExportPartnerData:
+      type: object
+      required:
+      - id
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+          format: int32
+        items:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ExportPartnerDataItem'
+        name:
+          type: string
+    ExportPartnerAccess:
+      type: object
+      required:
+      - expiresAt
+      - expiresIn
+      properties:
+        expires:
+          type: string
+        expiresAt:
+          type: integer
+          format: int32
+        expiresIn:
+          type: integer
+          format: int32
+        issued:
+          type: string
+        token:
+          type: string
+        tokenType:
+          type: string
     ExportPartnerDataItem:
       type: object
       required:

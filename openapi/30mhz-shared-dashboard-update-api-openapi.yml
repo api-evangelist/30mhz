@@ -46,13 +46,6 @@ paths:
               $ref: '#/components/schemas/SharedDashboardUpdate'
 components:
   schemas:
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     DashboardSummary:
       type: object
       properties:
@@ -103,6 +96,13 @@ components:
           description: User who the dashboard has been shared with
         sharedWithUserDetails:
           $ref: '#/components/schemas/SharedWithUserDetails'
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
     SharedByUserDetails:
       type: object
       properties:

@@ -199,6 +199,45 @@ paths:
           description: Error while retrieving notes.
 components:
   schemas:
+    ImageDimensions:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+    NoteMeasurements:
+      type: object
+      required:
+      - data
+      - jsonLabels
+      - metrics
+      - units
+      properties:
+        data:
+          type: array
+          description: Ordered numeric values of the note measurements, e.g. [20, 48]
+          items:
+            type: number
+            format: double
+        jsonLabels:
+          type: array
+          description: Ordered labels of the note measurements, e.g. ['Inside Temperature', 'Outside Temperature']
+          items:
+            type: string
+        metrics:
+          type: array
+          description: Ordered metrics of the note measurements, e.g. ['temperature', 'temperature']
+          items:
+            type: string
+        units:
+          type: array
+          description: Ordered unitIds of the note measurements, e.g. ['°C', 'F']
+          items:
+            type: string
+      description: represents measurements added to a note
     ImageThumbnail:
       type: object
       properties:
@@ -222,10 +261,14 @@ components:
           type: string
           description: Presigned download URL for the document.
       description: Represents a non-image document attached to a note file.
-    NoteEditable:
+    NoteNew:
       type: object
       required:
       - category
+      - cultivationId
+      - description
+      - organizationId
+      - timestamp
       properties:
         category:
           type: string
@@ -265,20 +308,13 @@ components:
         timestamp:
           type: string
           description: Timestamp of the note
-      description: Object containing the editable properties of Note.
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
+        cultivationId:
           type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
+          description: Universally unique identifier of a cultivation.
+        organizationId:
           type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+      description: Object holding the required properties to create a new Note.
     Note:
       type: object
       required:
@@ -343,44 +379,23 @@ components:
           type: string
           description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
       description: Represents a note with its metadata and content.
-    NoteMeasurements:
+    ImageWithThumbnails:
       type: object
-      required:
-      - data
-      - jsonLabels
-      - metrics
-      - units
       properties:
-        data:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
           type: array
-          description: Ordered numeric values of the note measurements, e.g. [20, 48]
           items:
-            type: number
-            format: double
-        jsonLabels:
-          type: array
-          description: Ordered labels of the note measurements, e.g. ['Inside Temperature', 'Outside Temperature']
-          items:
-            type: string
-        metrics:
-          type: array
-          description: Ordered metrics of the note measurements, e.g. ['temperature', 'temperature']
-          items:
-            type: string
-        units:
-          type: array
-          description: Ordered unitIds of the note measurements, e.g. ['°C', 'F']
-          items:
-            type: string
-      description: represents measurements added to a note
-    NoteNew:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    NoteEditable:
       type: object
       required:
       - category
-      - cultivationId
-      - description
-      - organizationId
-      - timestamp
       properties:
         category:
           type: string
@@ -420,22 +435,7 @@ components:
         timestamp:
           type: string
           description: Timestamp of the note
-        cultivationId:
-          type: string
-          description: Universally unique identifier of a cultivation.
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-      description: Object holding the required properties to create a new Note.
-    ImageDimensions:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        width:
-          type: integer
-          format: int32
+      description: Object containing the editable properties of Note.
     NoteFile:
       type: object
       required:

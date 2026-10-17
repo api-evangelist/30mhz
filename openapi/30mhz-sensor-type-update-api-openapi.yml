@@ -45,6 +45,106 @@ paths:
               $ref: '#/components/schemas/SensorTypeUpdate'
 components:
   schemas:
+    SensorTypeUpdate:
+      type: object
+      properties:
+        batteryVoltageChargedEnough:
+          type: string
+        batteryVoltageCritical:
+          type: string
+        batteryVoltageWarning:
+          type: string
+        canSleep:
+          type: boolean
+          description: States if this sensor is able to sleep
+        chartColor:
+          type: string
+        color:
+          type: string
+        dataTypes:
+          type: array
+          items:
+            type: string
+        decimals:
+          type: integer
+          format: int32
+          minimum: 0
+        description:
+          type: string
+        enums:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorTypeEnumData'
+        external:
+          type: boolean
+        hasVoltageInformation:
+          type: boolean
+        icon:
+          type: string
+        iconId:
+          type: string
+        isBillable:
+          type: boolean
+          description: States if the sensor type is billable or not.
+        isForManualInput:
+          type: boolean
+          description: States if the sensor type is for manual input
+        jsonKeys:
+          type: array
+          items:
+            type: string
+        jsonLabels:
+          type: array
+          items:
+            type: string
+        metadata:
+          type: string
+          description: Describes sensor metadata
+        metrics:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        notificationTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationTemplate'
+        productionStatus:
+          type: string
+          description: Production status of the sensor
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - OBSOLETE
+          - OUTGOING
+        queryParameters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        queryParametersRequired:
+          type: boolean
+        radioId:
+          type: string
+          description: Radio identifier
+          minLength: 0
+          maxLength: 20
+        rangeMax:
+          type: string
+        rangeMin:
+          type: string
+      description: Updating sensor type properties
+    SensorTypeEnumData:
+      type: object
+      properties:
+        key:
+          type: string
+        mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
     SharedSensorType:
       type: object
       properties:
@@ -82,13 +182,6 @@ components:
           description: User who the sensor type has been shared with
         sharedWithUserDetails:
           $ref: '#/components/schemas/SharedWithUserDetails'
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     SensorType:
       type: object
       required:
@@ -197,104 +290,6 @@ components:
         sharedDetails:
           $ref: '#/components/schemas/SharedSensorType'
       description: Authorization entity
-    SensorTypeUpdate:
-      type: object
-      properties:
-        batteryVoltageChargedEnough:
-          type: string
-        batteryVoltageCritical:
-          type: string
-        batteryVoltageWarning:
-          type: string
-        canSleep:
-          type: boolean
-          description: States if this sensor is able to sleep
-        chartColor:
-          type: string
-        color:
-          type: string
-        dataTypes:
-          type: array
-          items:
-            type: string
-        decimals:
-          type: integer
-          format: int32
-          minimum: 0
-        description:
-          type: string
-        enums:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorTypeEnumData'
-        external:
-          type: boolean
-        hasVoltageInformation:
-          type: boolean
-        icon:
-          type: string
-        iconId:
-          type: string
-        isBillable:
-          type: boolean
-          description: States if the sensor type is billable or not.
-        isForManualInput:
-          type: boolean
-          description: States if the sensor type is for manual input
-        jsonKeys:
-          type: array
-          items:
-            type: string
-        jsonLabels:
-          type: array
-          items:
-            type: string
-        metadata:
-          type: string
-          description: Describes sensor metadata
-        metrics:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        notificationTemplates:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationTemplate'
-        productionStatus:
-          type: string
-          description: Production status of the sensor
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - OBSOLETE
-          - OUTGOING
-        queryParameters:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        queryParametersRequired:
-          type: boolean
-        radioId:
-          type: string
-          description: Radio identifier
-          minLength: 0
-          maxLength: 20
-        rangeMax:
-          type: string
-        rangeMin:
-          type: string
-      description: Updating sensor type properties
-    SharedByUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
     SensorTypeEnumDataMapping:
       type: object
       properties:
@@ -314,15 +309,20 @@ components:
           type: string
         name:
           type: string
-    SensorTypeEnumData:
+    SharedWithUserDetails:
       type: object
       properties:
-        key:
+        firstName:
           type: string
-        mappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorTypeEnumDataMapping'
+        lastName:
+          type: string
+    SharedByUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

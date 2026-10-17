@@ -187,14 +187,6 @@ components:
         organizationId:
           type: string
       description: Notification follow represents a subscription of a user to a given notification with a given method, e.g. email, sms, etc.
-    NotificationFollowCount:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-        notificationId:
-          type: string
     NotificationMethods:
       type: object
       properties:
@@ -207,6 +199,14 @@ components:
             - EMAIL
             - SMS
             - WHATSAPP
+    NotificationFollowCount:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        notificationId:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

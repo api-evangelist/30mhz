@@ -42,57 +42,6 @@ paths:
               $ref: '#/components/schemas/NotificationEditable'
 components:
   schemas:
-    StructuredConditional:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation.
-        checkFields:
-          type: array
-          description: List of fields represented by the check id and field name
-          items:
-            $ref: '#/components/schemas/SensorField'
-        interval:
-          type: string
-          description: The time interval to aggregate over.
-        key:
-          type: string
-          description: Key of the structured conditional
-        operator:
-          type: string
-          description: Operator of the conditional
-        operatorType:
-          type: string
-          description: Operator type of the conditional
-          enum:
-          - COMPARISON
-          - LOGICAL
-        value:
-          type: string
-          description: Value of the key given the operator
-    EventHook:
-      type: object
-      required:
-      - method
-      - url
-      properties:
-        headers:
-          type: object
-          description: Headers of the HTTP request
-          additionalProperties:
-            type: object
-        method:
-          type: string
-          description: Method of the HTTP request
-        payload:
-          type: object
-          description: Payload of the HTTP request
-          additionalProperties:
-            type: object
-        url:
-          type: string
-          description: Url of the HTTP request
     Notification:
       type: object
       required:
@@ -173,20 +122,114 @@ components:
           items:
             type: string
       description: Holds the editable properties of a Notification
-    CalculationSettings:
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
+    EventHook:
       type: object
       required:
-      - inputParams
+      - method
+      - url
       properties:
-        calculationId:
-          type: string
-          description: Unique identifier for the calculation
-        inputParams:
+        headers:
           type: object
-          description: A map of the necessary input parameters and their type for performing the calculation
+          description: Headers of the HTTP request
           additionalProperties:
             type: object
-      description: Settings used to perform a calculation.
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
+    NotificationEditable:
+      type: object
+      properties:
+        action:
+          type: string
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+          description: Identifier of the check.
+        condition:
+          type: string
+          description: Conditional that defines the trigger of this notification
+        description:
+          type: string
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+      description: Holds the editable properties of a Notification
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -239,63 +282,20 @@ components:
           items:
             type: string
       description: Summary of a check
-    SensorField:
+    CalculationSettings:
       type: object
+      required:
+      - inputParams
       properties:
-        checkId:
+        calculationId:
           type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
-    NotificationEditable:
-      type: object
-      properties:
-        action:
-          type: string
-          description: Description of the action to take when the notification is triggered.
-        calculationSettings:
-          description: The calculation configuration
-          $ref: '#/components/schemas/CalculationSettings'
-        checkId:
-          type: string
-          description: Identifier of the check.
-        condition:
-          type: string
-          description: Conditional that defines the trigger of this notification
-        description:
-          type: string
-          description: Description of the notification
-        eventHook:
-          description: Event hook of the notification
-          $ref: '#/components/schemas/EventHook'
-        matchAfter:
-          type: integer
-          format: int32
-          description: Match after attribute
-          minimum: 0
-        throttleFor:
-          type: integer
-          format: int64
-          description: The amount of time in milliseconds to throttle notifications
-          minimum: 0
-      description: Holds the editable properties of a Notification
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
+          description: Unique identifier for the calculation
+        inputParams:
+          type: object
+          description: A map of the necessary input parameters and their type for performing the calculation
+          additionalProperties:
+            type: object
+      description: Settings used to perform a calculation.
   securitySchemes:
     Bearer:
       description: ''

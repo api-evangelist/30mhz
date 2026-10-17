@@ -147,6 +147,17 @@ components:
         frequency:
           type: integer
           format: int32
+    ExportPartnerJobMap:
+      type: object
+      required:
+      - exportPartnerData
+      properties:
+        checkId:
+          type: string
+        checkJsonKey:
+          type: string
+        exportPartnerData:
+          $ref: '#/components/schemas/ExportPartnerData'
     ExportPartnerData:
       type: object
       required:
@@ -164,17 +175,6 @@ components:
             $ref: '#/components/schemas/ExportPartnerDataItem'
         name:
           type: string
-    ExportPartnerJobMap:
-      type: object
-      required:
-      - exportPartnerData
-      properties:
-        checkId:
-          type: string
-        checkJsonKey:
-          type: string
-        exportPartnerData:
-          $ref: '#/components/schemas/ExportPartnerData'
     ExportPartnerDataItem:
       type: object
       required:

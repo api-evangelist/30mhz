@@ -123,6 +123,153 @@ components:
         organizationId:
           type: string
           description: The organization the crop belongs to.
+    Soil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
+    LocationEditable:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the location.
+          uniqueItems: true
+          items:
+            type: string
+        companyDetailsId:
+          type: string
+          description: The id of the company details.
+        description:
+          type: string
+        gatewayClusterId:
+          type: string
+          description: Location's gateway cluster id
+        icon:
+          type: string
+        latitude:
+          type: number
+          format: double
+          description: Location’s latitude
+        longitude:
+          type: number
+          format: double
+          description: Location’s longitude
+        motherIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        owner:
+          type: string
+        timezone:
+          type: string
+          description: Location’s timezone
+    EventHook:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
+    DataSourceCoordinates:
+      type: object
+      required:
+      - dataSourceId
+      - sinceDate
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -175,58 +322,6 @@ components:
           items:
             type: string
       description: Summary of a check
-    CheckCollection:
-      type: object
-      properties:
-        collectionId:
-          type: string
-          description: Id of the collection
-        name:
-          type: string
-          description: Name of the collection
-        order:
-          type: integer
-          format: int32
-          description: The position within all the collections
-    LocationEditable:
-      type: object
-      properties:
-        alarmsChecks:
-          type: array
-          description: The alarms checks ids of the location.
-          uniqueItems: true
-          items:
-            type: string
-        companyDetailsId:
-          type: string
-          description: The id of the company details.
-        description:
-          type: string
-        gatewayClusterId:
-          type: string
-          description: Location's gateway cluster id
-        icon:
-          type: string
-        latitude:
-          type: number
-          format: double
-          description: Location’s latitude
-        longitude:
-          type: number
-          format: double
-          description: Location’s longitude
-        motherIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-          maxItems: 2147483647
-          minItems: 1
-        owner:
-          type: string
-        timezone:
-          type: string
-          description: Location’s timezone
     CompanyDetails:
       type: object
       required:
@@ -275,6 +370,54 @@ components:
         vatNumber:
           type: string
           description: The vat number of the company details
+    SiteEditable:
+      type: object
+      properties:
+        address:
+          description: The particulars of the place where this object is located.
+          $ref: '#/components/schemas/Address'
+        billableSince:
+          type: string
+          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
+          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
+        contractLength:
+          type: integer
+          format: int32
+          description: Number of months from the start date through which the contract is effective.
+        latitude:
+          type: number
+          format: double
+          description: Angular distance north or south of the equator.
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          format: double
+          description: Angular distance east or west of the prime meridian.
+          minimum: -180
+          maximum: 180
+        name:
+          type: string
+          description: Set of words by which a site is known.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+      description: Object that contains the editable properties of a Site
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
     Zone:
       type: object
       required:
@@ -323,6 +466,299 @@ components:
           type: string
           description: Universally unique identifier.
       description: A Zone is a physical subsection in a site.
+    Address:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Human settlement of notable size.
+        country:
+          type: string
+          description: A nation, a body of land with one government.
+        countryCode:
+          type: string
+          description: Short alphanumeric identification code for countries and dependent areas, e.g. NL
+        number:
+          type: string
+          description: The number on a street of a particular address.
+        postalCode:
+          type: string
+          description: A series of letters and/or digits for the purpose of sorting mail, e.g. '3011 GK'.
+        street:
+          type: string
+          description: A public road in a city.
+      description: The particulars of the place where this object is located.
+    Gateway:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+        gatewayId:
+          type: string
+          description: Gateway Id.
+        macAddress:
+          type: string
+          description: The mac address of the gateway.
+        monitoringCheckId:
+          type: string
+          description: Id of the gateway monitoring check.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+        createdAt:
+          type: string
+          description: The date and time a gateway was created.
+        deletedAt:
+          type: string
+          description: The date and time a gateway was deleted.
+        deletedBy:
+          type: string
+          description: User that deleted the gateway.
+        deployedAt:
+          type: string
+          description: The date and time a gateway was deployed.
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        updatedAt:
+          type: string
+          description: The date and time a gateway was last updated.
+    Site:
+      type: object
+      required:
+      - address
+      - id
+      - name
+      - subscriptionId
+      properties:
+        address:
+          description: The particulars of the place where this object is located.
+          $ref: '#/components/schemas/Address'
+        billableSince:
+          type: string
+          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
+          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
+        contractLength:
+          type: integer
+          format: int32
+          description: Number of months from the start date through which the contract is effective.
+        latitude:
+          type: number
+          format: double
+          description: Angular distance north or south of the equator.
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          format: double
+          description: Angular distance east or west of the prime meridian.
+          minimum: -180
+          maximum: 180
+        name:
+          type: string
+          description: Set of words by which a site is known.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        aerialImageDataUploadId:
+          type: string
+          description: Id of the aerial image data upload.
+        aerialImagePresignedUrl:
+          type: string
+          description: Presigned URL of the aerial image.
+        deactivatedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of deactivation, e.g. e.g 2023-12-12T15:00:00Z.
+        externalSensors:
+          type: array
+          description: External sensors in the location.
+          items:
+            $ref: '#/components/schemas/ImportCheck'
+        gateways:
+          type: array
+          description: The gateways in this site.
+          items:
+            $ref: '#/components/schemas/Gateway'
+        id:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        internalSensors:
+          type: array
+          description: Internal sensors in the location.
+          items:
+            $ref: '#/components/schemas/Check'
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        status:
+          type: string
+          description: Current status of the site.
+          enum:
+          - ACTIVE
+          - DELETED
+          - INACTIVE
+          - PENDING
+        urlPathIdentifier:
+          type: string
+          description: URL friendly identifier of the site based on the name of the site.
+        uuid:
+          type: string
+          description: Universally unique identifier.
+        zones:
+          type: array
+          description: Zones in the site.
+          items:
+            $ref: '#/components/schemas/Zone'
+        isActive:
+          type: boolean
+          description: Whether it is active or deactivated.
+      description: A customer's physical location where data (sensors, devices and integrations) belong.
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
+    Notification:
+      type: object
+      required:
+      - notificationId
+      properties:
+        action:
+          type: string
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+          description: Identifier of the check.
+        condition:
+          type: string
+          description: Conditional that defines the trigger of this notification
+        description:
+          type: string
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+        check:
+          description: Summary of the check that is linked to this notification
+          $ref: '#/components/schemas/CheckSummary'
+        createdBy:
+          type: string
+          description: Identifier of the user that created this notification
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the notification was created
+        matched:
+          type: boolean
+          description: Matched attribute
+        matchedFor:
+          type: integer
+          format: int32
+          description: Matched for attribute
+        matchedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last matched notification was sent
+        notificationId:
+          type: string
+          description: Identifier of this notification object.
+        nrMatched:
+          type: integer
+          format: int32
+          description: Number of matches attribute
+        organizationId:
+          type: string
+          description: Identifier of the organization for which this notification is created
+        resolvedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last resolved notification was sent
+        structuredConditional:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          items:
+            $ref: '#/components/schemas/StructuredConditional'
+        widgetIds:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          uniqueItems: true
+          items:
+            type: string
+      description: Holds the editable properties of a Notification
     Location:
       type: object
       properties:
@@ -382,28 +818,6 @@ components:
         sc:
           type: string
       description: Monitoring location properties
-    EventHook:
-      type: object
-      required:
-      - method
-      - url
-      properties:
-        headers:
-          type: object
-          description: Headers of the HTTP request
-          additionalProperties:
-            type: object
-        method:
-          type: string
-          description: Method of the HTTP request
-        payload:
-          type: object
-          description: Payload of the HTTP request
-          additionalProperties:
-            type: object
-        url:
-          type: string
-          description: Url of the HTTP request
     ImportCheck:
       type: object
       required:
@@ -538,159 +952,6 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Import check properties
-    Soil:
-      type: object
-      required:
-      - category
-      - permanentWiltingPoint
-      - soilId
-      - totalAvailableWater
-      properties:
-        category:
-          type: string
-          description: Category of the soil.
-        fieldCapacity:
-          type: number
-          format: double
-          description: Field capacity of the soil.
-          minimum: 0
-          maximum: 100
-        name:
-          type: string
-          description: Name of the soil.
-        permanentWiltingPoint:
-          type: number
-          format: double
-          description: Permanent wilting point of the soil.
-          minimum: 0
-          maximum: 100
-        createdAt:
-          type: integer
-          format: int64
-          description: The epoch millis of the creation time.
-        organizationId:
-          type: string
-          description: The organization the soil belongs to.
-        soilId:
-          type: string
-          description: Id of the soil.
-        totalAvailableWater:
-          type: number
-          format: double
-          description: Total available water of the soil.
-          readOnly: true
-    DataSourceCoordinates:
-      type: object
-      required:
-      - dataSourceId
-      - sinceDate
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-        dataSourceId:
-          type: string
-          description: Identifier of the data source
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
-        zoneName:
-          type: string
-          description: Name of the zone
-        zoneUuid:
-          type: string
-          description: Unique identifier of the zone
-      description: Coordinates of a data source since a given timestamp.
-    Notification:
-      type: object
-      required:
-      - notificationId
-      properties:
-        action:
-          type: string
-          description: Description of the action to take when the notification is triggered.
-        calculationSettings:
-          description: The calculation configuration
-          $ref: '#/components/schemas/CalculationSettings'
-        checkId:
-          type: string
-          description: Identifier of the check.
-        condition:
-          type: string
-          description: Conditional that defines the trigger of this notification
-        description:
-          type: string
-          description: Description of the notification
-        eventHook:
-          description: Event hook of the notification
-          $ref: '#/components/schemas/EventHook'
-        matchAfter:
-          type: integer
-          format: int32
-          description: Match after attribute
-          minimum: 0
-        throttleFor:
-          type: integer
-          format: int64
-          description: The amount of time in milliseconds to throttle notifications
-          minimum: 0
-        check:
-          description: Summary of the check that is linked to this notification
-          $ref: '#/components/schemas/CheckSummary'
-        createdBy:
-          type: string
-          description: Identifier of the user that created this notification
-        creationTimestamp:
-          type: integer
-          format: int64
-          description: Timestamp of when the notification was created
-        matched:
-          type: boolean
-          description: Matched attribute
-        matchedFor:
-          type: integer
-          format: int32
-          description: Matched for attribute
-        matchedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last matched notification was sent
-        notificationId:
-          type: string
-          description: Identifier of this notification object.
-        nrMatched:
-          type: integer
-          format: int32
-          description: Number of matches attribute
-        organizationId:
-          type: string
-          description: Identifier of the organization for which this notification is created
-        resolvedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last resolved notification was sent
-        structuredConditional:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          items:
-            $ref: '#/components/schemas/StructuredConditional'
-        widgetIds:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          uniqueItems: true
-          items:
-            type: string
-      description: Holds the editable properties of a Notification
     CalculationSettings:
       type: object
       required:
@@ -705,267 +966,6 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
-    Site:
-      type: object
-      required:
-      - address
-      - id
-      - name
-      - subscriptionId
-      properties:
-        address:
-          description: The particulars of the place where this object is located.
-          $ref: '#/components/schemas/Address'
-        billableSince:
-          type: string
-          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
-          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
-        contractLength:
-          type: integer
-          format: int32
-          description: Number of months from the start date through which the contract is effective.
-        latitude:
-          type: number
-          format: double
-          description: Angular distance north or south of the equator.
-          minimum: -90
-          maximum: 90
-        longitude:
-          type: number
-          format: double
-          description: Angular distance east or west of the prime meridian.
-          minimum: -180
-          maximum: 180
-        name:
-          type: string
-          description: Set of words by which a site is known.
-        subscriptionId:
-          type: string
-          description: Unique identifier for the subscription.
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-        aerialImageDataUploadId:
-          type: string
-          description: Id of the aerial image data upload.
-        aerialImagePresignedUrl:
-          type: string
-          description: Presigned URL of the aerial image.
-        deactivatedAt:
-          type: string
-          description: UTC ISO 8601 timestamp of deactivation, e.g. e.g 2023-12-12T15:00:00Z.
-        externalSensors:
-          type: array
-          description: External sensors in the location.
-          items:
-            $ref: '#/components/schemas/ImportCheck'
-        gateways:
-          type: array
-          description: The gateways in this site.
-          items:
-            $ref: '#/components/schemas/Gateway'
-        id:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        internalSensors:
-          type: array
-          description: Internal sensors in the location.
-          items:
-            $ref: '#/components/schemas/Check'
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        status:
-          type: string
-          description: Current status of the site.
-          enum:
-          - ACTIVE
-          - DELETED
-          - INACTIVE
-          - PENDING
-        urlPathIdentifier:
-          type: string
-          description: URL friendly identifier of the site based on the name of the site.
-        uuid:
-          type: string
-          description: Universally unique identifier.
-        zones:
-          type: array
-          description: Zones in the site.
-          items:
-            $ref: '#/components/schemas/Zone'
-        isActive:
-          type: boolean
-          description: Whether it is active or deactivated.
-      description: A customer's physical location where data (sensors, devices and integrations) belong.
-    SiteEditable:
-      type: object
-      properties:
-        address:
-          description: The particulars of the place where this object is located.
-          $ref: '#/components/schemas/Address'
-        billableSince:
-          type: string
-          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
-          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
-        contractLength:
-          type: integer
-          format: int32
-          description: Number of months from the start date through which the contract is effective.
-        latitude:
-          type: number
-          format: double
-          description: Angular distance north or south of the equator.
-          minimum: -90
-          maximum: 90
-        longitude:
-          type: number
-          format: double
-          description: Angular distance east or west of the prime meridian.
-          minimum: -180
-          maximum: 180
-        name:
-          type: string
-          description: Set of words by which a site is known.
-        subscriptionId:
-          type: string
-          description: Unique identifier for the subscription.
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-      description: Object that contains the editable properties of a Site
-    Gateway:
-      type: object
-      properties:
-        alarmsChecks:
-          type: array
-          description: The alarms checks ids of the gateway.
-          uniqueItems: true
-          items:
-            type: string
-        fleetManagerDeviceId:
-          type: string
-          description: The fleet manager id.
-        gatewayClusterId:
-          type: string
-          description: The gateway cluster id.
-        gatewayInfoCheckId:
-          type: string
-          description: Id of the gateway info check.
-        isBillable:
-          type: boolean
-          description: States if the gateway is billable or not.
-        name:
-          type: string
-          description: Gateway name
-        organizationId:
-          type: string
-          description: The organization of the gateway.
-        remarks:
-          type: string
-          description: The remarks for the gateway.
-        siteId:
-          type: string
-          description: The site of the gateway.
-        state:
-          type: string
-          description: The state of the gateway.
-        templateId:
-          type: string
-          description: Gateway's template id.
-        gatewayId:
-          type: string
-          description: Gateway Id.
-        macAddress:
-          type: string
-          description: The mac address of the gateway.
-        monitoringCheckId:
-          type: string
-          description: Id of the gateway monitoring check.
-        xbeeAddress:
-          type: string
-          description: The address of the xbee.
-        createdAt:
-          type: string
-          description: The date and time a gateway was created.
-        deletedAt:
-          type: string
-          description: The date and time a gateway was deleted.
-        deletedBy:
-          type: string
-          description: User that deleted the gateway.
-        deployedAt:
-          type: string
-          description: The date and time a gateway was deployed.
-        jsonEnvironmentVariableOnDevice:
-          type: boolean
-          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
-        updatedAt:
-          type: string
-          description: The date and time a gateway was last updated.
-    Address:
-      type: object
-      properties:
-        city:
-          type: string
-          description: Human settlement of notable size.
-        country:
-          type: string
-          description: A nation, a body of land with one government.
-        countryCode:
-          type: string
-          description: Short alphanumeric identification code for countries and dependent areas, e.g. NL
-        number:
-          type: string
-          description: The number on a street of a particular address.
-        postalCode:
-          type: string
-          description: A series of letters and/or digits for the purpose of sorting mail, e.g. '3011 GK'.
-        street:
-          type: string
-          description: A public road in a city.
-      description: The particulars of the place where this object is located.
-    StructuredConditional:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation.
-        checkFields:
-          type: array
-          description: List of fields represented by the check id and field name
-          items:
-            $ref: '#/components/schemas/SensorField'
-        interval:
-          type: string
-          description: The time interval to aggregate over.
-        key:
-          type: string
-          description: Key of the structured conditional
-        operator:
-          type: string
-          description: Operator of the conditional
-        operatorType:
-          type: string
-          description: Operator type of the conditional
-          enum:
-          - COMPARISON
-          - LOGICAL
-        value:
-          type: string
-          description: Value of the key given the operator
-    SensorField:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
     Check:
       type: object
       required:

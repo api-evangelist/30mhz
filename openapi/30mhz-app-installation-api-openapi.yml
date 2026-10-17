@@ -473,13 +473,6 @@ paths:
               $ref: '#/components/schemas/NewAppInstallation'
 components:
   schemas:
-    OrganizationExtensions:
-      type: object
-      properties:
-        developed:
-          type: array
-          items:
-            $ref: '#/components/schemas/App'
     Crop:
       type: object
       required:
@@ -509,6 +502,210 @@ components:
         organizationId:
           type: string
           description: The organization the crop belongs to.
+    DashboardThemeCSS:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        buttonTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        headerBarShadow:
+          type: boolean
+        headerBarTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuActiveTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuBackgroundColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        localMenuTextColorMobile:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuActiveTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuBackgroundColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        menuTextColor:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+    Soil:
+      type: object
+      required:
+      - category
+      - permanentWiltingPoint
+      - soilId
+      - totalAvailableWater
+      properties:
+        category:
+          type: string
+          description: Category of the soil.
+        fieldCapacity:
+          type: number
+          format: double
+          description: Field capacity of the soil.
+          minimum: 0
+          maximum: 100
+        name:
+          type: string
+          description: Name of the soil.
+        permanentWiltingPoint:
+          type: number
+          format: double
+          description: Permanent wilting point of the soil.
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: integer
+          format: int64
+          description: The epoch millis of the creation time.
+        organizationId:
+          type: string
+          description: The organization the soil belongs to.
+        soilId:
+          type: string
+          description: Id of the soil.
+        totalAvailableWater:
+          type: number
+          format: double
+          description: Total available water of the soil.
+          readOnly: true
+    EventHook:
+      type: object
+      required:
+      - method
+      - url
+      properties:
+        headers:
+          type: object
+          description: Headers of the HTTP request
+          additionalProperties:
+            type: object
+        method:
+          type: string
+          description: Method of the HTTP request
+        payload:
+          type: object
+          description: Payload of the HTTP request
+          additionalProperties:
+            type: object
+        url:
+          type: string
+          description: Url of the HTTP request
+    DataSourceCoordinates:
+      type: object
+      required:
+      - dataSourceId
+      - sinceDate
+      properties:
+        coordinateX:
+          type: number
+          format: double
+          description: X coordinate in space
+        coordinateY:
+          type: number
+          format: double
+          description: Y coordinate in space
+        sinceDate:
+          type: string
+          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
+        dataSourceId:
+          type: string
+          description: Identifier of the data source
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        zoneName:
+          type: string
+          description: Name of the zone
+        zoneUuid:
+          type: string
+          description: Unique identifier of the zone
+      description: Coordinates of a data source since a given timestamp.
+    NewAppInstallation:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Installation's description.
+        dynamicConfigurations:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+          description: Installation's name.
+    RequiredSensor:
+      type: object
+      required:
+      - sensorTypeId
+      properties:
+        configurationKeypathToCheckId:
+          type: string
+          description: Optional keypath in dynamic configurations where check id is stored
+        name:
+          type: string
+          description: Name of the sensor
+        sensorTypeId:
+          type: string
+          description: Id of the sensor type of the required sensor
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
+    CheckCollection:
+      type: object
+      properties:
+        collectionId:
+          type: string
+          description: Id of the collection
+        name:
+          type: string
+          description: Name of the collection
+        order:
+          type: integer
+          format: int32
+          description: The position within all the collections
     CheckSummary:
       type: object
       properties:
@@ -561,32 +758,273 @@ components:
           items:
             type: string
       description: Summary of a check
-    NewAppInstallation:
+    CultivationPhaseDefinition:
       type: object
+      required:
+      - name
+      - uuid
       properties:
-        description:
+        color:
           type: string
-          description: Installation's description.
-        dynamicConfigurations:
-          type: object
-          additionalProperties:
-            type: object
+          description: Display color of the phase as a hex string, e.g. '#FAEEDA'.
+          pattern: ^#[A-Fa-f0-9]{6}$
         name:
           type: string
-          description: Installation's name.
-    CheckCollection:
+          description: Name of the cultivation phase, from its organization-wide definition. Sent along a uuid it renames that definition, so the phase is renamed on every cultivation using it; sent without one it defines the phase.
+          minLength: 0
+          maxLength: 64
+        uuid:
+          type: string
+          description: Universally unique identifier.
+      description: Organization-wide definition of a cultivation phase.
+    CompanyDetails:
       type: object
+      required:
+      - active
       properties:
-        collectionId:
+        accountManager:
           type: string
-          description: Id of the collection
-        name:
+          description: CompanyDetails's account manager.
+        active:
+          type: boolean
+          description: The state of the company detail
+        address:
           type: string
-          description: Name of the collection
-        order:
+          description: The address of the company details
+        city:
+          type: string
+          description: The city of the company details
+        companyDetailsId:
+          type: string
+          description: Company details id
+        companyName:
+          type: string
+          description: The company name of the company details
+        country:
+          type: string
+          description: The country of the company details
+        countryCode:
+          type: string
+          description: The code of the country of the company details
+        debtorId:
           type: integer
           format: int32
-          description: The position within all the collections
+          description: The debtor id of the company details
+        invoiceEmail:
+          type: string
+          description: CompanyDetails's invoice email.
+        organizationId:
+          type: string
+          description: The organization id of the company details
+        postalCode:
+          type: string
+          description: The postal code of the company details
+        telephoneNumber:
+          type: string
+          description: The address of the company details
+        vatNumber:
+          type: string
+          description: The vat number of the company details
+    SensorField:
+      type: object
+      properties:
+        checkId:
+          type: string
+          description: The id of the check this field belongs to.
+        id:
+          type: string
+          description: Which field of the sensor to retrieve data for.
+        unit:
+          type: string
+          description: The unit in which to retrieved the values. Defaults to system unit.
+    NoteMeasurementDefinition:
+      type: object
+      required:
+      - category
+      - key
+      - label
+      - metric
+      - subcategory
+      properties:
+        category:
+          type: string
+          description: Note category the measurement is offered under.
+          enum:
+          - general
+          - crop
+          - irrigation
+          - pest
+          - production
+          - nutrients
+        key:
+          type: string
+          description: Stable identifier of the measurement, also the json key its values are ingested under.
+        label:
+          type: string
+          description: Display name of the measurement, e.g. 'Drain Volume'.
+          minLength: 0
+          maxLength: 64
+        metric:
+          type: string
+          description: Identifier of the metric the measurement is expressed in, e.g. 'irrigation'.
+        subcategory:
+          type: string
+          description: Note sub category the measurement is offered under.
+          enum:
+          - observation
+          - action
+          - measurement
+          - rating
+        unitId:
+          type: string
+          description: Conversion unit the measurement is recorded in. Empty means the metric default unit.
+      description: Organization-wide definition of a measurement a note can carry.
+    Zone:
+      type: object
+      required:
+      - id
+      - name
+      - organizationId
+      - siteId
+      properties:
+        color:
+          type: string
+          description: Color of the zone in the map
+        cropId:
+          type: string
+          description: Zone's crop type.
+        floorArea:
+          type: number
+          format: double
+          description: Zone's floor area in m2.
+        name:
+          type: string
+          description: Name of the zone
+        soilId:
+          type: string
+          description: Zone's soil type id.
+        crop:
+          description: The crop being grown in this zone.
+          $ref: '#/components/schemas/Crop'
+        geoJson:
+          type: object
+          description: GeoJson definition.
+          additionalProperties:
+            type: object
+        id:
+          type: string
+          description: Identifier of the zone within the site
+        organizationId:
+          type: string
+          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
+        siteId:
+          type: string
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        soil:
+          description: The soil this zone uses.
+          $ref: '#/components/schemas/Soil'
+        uuid:
+          type: string
+          description: Universally unique identifier.
+      description: A Zone is a physical subsection in a site.
+    Address:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Human settlement of notable size.
+        country:
+          type: string
+          description: A nation, a body of land with one government.
+        countryCode:
+          type: string
+          description: Short alphanumeric identification code for countries and dependent areas, e.g. NL
+        number:
+          type: string
+          description: The number on a street of a particular address.
+        postalCode:
+          type: string
+          description: A series of letters and/or digits for the purpose of sorting mail, e.g. '3011 GK'.
+        street:
+          type: string
+          description: A public road in a city.
+      description: The particulars of the place where this object is located.
+    Gateway:
+      type: object
+      properties:
+        alarmsChecks:
+          type: array
+          description: The alarms checks ids of the gateway.
+          uniqueItems: true
+          items:
+            type: string
+        fleetManagerDeviceId:
+          type: string
+          description: The fleet manager id.
+        gatewayClusterId:
+          type: string
+          description: The gateway cluster id.
+        gatewayInfoCheckId:
+          type: string
+          description: Id of the gateway info check.
+        isBillable:
+          type: boolean
+          description: States if the gateway is billable or not.
+        name:
+          type: string
+          description: Gateway name
+        organizationId:
+          type: string
+          description: The organization of the gateway.
+        remarks:
+          type: string
+          description: The remarks for the gateway.
+        siteId:
+          type: string
+          description: The site of the gateway.
+        state:
+          type: string
+          description: The state of the gateway.
+        templateId:
+          type: string
+          description: Gateway's template id.
+        gatewayId:
+          type: string
+          description: Gateway Id.
+        macAddress:
+          type: string
+          description: The mac address of the gateway.
+        monitoringCheckId:
+          type: string
+          description: Id of the gateway monitoring check.
+        xbeeAddress:
+          type: string
+          description: The address of the xbee.
+        createdAt:
+          type: string
+          description: The date and time a gateway was created.
+        deletedAt:
+          type: string
+          description: The date and time a gateway was deleted.
+        deletedBy:
+          type: string
+          description: User that deleted the gateway.
+        deployedAt:
+          type: string
+          description: The date and time a gateway was deployed.
+        jsonEnvironmentVariableOnDevice:
+          type: boolean
+          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
+        updatedAt:
+          type: string
+          description: The date and time a gateway was last updated.
+    OrganizationExtensions:
+      type: object
+      properties:
+        developed:
+          type: array
+          items:
+            $ref: '#/components/schemas/App'
     Organization:
       type: object
       required:
@@ -739,130 +1177,437 @@ components:
               items:
                 $ref: '#/components/schemas/NoteMeasurementDefinition'
       description: An organization is an entity that encompasses a set of checks, private locations and users.
-    CompanyDetails:
+    Site:
       type: object
       required:
-      - active
-      properties:
-        accountManager:
-          type: string
-          description: CompanyDetails's account manager.
-        active:
-          type: boolean
-          description: The state of the company detail
-        address:
-          type: string
-          description: The address of the company details
-        city:
-          type: string
-          description: The city of the company details
-        companyDetailsId:
-          type: string
-          description: Company details id
-        companyName:
-          type: string
-          description: The company name of the company details
-        country:
-          type: string
-          description: The country of the company details
-        countryCode:
-          type: string
-          description: The code of the country of the company details
-        debtorId:
-          type: integer
-          format: int32
-          description: The debtor id of the company details
-        invoiceEmail:
-          type: string
-          description: CompanyDetails's invoice email.
-        organizationId:
-          type: string
-          description: The organization id of the company details
-        postalCode:
-          type: string
-          description: The postal code of the company details
-        telephoneNumber:
-          type: string
-          description: The address of the company details
-        vatNumber:
-          type: string
-          description: The vat number of the company details
-    Zone:
-      type: object
-      required:
+      - address
       - id
       - name
-      - organizationId
-      - siteId
+      - subscriptionId
       properties:
-        color:
+        address:
+          description: The particulars of the place where this object is located.
+          $ref: '#/components/schemas/Address'
+        billableSince:
           type: string
-          description: Color of the zone in the map
-        cropId:
-          type: string
-          description: Zone's crop type.
-        floorArea:
+          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
+          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
+        contractLength:
+          type: integer
+          format: int32
+          description: Number of months from the start date through which the contract is effective.
+        latitude:
           type: number
           format: double
-          description: Zone's floor area in m2.
+          description: Angular distance north or south of the equator.
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          format: double
+          description: Angular distance east or west of the prime meridian.
+          minimum: -180
+          maximum: 180
         name:
           type: string
-          description: Name of the zone
-        soilId:
+          description: Set of words by which a site is known.
+        subscriptionId:
           type: string
-          description: Zone's soil type id.
-        crop:
-          description: The crop being grown in this zone.
-          $ref: '#/components/schemas/Crop'
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
+          description: Unique identifier for the subscription.
+        timezone:
+          type: string
+          description: An area which observes a uniform standard time.
+        aerialImageDataUploadId:
+          type: string
+          description: Id of the aerial image data upload.
+        aerialImagePresignedUrl:
+          type: string
+          description: Presigned URL of the aerial image.
+        deactivatedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of deactivation, e.g. e.g 2023-12-12T15:00:00Z.
+        externalSensors:
+          type: array
+          description: External sensors in the location.
+          items:
+            $ref: '#/components/schemas/ImportCheck'
+        gateways:
+          type: array
+          description: The gateways in this site.
+          items:
+            $ref: '#/components/schemas/Gateway'
         id:
           type: string
-          description: Identifier of the zone within the site
+          description: Identifier of the site it belongs to, together with the organizationId this is unique.
+        internalSensors:
+          type: array
+          description: Internal sensors in the location.
+          items:
+            $ref: '#/components/schemas/Check'
         organizationId:
           type: string
           description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        siteId:
+        status:
           type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        soil:
-          description: The soil this zone uses.
-          $ref: '#/components/schemas/Soil'
+          description: Current status of the site.
+          enum:
+          - ACTIVE
+          - DELETED
+          - INACTIVE
+          - PENDING
+        urlPathIdentifier:
+          type: string
+          description: URL friendly identifier of the site based on the name of the site.
         uuid:
           type: string
           description: Universally unique identifier.
-      description: A Zone is a physical subsection in a site.
-    EventHook:
+        zones:
+          type: array
+          description: Zones in the site.
+          items:
+            $ref: '#/components/schemas/Zone'
+        isActive:
+          type: boolean
+          description: Whether it is active or deactivated.
+      description: A customer's physical location where data (sensors, devices and integrations) belong.
+    App:
       type: object
       required:
-      - method
-      - url
+      - appId
       properties:
-        headers:
+        dashboards:
+          type: array
+          description: App's dashboards.
+          items:
+            type: object
+            additionalProperties:
+              type: object
+        defaultDynamicConfigurations:
           type: object
-          description: Headers of the HTTP request
+          description: The default dynamic configuration of the installable
           additionalProperties:
             type: object
-        method:
+        description:
           type: string
-          description: Method of the HTTP request
-        payload:
+          description: Description of the installable.
+        logoDataId:
+          type: string
+          description: Id of the logo image data.
+        logoUrl:
+          type: string
+          description: Application's logo URL.
+        maxInstallationsPerOrg:
+          type: integer
+          format: int32
+          description: Maximum number of installations allowed for any given organization
+        name:
+          type: string
+          description: Name of the installable
+        ownerName:
+          type: string
+          description: Installable's owner name.
+        packageDataId:
+          type: string
+          description: Id of the code package data.
+        primaryColor:
+          type: string
+          description: App's primary color.
+        requiredManualInputForms:
+          type: array
+          description: List of manual input forms required by the extension.
+          items:
+            $ref: '#/components/schemas/RequiredSensor'
+        sections:
           type: object
-          description: Payload of the HTTP request
+          description: App's sections, with sections id as keys and definitions as values.
           additionalProperties:
             type: object
+            additionalProperties:
+              type: object
+        settings:
+          type: object
+          description: Custom settings common to all extension's installations
+          additionalProperties:
+            type: object
+        supportUrl:
+          type: string
+          description: Extension's support web page URL.
         url:
           type: string
-          description: Url of the HTTP request
+          description: Application's URL.
+        widgets:
+          type: array
+          description: Widgets that belong to the installable.
+          items:
+            type: object
+        publishedAt:
+          type: string
+          description: UTC ISO 8601 timestamp of publication, e.g., 2025-02-21T15:00:00Z.
+        publishedBy:
+          type: string
+          description: The email of the user that published this app.
+        submittedAt:
+          type: string
+          description: 'The ISO601 UTC date the app was submitted. e.g.: 2021-03-21T00:00:00Z'
+        submittedBy:
+          type: string
+          description: The email of the user that submitted this app.
+        appId:
+          type: string
+          description: Id of the application
+        organizationId:
+          type: string
+          description: Id of the organization that owns the installable.
+        state:
+          type: string
+          description: Status of the installable.
+        type:
+          type: string
+          description: Type of the application.
+    StructuredConditional:
+      type: object
+      properties:
+        aggregationType:
+          type: string
+          description: The type of aggregation.
+        checkFields:
+          type: array
+          description: List of fields represented by the check id and field name
+          items:
+            $ref: '#/components/schemas/SensorField'
+        interval:
+          type: string
+          description: The time interval to aggregate over.
+        key:
+          type: string
+          description: Key of the structured conditional
+        operator:
+          type: string
+          description: Operator of the conditional
+        operatorType:
+          type: string
+          description: Operator type of the conditional
+          enum:
+          - COMPARISON
+          - LOGICAL
+        value:
+          type: string
+          description: Value of the key given the operator
+    DashboardTheme:
+      type: object
+      properties:
+        createdByEmail:
+          type: string
+          description: Created by
+        css:
+          description: Dashboard theme css
+          $ref: '#/components/schemas/DashboardThemeCSS'
+        dashboardThemeId:
+          type: string
+          description: Dashboard theme id
+        groupIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        logo:
+          description: Dashboard logo
+          $ref: '#/components/schemas/ImageWithThumbnails'
+        logoDataUploadId:
+          type: string
+          description: Dashboard logo data upload id
+        name:
+          type: string
+          description: Dashboard theme name
+        organizationIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    Subscription:
+      type: object
+      properties:
+        actions:
+          type: array
+          description: The actions permitted by the license subscription.
+          items:
+            type: string
+        name:
+          type: string
+          description: Displayable name.
+        createdAt:
+          type: string
+          description: Timestamp of when it was created.
+        createdBy:
+          type: string
+          description: Identifier of the user that created it.
+        licenseId:
+          type: string
+          description: Unique identifier for the license.
+        subscriptionId:
+          type: string
+          description: Unique identifier for the subscription.
+      description: Object holding the editable properties of a subscription
+    AppInstallation:
+      type: object
+      required:
+      - app
+      - installationId
+      - siteId
+      properties:
+        description:
+          type: string
+          description: Installation's description.
+        dynamicConfigurations:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+          description: App installation name
+        activatedAt:
+          type: string
+          description: The ISO601 UTC date the app was activated. e.g 2021-03-21T00:00:00Z
+        activatedBy:
+          type: string
+          description: The email of the user that activated this installation.
+        app:
+          description: Application.
+          $ref: '#/components/schemas/App'
+        appId:
+          type: string
+          description: Application type.
+        deactivatedAt:
+          type: string
+          description: The ISO601 UTC date the app was deactivated, e.g 2021-03-21T00:00:00Z. Ignored when the activatedAt is not set.
+        deactivatedBy:
+          type: string
+          description: The email of the user that deactivated this installation.
+        installationId:
+          type: string
+          description: Application id.
+        installedAt:
+          type: string
+          description: The ISO601 UTC date the app was installed. e.g 2021-03-21T00:00:00Z
+        installedBy:
+          type: string
+          description: The email of the user performing the installation.
+        locationId:
+          type: string
+          description: The site the installation belongs to. Use getSiteId() instead.
+        organization:
+          $ref: '#/components/schemas/Organization'
+        organizationId:
+          type: string
+          description: The unique identifier of the organization it belongs to.
+        siteId:
+          type: string
+          description: The site the installation belongs to.
+        status:
+          type: string
+          description: The status of the installation.
+        isActive:
+          type: boolean
+          description: Whether it is active or deactivated.
     ImageDimensions:
       type: object
       properties:
         height:
           type: integer
           format: int32
+        width:
+          type: integer
+          format: int32
+    Notification:
+      type: object
+      required:
+      - notificationId
+      properties:
+        action:
+          type: string
+          description: Description of the action to take when the notification is triggered.
+        calculationSettings:
+          description: The calculation configuration
+          $ref: '#/components/schemas/CalculationSettings'
+        checkId:
+          type: string
+          description: Identifier of the check.
+        condition:
+          type: string
+          description: Conditional that defines the trigger of this notification
+        description:
+          type: string
+          description: Description of the notification
+        eventHook:
+          description: Event hook of the notification
+          $ref: '#/components/schemas/EventHook'
+        matchAfter:
+          type: integer
+          format: int32
+          description: Match after attribute
+          minimum: 0
+        throttleFor:
+          type: integer
+          format: int64
+          description: The amount of time in milliseconds to throttle notifications
+          minimum: 0
+        check:
+          description: Summary of the check that is linked to this notification
+          $ref: '#/components/schemas/CheckSummary'
+        createdBy:
+          type: string
+          description: Identifier of the user that created this notification
+        creationTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of when the notification was created
+        matched:
+          type: boolean
+          description: Matched attribute
+        matchedFor:
+          type: integer
+          format: int32
+          description: Matched for attribute
+        matchedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last matched notification was sent
+        notificationId:
+          type: string
+          description: Identifier of this notification object.
+        nrMatched:
+          type: integer
+          format: int32
+          description: Number of matches attribute
+        organizationId:
+          type: string
+          description: Identifier of the organization for which this notification is created
+        resolvedLastNotifiedAt:
+          type: integer
+          format: int64
+          description: When the last resolved notification was sent
+        structuredConditional:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          items:
+            $ref: '#/components/schemas/StructuredConditional'
+        widgetIds:
+          type: array
+          description: List of structured conditionals that defines the trigger event of this notification.
+          uniqueItems: true
+          items:
+            type: string
+      description: Holds the editable properties of a Notification
+    ImageThumbnail:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int32
+        path:
+          type: string
+        url:
+          type: string
         width:
           type: integer
           format: int32
@@ -1000,222 +1745,6 @@ components:
           type: string
           description: Identifier of the site it belongs to, together with the organizationId this is unique.
       description: Import check properties
-    ImageThumbnail:
-      type: object
-      properties:
-        height:
-          type: integer
-          format: int32
-        path:
-          type: string
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-    Soil:
-      type: object
-      required:
-      - category
-      - permanentWiltingPoint
-      - soilId
-      - totalAvailableWater
-      properties:
-        category:
-          type: string
-          description: Category of the soil.
-        fieldCapacity:
-          type: number
-          format: double
-          description: Field capacity of the soil.
-          minimum: 0
-          maximum: 100
-        name:
-          type: string
-          description: Name of the soil.
-        permanentWiltingPoint:
-          type: number
-          format: double
-          description: Permanent wilting point of the soil.
-          minimum: 0
-          maximum: 100
-        createdAt:
-          type: integer
-          format: int64
-          description: The epoch millis of the creation time.
-        organizationId:
-          type: string
-          description: The organization the soil belongs to.
-        soilId:
-          type: string
-          description: Id of the soil.
-        totalAvailableWater:
-          type: number
-          format: double
-          description: Total available water of the soil.
-          readOnly: true
-    NoteMeasurementDefinition:
-      type: object
-      required:
-      - category
-      - key
-      - label
-      - metric
-      - subcategory
-      properties:
-        category:
-          type: string
-          description: Note category the measurement is offered under.
-          enum:
-          - general
-          - crop
-          - irrigation
-          - pest
-          - production
-          - nutrients
-        key:
-          type: string
-          description: Stable identifier of the measurement, also the json key its values are ingested under.
-        label:
-          type: string
-          description: Display name of the measurement, e.g. 'Drain Volume'.
-          minLength: 0
-          maxLength: 64
-        metric:
-          type: string
-          description: Identifier of the metric the measurement is expressed in, e.g. 'irrigation'.
-        subcategory:
-          type: string
-          description: Note sub category the measurement is offered under.
-          enum:
-          - observation
-          - action
-          - measurement
-          - rating
-        unitId:
-          type: string
-          description: Conversion unit the measurement is recorded in. Empty means the metric default unit.
-      description: Organization-wide definition of a measurement a note can carry.
-    DataSourceCoordinates:
-      type: object
-      required:
-      - dataSourceId
-      - sinceDate
-      properties:
-        coordinateX:
-          type: number
-          format: double
-          description: X coordinate in space
-        coordinateY:
-          type: number
-          format: double
-          description: Y coordinate in space
-        sinceDate:
-          type: string
-          description: UTC ISO 8601 timestamp since when, e.g 2024-11-12T15:00:00Z.
-        dataSourceId:
-          type: string
-          description: Identifier of the data source
-        geoJson:
-          type: object
-          description: GeoJson definition.
-          additionalProperties:
-            type: object
-        zoneName:
-          type: string
-          description: Name of the zone
-        zoneUuid:
-          type: string
-          description: Unique identifier of the zone
-      description: Coordinates of a data source since a given timestamp.
-    AppInstallation:
-      type: object
-      required:
-      - app
-      - installationId
-      - siteId
-      properties:
-        description:
-          type: string
-          description: Installation's description.
-        dynamicConfigurations:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-          description: App installation name
-        activatedAt:
-          type: string
-          description: The ISO601 UTC date the app was activated. e.g 2021-03-21T00:00:00Z
-        activatedBy:
-          type: string
-          description: The email of the user that activated this installation.
-        app:
-          description: Application.
-          $ref: '#/components/schemas/App'
-        appId:
-          type: string
-          description: Application type.
-        deactivatedAt:
-          type: string
-          description: The ISO601 UTC date the app was deactivated, e.g 2021-03-21T00:00:00Z. Ignored when the activatedAt is not set.
-        deactivatedBy:
-          type: string
-          description: The email of the user that deactivated this installation.
-        installationId:
-          type: string
-          description: Application id.
-        installedAt:
-          type: string
-          description: The ISO601 UTC date the app was installed. e.g 2021-03-21T00:00:00Z
-        installedBy:
-          type: string
-          description: The email of the user performing the installation.
-        locationId:
-          type: string
-          description: The site the installation belongs to. Use getSiteId() instead.
-        organization:
-          $ref: '#/components/schemas/Organization'
-        organizationId:
-          type: string
-          description: The unique identifier of the organization it belongs to.
-        siteId:
-          type: string
-          description: The site the installation belongs to.
-        status:
-          type: string
-          description: The status of the installation.
-        isActive:
-          type: boolean
-          description: Whether it is active or deactivated.
-    RequiredSensor:
-      type: object
-      required:
-      - sensorTypeId
-      properties:
-        configurationKeypathToCheckId:
-          type: string
-          description: Optional keypath in dynamic configurations where check id is stored
-        name:
-          type: string
-          description: Name of the sensor
-        sensorTypeId:
-          type: string
-          description: Id of the sensor type of the required sensor
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
     CalculationSettings:
       type: object
       required:
@@ -1230,535 +1759,6 @@ components:
           additionalProperties:
             type: object
       description: Settings used to perform a calculation.
-    App:
-      type: object
-      required:
-      - appId
-      properties:
-        dashboards:
-          type: array
-          description: App's dashboards.
-          items:
-            type: object
-            additionalProperties:
-              type: object
-        defaultDynamicConfigurations:
-          type: object
-          description: The default dynamic configuration of the installable
-          additionalProperties:
-            type: object
-        description:
-          type: string
-          description: Description of the installable.
-        logoDataId:
-          type: string
-          description: Id of the logo image data.
-        logoUrl:
-          type: string
-          description: Application's logo URL.
-        maxInstallationsPerOrg:
-          type: integer
-          format: int32
-          description: Maximum number of installations allowed for any given organization
-        name:
-          type: string
-          description: Name of the installable
-        ownerName:
-          type: string
-          description: Installable's owner name.
-        packageDataId:
-          type: string
-          description: Id of the code package data.
-        primaryColor:
-          type: string
-          description: App's primary color.
-        requiredManualInputForms:
-          type: array
-          description: List of manual input forms required by the extension.
-          items:
-            $ref: '#/components/schemas/RequiredSensor'
-        sections:
-          type: object
-          description: App's sections, with sections id as keys and definitions as values.
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: object
-        settings:
-          type: object
-          description: Custom settings common to all extension's installations
-          additionalProperties:
-            type: object
-        supportUrl:
-          type: string
-          description: Extension's support web page URL.
-        url:
-          type: string
-          description: Application's URL.
-        widgets:
-          type: array
-          description: Widgets that belong to the installable.
-          items:
-            type: object
-        publishedAt:
-          type: string
-          description: UTC ISO 8601 timestamp of publication, e.g., 2025-02-21T15:00:00Z.
-        publishedBy:
-          type: string
-          description: The email of the user that published this app.
-        submittedAt:
-          type: string
-          description: 'The ISO601 UTC date the app was submitted. e.g.: 2021-03-21T00:00:00Z'
-        submittedBy:
-          type: string
-          description: The email of the user that submitted this app.
-        appId:
-          type: string
-          description: Id of the application
-        organizationId:
-          type: string
-          description: Id of the organization that owns the installable.
-        state:
-          type: string
-          description: Status of the installable.
-        type:
-          type: string
-          description: Type of the application.
-    Notification:
-      type: object
-      required:
-      - notificationId
-      properties:
-        action:
-          type: string
-          description: Description of the action to take when the notification is triggered.
-        calculationSettings:
-          description: The calculation configuration
-          $ref: '#/components/schemas/CalculationSettings'
-        checkId:
-          type: string
-          description: Identifier of the check.
-        condition:
-          type: string
-          description: Conditional that defines the trigger of this notification
-        description:
-          type: string
-          description: Description of the notification
-        eventHook:
-          description: Event hook of the notification
-          $ref: '#/components/schemas/EventHook'
-        matchAfter:
-          type: integer
-          format: int32
-          description: Match after attribute
-          minimum: 0
-        throttleFor:
-          type: integer
-          format: int64
-          description: The amount of time in milliseconds to throttle notifications
-          minimum: 0
-        check:
-          description: Summary of the check that is linked to this notification
-          $ref: '#/components/schemas/CheckSummary'
-        createdBy:
-          type: string
-          description: Identifier of the user that created this notification
-        creationTimestamp:
-          type: integer
-          format: int64
-          description: Timestamp of when the notification was created
-        matched:
-          type: boolean
-          description: Matched attribute
-        matchedFor:
-          type: integer
-          format: int32
-          description: Matched for attribute
-        matchedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last matched notification was sent
-        notificationId:
-          type: string
-          description: Identifier of this notification object.
-        nrMatched:
-          type: integer
-          format: int32
-          description: Number of matches attribute
-        organizationId:
-          type: string
-          description: Identifier of the organization for which this notification is created
-        resolvedLastNotifiedAt:
-          type: integer
-          format: int64
-          description: When the last resolved notification was sent
-        structuredConditional:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          items:
-            $ref: '#/components/schemas/StructuredConditional'
-        widgetIds:
-          type: array
-          description: List of structured conditionals that defines the trigger event of this notification.
-          uniqueItems: true
-          items:
-            type: string
-      description: Holds the editable properties of a Notification
-    Site:
-      type: object
-      required:
-      - address
-      - id
-      - name
-      - subscriptionId
-      properties:
-        address:
-          description: The particulars of the place where this object is located.
-          $ref: '#/components/schemas/Address'
-        billableSince:
-          type: string
-          description: Date since the site is billable in UTC, e.g. 2020-12-24T18:51:31Z
-          pattern: \d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)
-        contractLength:
-          type: integer
-          format: int32
-          description: Number of months from the start date through which the contract is effective.
-        latitude:
-          type: number
-          format: double
-          description: Angular distance north or south of the equator.
-          minimum: -90
-          maximum: 90
-        longitude:
-          type: number
-          format: double
-          description: Angular distance east or west of the prime meridian.
-          minimum: -180
-          maximum: 180
-        name:
-          type: string
-          description: Set of words by which a site is known.
-        subscriptionId:
-          type: string
-          description: Unique identifier for the subscription.
-        timezone:
-          type: string
-          description: An area which observes a uniform standard time.
-        aerialImageDataUploadId:
-          type: string
-          description: Id of the aerial image data upload.
-        aerialImagePresignedUrl:
-          type: string
-          description: Presigned URL of the aerial image.
-        deactivatedAt:
-          type: string
-          description: UTC ISO 8601 timestamp of deactivation, e.g. e.g 2023-12-12T15:00:00Z.
-        externalSensors:
-          type: array
-          description: External sensors in the location.
-          items:
-            $ref: '#/components/schemas/ImportCheck'
-        gateways:
-          type: array
-          description: The gateways in this site.
-          items:
-            $ref: '#/components/schemas/Gateway'
-        id:
-          type: string
-          description: Identifier of the site it belongs to, together with the organizationId this is unique.
-        internalSensors:
-          type: array
-          description: Internal sensors in the location.
-          items:
-            $ref: '#/components/schemas/Check'
-        organizationId:
-          type: string
-          description: Unique identifier for the organization, preferably a readable text such as the domain name of the company.
-        status:
-          type: string
-          description: Current status of the site.
-          enum:
-          - ACTIVE
-          - DELETED
-          - INACTIVE
-          - PENDING
-        urlPathIdentifier:
-          type: string
-          description: URL friendly identifier of the site based on the name of the site.
-        uuid:
-          type: string
-          description: Universally unique identifier.
-        zones:
-          type: array
-          description: Zones in the site.
-          items:
-            $ref: '#/components/schemas/Zone'
-        isActive:
-          type: boolean
-          description: Whether it is active or deactivated.
-      description: A customer's physical location where data (sensors, devices and integrations) belong.
-    CultivationPhaseDefinition:
-      type: object
-      required:
-      - name
-      - uuid
-      properties:
-        color:
-          type: string
-          description: Display color of the phase as a hex string, e.g. '#FAEEDA'.
-          pattern: ^#[A-Fa-f0-9]{6}$
-        name:
-          type: string
-          description: Name of the cultivation phase, from its organization-wide definition. Sent along a uuid it renames that definition, so the phase is renamed on every cultivation using it; sent without one it defines the phase.
-          minLength: 0
-          maxLength: 64
-        uuid:
-          type: string
-          description: Universally unique identifier.
-      description: Organization-wide definition of a cultivation phase.
-    DashboardTheme:
-      type: object
-      properties:
-        createdByEmail:
-          type: string
-          description: Created by
-        css:
-          description: Dashboard theme css
-          $ref: '#/components/schemas/DashboardThemeCSS'
-        dashboardThemeId:
-          type: string
-          description: Dashboard theme id
-        groupIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        logo:
-          description: Dashboard logo
-          $ref: '#/components/schemas/ImageWithThumbnails'
-        logoDataUploadId:
-          type: string
-          description: Dashboard logo data upload id
-        name:
-          type: string
-          description: Dashboard theme name
-        organizationIds:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-    Gateway:
-      type: object
-      properties:
-        alarmsChecks:
-          type: array
-          description: The alarms checks ids of the gateway.
-          uniqueItems: true
-          items:
-            type: string
-        fleetManagerDeviceId:
-          type: string
-          description: The fleet manager id.
-        gatewayClusterId:
-          type: string
-          description: The gateway cluster id.
-        gatewayInfoCheckId:
-          type: string
-          description: Id of the gateway info check.
-        isBillable:
-          type: boolean
-          description: States if the gateway is billable or not.
-        name:
-          type: string
-          description: Gateway name
-        organizationId:
-          type: string
-          description: The organization of the gateway.
-        remarks:
-          type: string
-          description: The remarks for the gateway.
-        siteId:
-          type: string
-          description: The site of the gateway.
-        state:
-          type: string
-          description: The state of the gateway.
-        templateId:
-          type: string
-          description: Gateway's template id.
-        gatewayId:
-          type: string
-          description: Gateway Id.
-        macAddress:
-          type: string
-          description: The mac address of the gateway.
-        monitoringCheckId:
-          type: string
-          description: Id of the gateway monitoring check.
-        xbeeAddress:
-          type: string
-          description: The address of the xbee.
-        createdAt:
-          type: string
-          description: The date and time a gateway was created.
-        deletedAt:
-          type: string
-          description: The date and time a gateway was deleted.
-        deletedBy:
-          type: string
-          description: User that deleted the gateway.
-        deployedAt:
-          type: string
-          description: The date and time a gateway was deployed.
-        jsonEnvironmentVariableOnDevice:
-          type: boolean
-          description: Indicates if the json environment variable was successfully set on the actual device via the resin api call when creating a gateway
-        updatedAt:
-          type: string
-          description: The date and time a gateway was last updated.
-    StructuredConditional:
-      type: object
-      properties:
-        aggregationType:
-          type: string
-          description: The type of aggregation.
-        checkFields:
-          type: array
-          description: List of fields represented by the check id and field name
-          items:
-            $ref: '#/components/schemas/SensorField'
-        interval:
-          type: string
-          description: The time interval to aggregate over.
-        key:
-          type: string
-          description: Key of the structured conditional
-        operator:
-          type: string
-          description: Operator of the conditional
-        operatorType:
-          type: string
-          description: Operator type of the conditional
-          enum:
-          - COMPARISON
-          - LOGICAL
-        value:
-          type: string
-          description: Value of the key given the operator
-    Address:
-      type: object
-      properties:
-        city:
-          type: string
-          description: Human settlement of notable size.
-        country:
-          type: string
-          description: A nation, a body of land with one government.
-        countryCode:
-          type: string
-          description: Short alphanumeric identification code for countries and dependent areas, e.g. NL
-        number:
-          type: string
-          description: The number on a street of a particular address.
-        postalCode:
-          type: string
-          description: A series of letters and/or digits for the purpose of sorting mail, e.g. '3011 GK'.
-        street:
-          type: string
-          description: A public road in a city.
-      description: The particulars of the place where this object is located.
-    SensorField:
-      type: object
-      properties:
-        checkId:
-          type: string
-          description: The id of the check this field belongs to.
-        id:
-          type: string
-          description: Which field of the sensor to retrieve data for.
-        unit:
-          type: string
-          description: The unit in which to retrieved the values. Defaults to system unit.
-    Subscription:
-      type: object
-      properties:
-        actions:
-          type: array
-          description: The actions permitted by the license subscription.
-          items:
-            type: string
-        name:
-          type: string
-          description: Displayable name.
-        createdAt:
-          type: string
-          description: Timestamp of when it was created.
-        createdBy:
-          type: string
-          description: Identifier of the user that created it.
-        licenseId:
-          type: string
-          description: Unique identifier for the license.
-        subscriptionId:
-          type: string
-          description: Unique identifier for the subscription.
-      description: Object holding the editable properties of a subscription
-    DashboardThemeCSS:
-      type: object
-      properties:
-        backgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        buttonBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        buttonTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        headerBarBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        headerBarShadow:
-          type: boolean
-        headerBarTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuActiveBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuActiveBackgroundColorMobile:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuActiveTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuActiveTextColorMobile:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuBackgroundColorMobile:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        localMenuTextColorMobile:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        menuActiveBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        menuActiveTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        menuBackgroundColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
-        menuTextColor:
-          type: string
-          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
     Check:
       type: object
       required:

@@ -140,26 +140,6 @@ paths:
       x-admin-only: true
 components:
   schemas:
-    StackTraceElement:
-      type: object
-      properties:
-        classLoaderName:
-          type: string
-        moduleName:
-          type: string
-        moduleVersion:
-          type: string
-        methodName:
-          type: string
-        fileName:
-          type: string
-        lineNumber:
-          type: integer
-          format: int32
-        className:
-          type: string
-        nativeMethod:
-          type: boolean
     Result:
       type: object
       properties:
@@ -198,6 +178,26 @@ components:
             $ref: '#/components/schemas/Throwable'
         localizedMessage:
           type: string
+    StackTraceElement:
+      type: object
+      properties:
+        classLoaderName:
+          type: string
+        moduleName:
+          type: string
+        moduleVersion:
+          type: string
+        methodName:
+          type: string
+        fileName:
+          type: string
+        lineNumber:
+          type: integer
+          format: int32
+        className:
+          type: string
+        nativeMethod:
+          type: boolean
   securitySchemes:
     Bearer:
       description: ''

@@ -242,23 +242,6 @@ paths:
           description: Server error while turning off sharing for this dashboard
 components:
   schemas:
-    SharedWithUserDetails:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-    DashboardSummary:
-      type: object
-      properties:
-        dashboardId:
-          type: string
-        name:
-          type: string
-        organizationId:
-          type: string
-      description: Summary of a dashboard
     NewSharedDashboard:
       type: object
       properties:
@@ -272,6 +255,16 @@ components:
           uniqueItems: true
           items:
             type: string
+    DashboardSummary:
+      type: object
+      properties:
+        dashboardId:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+      description: Summary of a dashboard
     SharedDashboard:
       type: object
       properties:
@@ -306,6 +299,13 @@ components:
           description: User who the dashboard has been shared with
         sharedWithUserDetails:
           $ref: '#/components/schemas/SharedWithUserDetails'
+    SharedWithUserDetails:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
     SharedByUserDetails:
       type: object
       properties:

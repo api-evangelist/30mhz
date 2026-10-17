@@ -114,16 +114,6 @@ paths:
           description: User is not authorized to perform this operation.
 components:
   schemas:
-    WebPageReference:
-      type: object
-      properties:
-        url:
-          type: string
-          description: URL of a web page.
-        title:
-          type: string
-          description: Displayable title.
-      description: A reference to a web page
     User:
       type: object
       required:
@@ -184,6 +174,16 @@ components:
           type: string
           description: Universally unique identifier of a user.
       description: A person who uses the platform
+    WebPageReference:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of a web page.
+        title:
+          type: string
+          description: Displayable title.
+      description: A reference to a web page
     UserEditable:
       type: object
       properties:

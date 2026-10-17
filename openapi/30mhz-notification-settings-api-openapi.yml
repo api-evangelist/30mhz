@@ -248,6 +248,18 @@ components:
         topic:
           type: string
       description: A follow represents a subscription to check's UP/DOWN changes. UP or DOWN reflects succeeded or failed url response according to the check configurations. A follow can eventually be a of a predefined topic that uses a custom notification template for the different methods
+    NotificationMethods:
+      type: object
+      properties:
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - EMAIL
+            - SMS
+            - WHATSAPP
     NotificationSetting:
       type: object
       properties:
@@ -261,18 +273,6 @@ components:
           items:
             type: string
       description: Notification Settings
-    NotificationMethods:
-      type: object
-      properties:
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            enum:
-            - EMAIL
-            - SMS
-            - WHATSAPP
   securitySchemes:
     Bearer:
       description: ''

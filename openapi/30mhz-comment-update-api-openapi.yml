@@ -77,41 +77,18 @@ paths:
               $ref: '#/components/schemas/NewCommentReply'
 components:
   schemas:
-    AttachedDocument:
+    NewCommentReply:
       type: object
       properties:
-        dataUploadId:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
-    ImageWithThumbnails:
-      type: object
-      properties:
-        dataUploadId:
-          type: string
-        imageDimensions:
-          $ref: '#/components/schemas/ImageDimensions'
-        thumbnails:
+        emails:
           type: array
-          items:
-            $ref: '#/components/schemas/ImageThumbnail'
-        url:
-          type: string
-    CommentAttachments:
-      type: object
-      properties:
-        documents:
-          type: array
+          description: Emails of mentioned users
           uniqueItems: true
           items:
-            $ref: '#/components/schemas/AttachedDocument'
-        images:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/ImageWithThumbnails'
+            type: string
+        text:
+          type: string
+          description: Comment text
     Comment:
       type: object
       properties:
@@ -211,18 +188,15 @@ components:
         text:
           type: string
           description: Comment text
-    NewCommentReply:
+    AttachedDocument:
       type: object
       properties:
-        emails:
-          type: array
-          description: Emails of mentioned users
-          uniqueItems: true
-          items:
-            type: string
-        text:
+        dataUploadId:
           type: string
-          description: Comment text
+        filename:
+          type: string
+        url:
+          type: string
     ImageThumbnail:
       type: object
       properties:
@@ -236,6 +210,19 @@ components:
         width:
           type: integer
           format: int32
+    CommentAttachments:
+      type: object
+      properties:
+        documents:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachedDocument'
+        images:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ImageWithThumbnails'
     CommentTags:
       type: object
       properties:
@@ -275,6 +262,19 @@ components:
         selectedField:
           type: string
           description: Selected field id for this comment
+    ImageWithThumbnails:
+      type: object
+      properties:
+        dataUploadId:
+          type: string
+        imageDimensions:
+          $ref: '#/components/schemas/ImageDimensions'
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageThumbnail'
+        url:
+          type: string
   securitySchemes:
     Bearer:
       description: ''

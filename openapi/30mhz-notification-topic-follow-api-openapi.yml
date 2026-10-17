@@ -185,25 +185,6 @@ paths:
           description: User not allowed to perform the operation
 components:
   schemas:
-    NotificationTopicFollow:
-      type: object
-      properties:
-        email:
-          type: string
-        methods:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-          maxItems: 2147483647
-          minItems: 1
-        notificationTopicFollowId:
-          type: string
-        notificationTopicId:
-          type: string
-        organizationId:
-          type: string
-      description: Notification topic follow
     NotificationTopicFollowCount:
       type: object
       properties:
@@ -224,6 +205,25 @@ components:
             - EMAIL
             - SMS
             - WHATSAPP
+    NotificationTopicFollow:
+      type: object
+      properties:
+        email:
+          type: string
+        methods:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          maxItems: 2147483647
+          minItems: 1
+        notificationTopicFollowId:
+          type: string
+        notificationTopicId:
+          type: string
+        organizationId:
+          type: string
+      description: Notification topic follow
   securitySchemes:
     Bearer:
       description: ''
