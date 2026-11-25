@@ -222,32 +222,45 @@ Model Context Protocol servers that expose the API to agents.
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [30Mhz Agentic Access](https://apis.io/agentic-access/30mhz/30mhz-agentic-access/)
+- [30MHz Agentic Access](https://apis.io/agentic-access/30mhz/30mhz-agentic-access/)
 
 #### Overlays (1)
 
 OpenAPI overlays, including conversational phrasing for each operation.
 
-- [30Mhz Zensie Overlay](https://apis.io/overlays/30mhz/30mhz-zensie-overlay/)
+- [30MHz Zensie Overlay](https://apis.io/overlays/30mhz/30mhz-zensie-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [30MHz API Rules](https://apis.io/rules/30mhz/30mhz-rules/)
 
 #### Security (2)
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [30Mhz Authentication](https://apis.io/security/30mhz/30mhz-authentication/)
-- [30Mhz Domain Security](https://apis.io/security/30mhz/30mhz-domain-security/)
+- [30MHz Authentication](https://apis.io/security/30mhz/30mhz-authentication/)
+- [30MHz Domain Security](https://apis.io/security/30mhz/30mhz-domain-security/)
 
-#### Plans and pricing (1)
+#### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
-- [30Mhz Plans Pricing](https://apis.io/plans/30mhz/30mhz-plans-pricing/)
+- [30MHz Plans Pricing](https://apis.io/plans/30mhz/30mhz-plans-pricing/)
+- [30MHz Price Estimates](https://apis.io/plans/30mhz/30mhz-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [30Mhz Rate Limits](https://apis.io/rate-limits/30mhz/30mhz-rate-limits/)
+- [30MHz Rate Limits](https://apis.io/rate-limits/30mhz/30mhz-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [30MHz Finops](https://apis.io/finops/30mhz/30mhz-finops/)
 
 ## Where to find this API
 
@@ -268,16 +281,16 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 52.0** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 53.3** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 66.1 |
-| Contract quality | 54.5 |
-| Contract governance | 4.5 |
-| Operational transparency | 18.4 |
+| Contract quality | 59.6 |
+| Contract governance | 18.2 |
+| Operational transparency | 19.0 |
 | Developer ergonomics | 58.9 |
-| Access clarity | 76.3 |
+| Access clarity | 72.3 |
 
 **Agent readiness 25.0** — agent-aware
 
@@ -304,8 +317,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | — |
 | Operation Distinctiveness | mostly (partial credit) |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | yes |
 
-**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/30mhz/](https://apis.io/providers/30mhz/).
 
